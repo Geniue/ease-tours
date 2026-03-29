@@ -92,9 +92,9 @@ export default function Navbar() {
           <Image
             src="/logo.png"
             alt="Ease Travel"
-            width={96}
-            height={96}
-            className="h-20 lg:h-24 w-auto object-contain drop-shadow-md"
+            width={128}
+            height={128}
+            className="h-28 lg:h-32 w-auto object-contain drop-shadow-md"
             priority
           />
         </Link>

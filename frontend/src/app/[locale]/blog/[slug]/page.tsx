@@ -10,17 +10,6 @@ import { JsonLd, blogPostingSchema, breadcrumbSchema } from "@/lib/schemas";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
 export const dynamic = 'force-dynamic';
-export const dynamicParams = true;
-
-export async function generateStaticParams() {
-  const blogs = await getBlogs();
-  const params: { slug: string }[] = [];
-  for (const blog of blogs) {
-    params.push({ slug: blog.slug_en });
-    params.push({ slug: blog.slug_ar });
-  }
-  return params;
-}
 
 export async function generateMetadata({
   params,

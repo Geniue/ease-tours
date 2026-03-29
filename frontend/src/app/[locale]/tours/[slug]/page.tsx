@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getTrip, getTrips, getBlogs } from "@/lib/api";
+import { getTrip, getBlogs } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -11,15 +11,6 @@ import { JsonLd, touristTripSchema, breadcrumbSchema } from "@/lib/schemas";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
 export const dynamic = 'force-dynamic';
-export const dynamicParams = true;
-
-export async function generateStaticParams() {
-  const trips = await getTrips();
-  return trips.flatMap((trip) => [
-    { slug: trip.slug_en },
-    { slug: trip.slug_ar },
-  ]);
-}
 
 export async function generateMetadata({
   params,

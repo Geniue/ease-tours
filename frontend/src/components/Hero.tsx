@@ -50,7 +50,7 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60 z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20 z-[1]" />
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center text-white flex flex-col items-center justify-center">

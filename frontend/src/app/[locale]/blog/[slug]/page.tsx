@@ -9,6 +9,7 @@ import { JsonLd, blogPostingSchema, breadcrumbSchema } from "@/lib/schemas";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
+export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
 
 export async function generateStaticParams() {

@@ -9,6 +9,8 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { getTrips, getBlogs } from "@/lib/api";
 import { Link } from "@/i18n/navigation";
 
+export const dynamic = 'force-dynamic';
+
 export default async function HomePage() {
   const [trips, blogs] = await Promise.all([
     getTrips(),

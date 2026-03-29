@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "title": "Ease Travel - Leading Tourism Company in Egypt",
+    "description": "Hajj & Umrah trips, inbound and outbound tourism at the best prices. Book your trip now with Ease Travel."
+  },
+  "nav": {
+    "home": "Home",
+    "tours": "Tours",
+    "hajjUmrah": "Hajj & Umrah",
+    "inbound": "Inbound Tourism",
+    "outbound": "Outbound Tourism",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "blog": "Blog",
+    "bookNow": "Book Now"
+  },
+  "hero": {
+    "slide1Title": "Discover the World",
+    "slide1Subtitle": "Premium tours at competitive prices",
+    "slide2Title": "Enjoy Your Time",
+    "slide2Subtitle": "Spend the best moments with your family",
+    "slide3Title": "Relaxing Time",
+    "slide3Subtitle": "Relax on the most beautiful beaches worldwide",
+    "searchPlaceholder": "Search your destination...",
+    "cta": "Explore Tours"
+  },
+  "categories": {
+    "religious": "Hajj & Umrah",
+    "inbound": "Inbound Tourism",
+    "outbound": "Outbound Tourism"
+  },
+  "tourCard": {
+    "bookNow": "Book Now",
+    "days": "Days",
+    "from": "From",
+    "egp": "EGP"
+  },
+  "tourDetail": {
+    "overview": "Overview",
+    "itinerary": "Itinerary",
+    "inclusions": "Inclusions",
+    "duration": "Duration",
+    "destination": "Destination",
+    "category": "Category",
+    "price": "Price",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "maxParticipants": "Max Participants",
+    "daysUnit": "days",
+    "perPerson": "per person",
+    "bookThisTrip": "Book This Trip",
+    "notFound": "Trip Not Found",
+    "notFoundDesc": "Sorry, we couldn't find this trip.",
+    "backToTours": "Back to Tours",
+    "participants": "participants"
+  },
+  "booking": {
+    "title": "Book Your Trip",
+    "fullName": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "passengers": "Number of Passengers",
+    "notes": "Additional Notes",
+    "notesPlaceholder": "Any special requests or notes...",
+    "submit": "Confirm Booking",
+    "submitting": "Submitting...",
+    "totalPrice": "Total Price",
+    "successTitle": "Booking Confirmed!",
+    "successMsg": "Thank you! Your booking request has been received. We will contact you shortly.",
+    "bookAnother": "Book Another Trip",
+    "errorMsg": "An error occurred while booking. Please try again."
+  },
+  "whyUs": {
+    "title": "Why Ease Travel?",
+    "licenseA": "Licensed Tourism Company (Category A)",
+    "experience": "Extensive experience in tourism",
+    "hotels": "Partnered with premium hotels",
+    "transport": "Modern tourist transport fleet",
+    "guides": "Professional tour guides",
+    "satisfaction": "Your satisfaction is our goal"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "contactUs": "Contact Us",
+    "quickLinks": "Quick Links",
+    "followUs": "Follow Us",
+    "description": "Leading tourism company in Egypt — Hajj & Umrah, inbound and outbound tourism."
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Ease Travel Tourism Company",
+    "description": "Ease Travel is an Egyptian tourism company specialized in providing comprehensive tourism services including Hajj & Umrah trips, inbound and outbound tourism. We always strive to provide the best services at competitive prices while ensuring the highest levels of quality and comfort for our customers.",
+    "mission": "Our Mission",
+    "missionText": "To deliver an unforgettable travel experience for every customer, with attention to the finest details to ensure a comfortable and enjoyable trip.",
+    "vision": "Our Vision",
+    "visionText": "To be the leading tourism company in Egypt, contributing to the promotion of Egyptian tourism at the regional and international levels.",
+    "values": "Our Values",
+    "value1": "Quality and excellence in service",
+    "value2": "Transparency and credibility",
+    "value3": "Innovation and continuous improvement",
+    "value4": "Customer satisfaction first"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We'd love to hear from you anytime",
+    "phone": "Phone",
+    "email": "Email",
+    "whatsapp": "WhatsApp",
+    "address": "Address",
+    "addressText": "Egypt",
+    "formTitle": "Send us a message",
+    "name": "Name",
+    "message": "Message",
+    "send": "Send",
+    "orWhatsapp": "Or reach us via WhatsApp"
+  },
+  "tours": {
+    "title": "All Tours",
+    "all": "All",
+    "noTrips": "No tours available at the moment"
+  },
+  "blog": {
+    "title": "Blog",
+    "latestPosts": "Latest Articles",
+    "readMore": "Read More",
+    "relatedPosts": "Related Articles",
+    "noPosts": "No articles available at the moment",
+    "viewAll": "View All Articles",
+    "share": "Share",
+    "publishedAt": "Published on"
+  }
+}

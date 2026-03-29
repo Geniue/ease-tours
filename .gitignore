@@ -1,0 +1,12 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Docs (not needed in production)
+REVIEW.md
+PRODUCTION_ROADMAP.md
+SEO_STRATEGY.md

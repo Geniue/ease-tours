@@ -88,13 +88,13 @@ export default function Navbar() {
         </div>
 
         {/* Centered Logo */}
-        <Link href="/" className="mx-4 lg:mx-8 shrink-0">
+        <Link href="/" className="mx-4 lg:mx-8 shrink-0 mt-4">
           <Image
             src="/logo.png"
             alt="Ease Travel"
-            width={128}
-            height={128}
-            className="h-28 lg:h-32 w-auto object-contain drop-shadow-md"
+            width={160}
+            height={160}
+            className="h-36 lg:h-40 w-auto object-contain drop-shadow-md"
             priority
           />
         </Link>

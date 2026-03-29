@@ -6,9 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 const slides = [
-  { image: "/hero-egypt.jpg", titleKey: "slide1Title", subtitleKey: "slide1Subtitle" },
-  { image: "/hero-travel.jpg", titleKey: "slide2Title", subtitleKey: "slide2Subtitle" },
-  { image: "/hero-beach.jpg", titleKey: "slide3Title", subtitleKey: "slide3Subtitle" },
+  { image: "/felix-rostig-UmV2wr-Vbq8-unsplash.jpg", titleKey: "slide1Title", subtitleKey: "slide1Subtitle" },
+  { image: "/pietro-de-grandi-T7K4aEPoGGk-unsplash.jpg", titleKey: "slide2Title", subtitleKey: "slide2Subtitle" },
+  { image: "/rui-silvestre-NYbbON5Afs0-unsplash.jpg", titleKey: "slide3Title", subtitleKey: "slide3Subtitle" },
 ];
 
 export default function Hero() {

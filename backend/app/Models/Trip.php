@@ -56,7 +56,7 @@ class Trip extends Model
         if (str_starts_with($image, 'http://') || str_starts_with($image, 'https://')) {
             return $image;
         }
-        return Storage::disk('public')->url($image);
+        return preg_replace('#(?<!:)//+#', '/', Storage::disk('public')->url($image));
     }
 
     public function category(): BelongsTo

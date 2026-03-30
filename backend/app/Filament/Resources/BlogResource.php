@@ -35,7 +35,6 @@ class BlogResource extends Resource
                                 ->orderBy('sort_order')
                                 ->pluck('name_en', 'id')
                                 ->all())
-                            ->native(true)
                             ->required(),
                         Forms\Components\Select::make('direction')
                             ->options([

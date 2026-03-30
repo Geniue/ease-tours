@@ -35,7 +35,6 @@ class TripResource extends Resource
                                 ->orderBy('sort_order')
                                 ->pluck('name_en', 'id')
                                 ->all())
-                            ->native(true)
                             ->required(),
                         Forms\Components\TextInput::make('duration_days')
                             ->label('Duration (Days)')

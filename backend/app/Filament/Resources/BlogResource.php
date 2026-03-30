@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BlogResource\Pages;
 use App\Filament\Resources\BlogResource\RelationManagers;
 use App\Models\Blog;
-use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -30,12 +29,10 @@ class BlogResource extends Resource
                     ->columns(2)
                     ->schema([
                         Forms\Components\Select::make('category_id')
-                            ->label('Category')
-                            ->options(fn (): array => Category::query()
-                                ->orderBy('sort_order')
-                                ->pluck('name_en', 'id')
-                                ->all())
-                            ->required(),
+                            ->relationship('category', 'name_en')
+                            ->required()
+                            ->searchable()
+                            ->preload(),
                         Forms\Components\Select::make('direction')
                             ->options([
                                 'rtl' => 'RTL (Arabic)',

@@ -112,6 +112,10 @@ export function touristTripSchema(trip: ApiTrip, locale: string) {
       "@type": "TravelAgency",
       name: isAr ? "إيز ترافل" : "Ease Travel",
       url: SITE_URL,
+      logo: `${SITE_URL}/logo.png`,
+      image: `${SITE_URL}/logo.png`,
+      telephone: "+201105001389",
+      priceRange: "$$",
     },
     ...(destination && {
       touristDestination: {

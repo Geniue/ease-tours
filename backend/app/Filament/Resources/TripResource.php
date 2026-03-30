@@ -30,13 +30,13 @@ class TripResource extends Resource
                     ->columns(2)
                     ->schema([
                         Forms\Components\Select::make('category_id')
+                            ->label('Category')
                             ->options(fn (): array => Category::query()
                                 ->orderBy('sort_order')
                                 ->pluck('name_en', 'id')
                                 ->all())
-                            ->required()
-                            ->searchable()
-                            ->preload(),
+                            ->native(true)
+                            ->required(),
                         Forms\Components\TextInput::make('duration_days')
                             ->label('Duration (Days)')
                             ->required()

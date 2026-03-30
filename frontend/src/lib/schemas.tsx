@@ -91,7 +91,7 @@ export function touristTripSchema(trip: ApiTrip, locale: string) {
     offers: hasDiscount
       ? {
           "@type": "AggregateOffer",
-          lowPrice: parseFloat(trip.discounted_price),
+          lowPrice: parseFloat(trip.discounted_price!),
           highPrice: parseFloat(trip.base_price),
           priceCurrency: trip.currency || "EGP",
           availability: trip.is_active

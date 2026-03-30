@@ -16,9 +16,9 @@ export default function Footer() {
             <Image
               src="/logo-white.png"
               alt="Ease Travel"
-              width={100}
-              height={100}
-              className="h-14 w-auto object-contain mb-2 brightness-0 invert"
+              width={160}
+              height={160}
+              className="h-36 lg:h-40 w-auto object-contain mb-2 brightness-0 invert"
             />
             <p className="text-sm text-gray-400 leading-snug">
               {t("description")}

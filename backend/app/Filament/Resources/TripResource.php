@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TripResource\Pages;
 use App\Filament\Resources\TripResource\RelationManagers;
+use App\Models\Category;
 use App\Models\Trip;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -29,7 +30,10 @@ class TripResource extends Resource
                     ->columns(2)
                     ->schema([
                         Forms\Components\Select::make('category_id')
-                            ->relationship('category', 'name_en')
+                            ->options(fn (): array => Category::query()
+                                ->orderBy('sort_order')
+                                ->pluck('name_en', 'id')
+                                ->all())
                             ->required()
                             ->searchable()
                             ->preload(),

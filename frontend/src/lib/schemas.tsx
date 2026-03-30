@@ -10,8 +10,10 @@ export function organizationSchema(locale: string) {
     name: locale === "ar" ? "إيز ترافل" : "Ease Travel",
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
+    image: `${SITE_URL}/logo.png`,
     email: "easetravel93@gmail.com",
     telephone: "+201105001389",
+    priceRange: "$$",
     areaServed: {
       "@type": "Country",
       name: "Egypt",
@@ -70,6 +72,7 @@ export function touristTripSchema(trip: ApiTrip, locale: string) {
   const destination = isAr ? trip.destination_ar : trip.destination_en;
   const slug = isAr ? trip.slug_ar : trip.slug_en;
   const price = trip.discounted_price || trip.base_price;
+  const hasDiscount = trip.discounted_price && trip.discounted_price !== trip.base_price;
 
   return {
     "@context": "https://schema.org",
@@ -85,15 +88,26 @@ export function touristTripSchema(trip: ApiTrip, locale: string) {
         description: isAr ? trip.itinerary_ar : trip.itinerary_en,
       },
     }),
-    offers: {
-      "@type": "Offer",
-      price: price,
-      priceCurrency: trip.currency || "EGP",
-      availability: trip.is_active
-        ? "https://schema.org/InStock"
-        : "https://schema.org/SoldOut",
-      ...(trip.start_date && { validFrom: trip.start_date }),
-    },
+    offers: hasDiscount
+      ? {
+          "@type": "AggregateOffer",
+          lowPrice: parseFloat(trip.discounted_price),
+          highPrice: parseFloat(trip.base_price),
+          priceCurrency: trip.currency || "EGP",
+          availability: trip.is_active
+            ? "https://schema.org/InStock"
+            : "https://schema.org/SoldOut",
+          ...(trip.start_date && { validFrom: trip.start_date }),
+        }
+      : {
+          "@type": "Offer",
+          price: parseFloat(price),
+          priceCurrency: trip.currency || "EGP",
+          availability: trip.is_active
+            ? "https://schema.org/InStock"
+            : "https://schema.org/SoldOut",
+          ...(trip.start_date && { validFrom: trip.start_date }),
+        },
     provider: {
       "@type": "TravelAgency",
       name: isAr ? "إيز ترافل" : "Ease Travel",

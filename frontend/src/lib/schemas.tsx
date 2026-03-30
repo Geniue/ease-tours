@@ -18,6 +18,8 @@ export function organizationSchema(locale: string) {
     },
     sameAs: [
       "https://www.facebook.com/profile.php?id=61587378845962",
+      "https://www.instagram.com/ease16732",
+      "https://www.tiktok.com/@easetravel8",
     ],
     contactPoint: {
       "@type": "ContactPoint",

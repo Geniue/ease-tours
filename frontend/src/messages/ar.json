@@ -31,6 +31,7 @@
   },
   "tourCard": {
     "bookNow": "احجز الآن",
+    "comingSoon": "قريباً",
     "days": "أيام",
     "from": "من",
     "egp": "ج.م"
@@ -49,6 +50,8 @@
     "daysUnit": "أيام",
     "perPerson": "للفرد",
     "bookThisTrip": "احجز هذه الرحلة",
+    "comingSoon": "قريباً",
+    "tripEnded": "انتهت هذه الرحلة",
     "notFound": "الرحلة غير موجودة",
     "notFoundDesc": "عذراً، لم نتمكن من العثور على هذه الرحلة.",
     "backToTours": "العودة للرحلات",

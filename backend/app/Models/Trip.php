@@ -33,6 +33,7 @@ class Trip extends Model
         'featured_image',
         'is_featured',
         'is_active',
+        'coming_soon',
         'start_date',
         'end_date',
         'max_participants',
@@ -43,6 +44,7 @@ class Trip extends Model
         'discounted_price' => 'decimal:2',
         'is_featured' => 'boolean',
         'is_active' => 'boolean',
+        'coming_soon' => 'boolean',
         'start_date' => 'date',
         'end_date' => 'date',
     ];

@@ -31,6 +31,7 @@
   },
   "tourCard": {
     "bookNow": "Book Now",
+    "comingSoon": "Coming Soon",
     "days": "Days",
     "from": "From",
     "egp": "EGP"
@@ -49,6 +50,8 @@
     "daysUnit": "days",
     "perPerson": "per person",
     "bookThisTrip": "Book This Trip",
+    "comingSoon": "Coming Soon",
+    "tripEnded": "This Trip Has Ended",
     "notFound": "Trip Not Found",
     "notFoundDesc": "Sorry, we couldn't find this trip.",
     "backToTours": "Back to Tours",

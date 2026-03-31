@@ -125,6 +125,9 @@ class TripResource extends Resource
                             Forms\Components\Toggle::make('is_active')
                                 ->label('Active')
                                 ->default(true),
+                            Forms\Components\Toggle::make('coming_soon')
+                                ->label('Coming Soon')
+                                ->helperText('Enable when prices are not set yet'),
                         ]),
                     ]),
             ]);
@@ -160,6 +163,9 @@ class TripResource extends Resource
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean()
                     ->label('Active'),
+                Tables\Columns\IconColumn::make('coming_soon')
+                    ->boolean()
+                    ->label('Coming Soon'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

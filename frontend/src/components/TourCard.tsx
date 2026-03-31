@@ -17,6 +17,7 @@ export default function TourCard({ tour }: { tour: ApiTrip }) {
   const slug = isAr ? tour.slug_ar : tour.slug_en;
   const price = parseFloat(tour.base_price);
   const discounted = tour.discounted_price ? parseFloat(tour.discounted_price) : null;
+  const isComingSoon = tour.coming_soon;
 
   return (
     <motion.article
@@ -59,7 +60,11 @@ export default function TourCard({ tour }: { tour: ApiTrip }) {
 
         <div className="flex items-center justify-between">
           <div>
-            {discounted ? (
+            {isComingSoon ? (
+              <p className="text-amber-500 font-bold text-lg">
+                {t("comingSoon")}
+              </p>
+            ) : discounted ? (
               <>
                 <p className="text-foreground/40 line-through text-sm">
                   {price.toLocaleString()} {t("egp")}
@@ -78,7 +83,7 @@ export default function TourCard({ tour }: { tour: ApiTrip }) {
             href={`/tours/${slug}`}
             className="bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors cursor-pointer"
           >
-            {t("bookNow")}
+            {isComingSoon ? t("comingSoon") : t("bookNow")}
           </Link>
         </div>
       </div>

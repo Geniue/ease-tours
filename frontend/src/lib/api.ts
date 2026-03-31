@@ -26,6 +26,7 @@ export interface ApiTrip {
   featured_image_url: string | null;
   is_featured: boolean;
   is_active: boolean;
+  coming_soon: boolean;
   itinerary_ar: string | null;
   itinerary_en: string | null;
   inclusions_ar: string | null;

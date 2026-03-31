@@ -36,6 +36,12 @@ export default function TourDetailContent({ trip }: { trip: ApiTrip }) {
   const [openSection, setOpenSection] = useState<string | null>("overview");
   const [showBooking, setShowBooking] = useState(false);
 
+  const isTripEnded = trip.end_date
+    ? new Date(trip.end_date) < new Date(new Date().toDateString())
+    : false;
+  const isComingSoon = trip.coming_soon;
+  const canBook = !isTripEnded && !isComingSoon;
+
   const toggleSection = (section: string) => {
     setOpenSection(openSection === section ? null : section);
   };
@@ -147,7 +153,11 @@ export default function TourDetailContent({ trip }: { trip: ApiTrip }) {
             <div className="sticky top-28 bg-white rounded-2xl shadow-lg p-6 space-y-5">
               {/* Price */}
               <div className="text-center border-b pb-5">
-                {discounted ? (
+                {isComingSoon ? (
+                  <p className="text-2xl font-bold text-amber-500">
+                    {t("comingSoon")}
+                  </p>
+                ) : discounted ? (
                   <>
                     <p className="text-foreground/40 line-through text-lg">
                       {price.toLocaleString()} {tCard("egp")}
@@ -161,9 +171,11 @@ export default function TourDetailContent({ trip }: { trip: ApiTrip }) {
                     {price.toLocaleString()} {tCard("egp")}
                   </p>
                 )}
-                <p className="text-foreground/50 text-sm mt-1">
-                  {t("perPerson")}
-                </p>
+                {!isComingSoon && (
+                  <p className="text-foreground/50 text-sm mt-1">
+                    {t("perPerson")}
+                  </p>
+                )}
               </div>
 
               {/* Trip Info */}
@@ -207,12 +219,28 @@ export default function TourDetailContent({ trip }: { trip: ApiTrip }) {
               </div>
 
               {/* Book Button */}
-              <button
-                onClick={() => setShowBooking(true)}
-                className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3 px-6 rounded-full transition-colors cursor-pointer text-lg"
-              >
-                {t("bookThisTrip")}
-              </button>
+              {isComingSoon ? (
+                <button
+                  disabled
+                  className="w-full bg-amber-500 text-white font-bold py-3 px-6 rounded-full text-lg cursor-not-allowed opacity-80"
+                >
+                  {t("comingSoon")}
+                </button>
+              ) : isTripEnded ? (
+                <button
+                  disabled
+                  className="w-full bg-gray-400 text-white font-bold py-3 px-6 rounded-full text-lg cursor-not-allowed"
+                >
+                  {t("tripEnded")}
+                </button>
+              ) : (
+                <button
+                  onClick={() => setShowBooking(true)}
+                  className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3 px-6 rounded-full transition-colors cursor-pointer text-lg"
+                >
+                  {t("bookThisTrip")}
+                </button>
+              )}
             </div>
           </aside>
         </div>

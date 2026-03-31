@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -23,6 +23,7 @@ export async function generateMetadata({
   const isAr = locale === "ar";
   const title = isAr ? blog.title_ar : blog.title_en;
   const excerpt = isAr ? blog.excerpt_ar : blog.excerpt_en;
+  const correctSlug = isAr ? blog.slug_ar : blog.slug_en;
   const altLocale = isAr ? "en" : "ar";
   const altSlug = isAr ? blog.slug_en : blog.slug_ar;
 
@@ -30,9 +31,9 @@ export async function generateMetadata({
     title,
     description: excerpt || title,
     alternates: {
-      canonical: `${SITE_URL}/${locale}/blog/${encodeURIComponent(slug)}`,
+      canonical: `${SITE_URL}/${locale}/blog/${encodeURIComponent(correctSlug)}`,
       languages: {
-        [locale]: `${SITE_URL}/${locale}/blog/${encodeURIComponent(isAr ? blog.slug_ar : blog.slug_en)}`,
+        [locale]: `${SITE_URL}/${locale}/blog/${encodeURIComponent(correctSlug)}`,
         [altLocale]: `${SITE_URL}/${altLocale}/blog/${encodeURIComponent(altSlug)}`,
       },
     },
@@ -41,7 +42,7 @@ export async function generateMetadata({
       locale: isAr ? "ar_EG" : "en_US",
       title,
       description: excerpt || title,
-      url: `${SITE_URL}/${locale}/blog/${encodeURIComponent(slug)}`,
+      url: `${SITE_URL}/${locale}/blog/${encodeURIComponent(correctSlug)}`,
       ...(blog.published_at && { publishedTime: blog.published_at }),
       ...(blog.featured_image_url && {
         images: [{ url: blog.featured_image_url, alt: title }],
@@ -65,11 +66,17 @@ export default async function BlogPostPage({
   const blog = await getBlog(decodeURIComponent(slug));
   if (!blog) notFound();
 
+  // Redirect to the correct slug for the current locale
+  const isAr = locale === "ar";
+  const correctSlug = isAr ? blog.slug_ar : blog.slug_en;
+  if (decodeURIComponent(slug) !== correctSlug) {
+    redirect(`/${locale}/blog/${encodeURIComponent(correctSlug)}`);
+  }
+
   // Get related blogs from same category
   const allBlogs = await getBlogs({ category_id: String(blog.category_id) });
   const relatedBlogs = allBlogs.filter((b) => b.id !== blog.id).slice(0, 3);
 
-  const isAr = locale === "ar";
   const title = isAr ? blog.title_ar : blog.title_en;
   const homeLabel = isAr ? "الرئيسية" : "Home";
   const blogLabel = isAr ? "المدونة" : "Blog";
@@ -81,7 +88,7 @@ export default async function BlogPostPage({
         data={breadcrumbSchema([
           { name: homeLabel, url: `${SITE_URL}/${locale}` },
           { name: blogLabel, url: `${SITE_URL}/${locale}/blog` },
-          { name: title, url: `${SITE_URL}/${locale}/blog/${encodeURIComponent(slug)}` },
+          { name: title, url: `${SITE_URL}/${locale}/blog/${encodeURIComponent(correctSlug)}` },
         ])}
       />
       <Navbar />

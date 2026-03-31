@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getTrip, getBlogs } from "@/lib/api";
 import Navbar from "@/components/Navbar";
@@ -24,6 +24,7 @@ export async function generateMetadata({
   const isAr = locale === "ar";
   const title = isAr ? trip.title_ar : trip.title_en;
   const description = isAr ? trip.description_ar : trip.description_en;
+  const correctSlug = isAr ? trip.slug_ar : trip.slug_en;
   const altLocale = isAr ? "en" : "ar";
   const altSlug = isAr ? trip.slug_en : trip.slug_ar;
 
@@ -31,9 +32,9 @@ export async function generateMetadata({
     title,
     description: description || title,
     alternates: {
-      canonical: `${SITE_URL}/${locale}/tours/${encodeURIComponent(slug)}`,
+      canonical: `${SITE_URL}/${locale}/tours/${encodeURIComponent(correctSlug)}`,
       languages: {
-        [locale]: `${SITE_URL}/${locale}/tours/${encodeURIComponent(isAr ? trip.slug_ar : trip.slug_en)}`,
+        [locale]: `${SITE_URL}/${locale}/tours/${encodeURIComponent(correctSlug)}`,
         [altLocale]: `${SITE_URL}/${altLocale}/tours/${encodeURIComponent(altSlug)}`,
       },
     },
@@ -42,7 +43,7 @@ export async function generateMetadata({
       locale: isAr ? "ar_EG" : "en_US",
       title,
       description: description || title,
-      url: `${SITE_URL}/${locale}/tours/${encodeURIComponent(slug)}`,
+      url: `${SITE_URL}/${locale}/tours/${encodeURIComponent(correctSlug)}`,
       ...(trip.featured_image_url && {
         images: [{ url: trip.featured_image_url, alt: title }],
       }),
@@ -69,8 +70,14 @@ export default async function TourDetailPage({
     notFound();
   }
 
-  const blogs = await getBlogs({ category_id: String(trip.category_id) });
+  // Redirect to the correct slug for the current locale
   const isAr = locale === "ar";
+  const correctSlug = isAr ? trip.slug_ar : trip.slug_en;
+  if (decodedSlug !== correctSlug) {
+    redirect(`/${locale}/tours/${encodeURIComponent(correctSlug)}`);
+  }
+
+  const blogs = await getBlogs({ category_id: String(trip.category_id) });
   const title = isAr ? trip.title_ar : trip.title_en;
   const homeLabel = isAr ? "الرئيسية" : "Home";
   const toursLabel = isAr ? "الرحلات" : "Tours";
@@ -82,7 +89,7 @@ export default async function TourDetailPage({
         data={breadcrumbSchema([
           { name: homeLabel, url: `${SITE_URL}/${locale}` },
           { name: toursLabel, url: `${SITE_URL}/${locale}/tours` },
-          { name: title, url: `${SITE_URL}/${locale}/tours/${encodeURIComponent(slug)}` },
+          { name: title, url: `${SITE_URL}/${locale}/tours/${encodeURIComponent(correctSlug)}` },
         ])}
       />
       <Navbar />

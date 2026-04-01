@@ -109,8 +109,14 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'sales@ease-travel.online'),
+        'name' => env('MAIL_FROM_NAME', 'Ease Travel'),
+    ],
+
+    'addresses' => [
+        'support' => env('MAIL_SUPPORT_ADDRESS', 'support@ease-travel.online'),
+        'booking' => env('MAIL_BOOKING_ADDRESS', 'booking@ease-travel.online'),
+        'sales' => env('MAIL_SALES_ADDRESS', 'sales@ease-travel.online'),
     ],
 
 ];

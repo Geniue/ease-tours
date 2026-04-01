@@ -31,7 +31,7 @@ class BookingController extends Controller
 
         $booking = Booking::create($validated);
 
-        Mail::to(config('mail.from.address'))->send(new BookingNotification($booking->load('trip')));
+        Mail::to(config('mail.addresses.sales', 'sales@ease-travel.online'))->send(new BookingNotification($booking->load('trip')));
 
         return response()->json([
             'status' => 'success',

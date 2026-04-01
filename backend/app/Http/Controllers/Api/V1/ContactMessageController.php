@@ -24,7 +24,7 @@ class ContactMessageController extends Controller
 
         $contact = ContactMessage::create($validated);
 
-        Mail::to(config('mail.from.address'))->send(new ContactMessageNotification($contact));
+        Mail::to(config('mail.addresses.sales', 'sales@ease-travel.online'))->send(new ContactMessageNotification($contact));
 
         return response()->json([
             'status' => 'success',

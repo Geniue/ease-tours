@@ -20,6 +20,10 @@ class BookingNotification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new \Illuminate\Mail\Mailables\Address(
+                config('mail.addresses.booking', 'booking@ease-travel.online'),
+                'Ease Travel Bookings'
+            ),
             subject: '🎉 حجز جديد - ' . $this->booking->customer_name . ' | ' . $this->booking->trip->title_ar,
         );
     }

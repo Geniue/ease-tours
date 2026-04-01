@@ -41,8 +41,8 @@ export default function ContactContent() {
     {
       icon: Mail,
       label: t("email"),
-      value: "easetravel93@gmail.com",
-      href: "mailto:easetravel93@gmail.com",
+      value: "sales@ease-travel.online",
+      href: "mailto:sales@ease-travel.online",
     },
     {
       icon: MessageCircle,

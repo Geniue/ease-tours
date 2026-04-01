@@ -70,9 +70,9 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <a href="mailto:easetravel93@gmail.com" className="flex items-center gap-2 hover:text-white transition-colors">
+                <a href="mailto:sales@ease-travel.online" className="flex items-center gap-2 hover:text-white transition-colors">
                   <Mail size={16} />
-                  easetravel93@gmail.com
+                  sales@ease-travel.online
                 </a>
               </li>
               <li>

@@ -20,6 +20,10 @@ class ContactMessageNotification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new \Illuminate\Mail\Mailables\Address(
+                config('mail.addresses.support', 'support@ease-travel.online'),
+                'Ease Travel Support'
+            ),
             subject: '📩 رسالة جديدة من موقع إيز ترافل - ' . $this->contactMessage->name,
         );
     }

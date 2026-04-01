@@ -17,6 +17,10 @@ class BlogController extends Controller
             $query->where('category_id', $request->category_id);
         }
 
+        if ($request->boolean('featured')) {
+            $query->where('is_featured', true);
+        }
+
         if ($request->has('limit')) {
             $query->limit(min((int) $request->limit, 50));
         }

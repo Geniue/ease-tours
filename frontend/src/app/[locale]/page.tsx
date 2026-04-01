@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 export default async function HomePage() {
   const [trips, blogs] = await Promise.all([
     getTrips({ featured: "1" }),
-    getBlogs({ limit: "3" }),
+    getBlogs({ featured: "1", limit: "3" }),
   ]);
 
   return (

@@ -149,6 +149,7 @@ export interface ApiBlog {
   featured_image_url: string | null;
   direction: "rtl" | "ltr";
   is_published: boolean;
+  is_featured: boolean;
   published_at: string | null;
   category: {
     id: number;

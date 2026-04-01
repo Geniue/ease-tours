@@ -93,6 +93,8 @@ class BlogResource extends Resource
                         Forms\Components\Group::make([
                             Forms\Components\Toggle::make('is_published')
                                 ->label('Published'),
+                            Forms\Components\Toggle::make('is_featured')
+                                ->label('Featured'),
                             Forms\Components\DateTimePicker::make('published_at')
                                 ->label('Publish Date'),
                         ]),
@@ -125,6 +127,9 @@ class BlogResource extends Resource
                 Tables\Columns\IconColumn::make('is_published')
                     ->boolean()
                     ->label('Published'),
+                Tables\Columns\IconColumn::make('is_featured')
+                    ->boolean()
+                    ->label('Featured'),
                 Tables\Columns\TextColumn::make('published_at')
                     ->dateTime()
                     ->sortable(),

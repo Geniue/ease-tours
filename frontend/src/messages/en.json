@@ -120,6 +120,14 @@
   },
   "tours": {
     "title": "All Tours",
+    "subtitle": "Discover Egypt & Beyond",
+    "introText": "Browse our curated collection of guided tour packages, private tours, and group adventures across Egypt and international destinations. Whether you're looking for a guided tour of the Pyramids, a private tour along the Nile, or an adventure-filled day trip from Hurghada — every itinerary is crafted by local travel experts to give you an authentic, hassle-free experience.",
+    "whyTitle": "Why Choose Our Tours?",
+    "whyItem1": "Expert-led guided tours with licensed local guides",
+    "whyItem2": "Flexible private tours tailored to your schedule",
+    "whyItem3": "Small group tours for a more personal experience",
+    "whyItem4": "Best price guarantee on all tour packages",
+    "browseCta": "Browse tours below or contact us for a custom private tour designed just for you.",
     "all": "All",
     "noTrips": "No tours available at the moment"
   },

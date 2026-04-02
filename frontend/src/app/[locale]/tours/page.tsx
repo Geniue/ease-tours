@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const isAr = locale === "ar";
   const title = isAr ? "جميع الرحلات السياحية" : "All Tours";
   const description = isAr
-    ? "استكشف جميع الرحلات السياحية مع إيز ترافل - رحلات داخلية وخارجية وحج وعمرة بأفضل الأسعار"
-    : "Explore all tours with Ease Travel - domestic, outbound, Hajj & Umrah trips at the best prices";
+    ? "استكشف جميع الرحلات السياحية مع إيز ترافل — جولات بمرشدين، رحلات خاصة، رحلات داخلية وخارجية وحج وعمرة بأفضل الأسعار"
+    : "Explore all tours with Ease Travel — guided tours, private tours, domestic & outbound trips, Hajj & Umrah packages at the best prices";
   const altLocale = isAr ? "en" : "ar";
   return {
     title,
@@ -43,6 +43,7 @@ export default async function ToursPage() {
       <Navbar />
       <main>
         <ToursHero />
+        <ToursIntro />
         <section className="py-16">
           <div className="container mx-auto px-4">
             <ToursFilter trips={trips} categories={categories} />
@@ -70,6 +71,36 @@ function ToursHero() {
       <div className="absolute inset-0 bg-black/50" />
       <div className="relative z-10 text-center">
         <h1 className="text-4xl md:text-5xl font-bold">{t("title")}</h1>
+        <p className="mt-3 text-lg md:text-xl text-white/90">{t("subtitle")}</p>
+      </div>
+    </section>
+  );
+}
+
+function ToursIntro() {
+  const t = useTranslations("tours");
+  return (
+    <section className="py-12 bg-gray-50">
+      <div className="container mx-auto px-4 max-w-4xl text-center">
+        <p className="text-foreground/70 text-lg leading-relaxed mb-8">
+          {t("introText")}
+        </p>
+        <h2 className="text-2xl font-bold text-foreground mb-4">{t("whyTitle")}</h2>
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-start mb-6">
+          <li className="flex items-start gap-2 text-foreground/80">
+            <span className="text-primary mt-1">✓</span> {t("whyItem1")}
+          </li>
+          <li className="flex items-start gap-2 text-foreground/80">
+            <span className="text-primary mt-1">✓</span> {t("whyItem2")}
+          </li>
+          <li className="flex items-start gap-2 text-foreground/80">
+            <span className="text-primary mt-1">✓</span> {t("whyItem3")}
+          </li>
+          <li className="flex items-start gap-2 text-foreground/80">
+            <span className="text-primary mt-1">✓</span> {t("whyItem4")}
+          </li>
+        </ul>
+        <p className="text-foreground/60 text-sm">{t("browseCta")}</p>
       </div>
     </section>
   );

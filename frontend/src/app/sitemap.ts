@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next";
-import { getTrips, getBlogs } from "@/lib/api";
+import { getTrips, getBlogs, getServices } from "@/lib/api";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [trips, blogs] = await Promise.all([getTrips(), getBlogs()]);
+  const [trips, blogs, services] = await Promise.all([getTrips(), getBlogs(), getServices()]);
 
-  const staticPages = ["", "/tours", "/blog", "/about", "/contact", "/hajj-umrah"];
+  const staticPages = ["", "/tours", "/blog", "/about", "/contact", "/hajj-umrah", "/services"];
   const locales = ["ar", "en"];
 
   const staticEntries: MetadataRoute.Sitemap = staticPages.flatMap((page) =>
@@ -36,5 +36,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
-  return [...staticEntries, ...tripEntries, ...blogEntries];
+  const serviceEntries: MetadataRoute.Sitemap = services.flatMap((service) =>
+    locales.map((locale) => ({
+      url: `${SITE_URL}/${locale}/services/${encodeURIComponent(locale === "ar" ? service.slug_ar : service.slug_en)}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    }))
+  );
+
+  return [...staticEntries, ...tripEntries, ...blogEntries, ...serviceEntries];
 }

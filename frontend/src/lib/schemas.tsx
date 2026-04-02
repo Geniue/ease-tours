@@ -1,4 +1,4 @@
-import type { ApiTrip, ApiBlog } from "@/lib/api";
+import type { ApiTrip, ApiBlog, ApiService } from "@/lib/api";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
@@ -159,6 +159,34 @@ export function blogPostingSchema(blog: ApiBlog, locale: string) {
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `${SITE_URL}/${locale}/blog/${encodeURIComponent(slug)}`,
+    },
+  };
+}
+
+// ── Service (service detail pages) ──
+export function serviceSchema(service: ApiService, locale: string) {
+  const isAr = locale === "ar";
+  const title = isAr ? service.title_ar : service.title_en;
+  const excerpt = isAr ? service.excerpt_ar : service.excerpt_en;
+  const slug = isAr ? service.slug_ar : service.slug_en;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: title,
+    ...(excerpt && { description: excerpt }),
+    url: `${SITE_URL}/${locale}/services/${encodeURIComponent(slug)}`,
+    ...(service.featured_image_url && { image: service.featured_image_url }),
+    provider: {
+      "@type": "TravelAgency",
+      name: isAr ? "إيز ترافل" : "Ease Travel",
+      url: SITE_URL,
+      logo: `${SITE_URL}/logo.png`,
+      telephone: "+201105001389",
+    },
+    areaServed: {
+      "@type": "Country",
+      name: "Egypt",
     },
   };
 }

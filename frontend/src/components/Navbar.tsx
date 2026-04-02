@@ -27,6 +27,7 @@ export default function Navbar() {
     { href: "/", label: t("home") },
     { href: "/about", label: t("about") },
     { href: "/tours", label: t("tours") },
+    { href: "/services", label: t("services") },
   ];
 
   const leftLinks = [

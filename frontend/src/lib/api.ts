@@ -178,3 +178,38 @@ export async function getBlog(slug: string): Promise<ApiBlog | null> {
   const json: { status: string; data: ApiBlog } = await res.json();
   return json.data;
 }
+
+// ── Services ──
+
+export interface ApiService {
+  id: number;
+  title_ar: string;
+  title_en: string;
+  slug_ar: string;
+  slug_en: string;
+  excerpt_ar: string | null;
+  excerpt_en: string | null;
+  body_ar: string;
+  body_en: string;
+  icon: string | null;
+  featured_image: string | null;
+  featured_image_url: string | null;
+  is_active: boolean;
+  sort_order: number;
+}
+
+export async function getServices(): Promise<ApiService[]> {
+  const res = await fetch(`${API_URL}/services`, { next: { revalidate: 60 } });
+  if (!res.ok) return [];
+  const json: ListResponse<ApiService> = await res.json();
+  return json.data;
+}
+
+export async function getService(slug: string): Promise<ApiService | null> {
+  const res = await fetch(`${API_URL}/services/${encodeURIComponent(slug)}`, {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) return null;
+  const json: { status: string; data: ApiService } = await res.json();
+  return json.data;
+}

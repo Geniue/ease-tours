@@ -12,6 +12,7 @@
     "about": "About Us",
     "contact": "Contact Us",
     "blog": "Blog",
+    "services": "Our Services",
     "bookNow": "Book Now"
   },
   "hero": {
@@ -121,6 +122,13 @@
     "title": "All Tours",
     "all": "All",
     "noTrips": "No tours available at the moment"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "We offer a comprehensive range of premium tourism services",
+    "readMore": "Read More",
+    "noServices": "No services available at the moment",
+    "contactForService": "Contact us via WhatsApp"
   },
   "blog": {
     "title": "Blog",

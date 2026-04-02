@@ -77,7 +77,7 @@ export default async function TourDetailPage({
     redirect(`/${locale}/tours/${encodeURIComponent(correctSlug)}`);
   }
 
-  const blogs = await getBlogs({ category_id: String(trip.category_id) });
+  const blogs = await getBlogs({ category_id: String(trip.category_id), limit: "10" });
   const title = isAr ? trip.title_ar : trip.title_en;
   const homeLabel = isAr ? "الرئيسية" : "Home";
   const toursLabel = isAr ? "الرحلات" : "Tours";

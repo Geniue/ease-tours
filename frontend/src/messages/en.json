@@ -128,6 +128,8 @@
     "subtitle": "We offer a comprehensive range of premium tourism services",
     "readMore": "Read More",
     "noServices": "No services available at the moment",
+    "loadMore": "Load More",
+    "loading": "Loading...",
     "contactForService": "Contact us via WhatsApp"
   },
   "blog": {
@@ -137,6 +139,8 @@
     "relatedPosts": "Related Articles",
     "noPosts": "No articles available at the moment",
     "viewAll": "View All Articles",
+    "loadMore": "Load More",
+    "loading": "Loading...",
     "share": "Share",
     "publishedAt": "Published on"
   }

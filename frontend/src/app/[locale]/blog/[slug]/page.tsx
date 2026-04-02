@@ -74,7 +74,7 @@ export default async function BlogPostPage({
   }
 
   // Get related blogs from same category
-  const allBlogs = await getBlogs({ category_id: String(blog.category_id) });
+  const allBlogs = await getBlogs({ category_id: String(blog.category_id), limit: "10" });
   const relatedBlogs = allBlogs.filter((b) => b.id !== blog.id).slice(0, 3);
 
   const title = isAr ? blog.title_ar : blog.title_en;

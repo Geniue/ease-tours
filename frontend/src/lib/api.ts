@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.ease-travel.online/api/v1";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.ease-travel.online/api/v1";
 const BACKEND_URL = API_URL.replace(/\/api\/v1$/, "");
 
 export function getImageUrl(path: string | null): string | null {
@@ -199,7 +199,7 @@ export interface ApiService {
 }
 
 export async function getServices(): Promise<ApiService[]> {
-  const res = await fetch(`${API_URL}/services`, { next: { revalidate: 60 } });
+  const res = await fetch(`${API_URL}/services?all=1`, { next: { revalidate: 60 } });
   if (!res.ok) return [];
   const json: ListResponse<ApiService> = await res.json();
   return json.data;
@@ -212,4 +212,41 @@ export async function getService(slug: string): Promise<ApiService | null> {
   if (!res.ok) return null;
   const json: { status: string; data: ApiService } = await res.json();
   return json.data;
+}
+
+// ── Pagination ──
+
+export interface PaginatedMeta {
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+}
+
+export async function getBlogsPaginated(
+  params?: Record<string, string>
+): Promise<{ data: ApiBlog[]; meta: PaginatedMeta }> {
+  const url = new URL(`${API_URL}/blogs`);
+  if (params) {
+    Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+  }
+  const res = await fetch(url.toString(), { cache: "no-store" });
+  const empty = { data: [] as ApiBlog[], meta: { current_page: 1, last_page: 1, per_page: 9, total: 0 } };
+  if (!res.ok) return empty;
+  const json = await res.json();
+  return { data: json.data ?? [], meta: json.meta ?? empty.meta };
+}
+
+export async function getServicesPaginated(
+  params?: Record<string, string>
+): Promise<{ data: ApiService[]; meta: PaginatedMeta }> {
+  const url = new URL(`${API_URL}/services`);
+  if (params) {
+    Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+  }
+  const res = await fetch(url.toString(), { cache: "no-store" });
+  const empty = { data: [] as ApiService[], meta: { current_page: 1, last_page: 1, per_page: 9, total: 0 } };
+  if (!res.ok) return empty;
+  const json = await res.json();
+  return { data: json.data ?? [], meta: json.meta ?? empty.meta };
 }

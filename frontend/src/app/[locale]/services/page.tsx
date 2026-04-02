@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import ServiceCard from "@/components/ServiceCard";
-import { getServices } from "@/lib/api";
+import ServiceGrid from "@/components/ServiceGrid";
+import { getServicesPaginated } from "@/lib/api";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
@@ -47,7 +47,7 @@ export async function generateMetadata({
 }
 
 export default async function ServicesPage() {
-  const services = await getServices();
+  const { data: services, meta } = await getServicesPaginated({ page: "1" });
 
   return (
     <>
@@ -56,17 +56,7 @@ export default async function ServicesPage() {
         <ServicesHero />
         <section className="py-16">
           <div className="container mx-auto px-4">
-            {services.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {services.map((service) => (
-                  <ServiceCard key={service.id} service={service} />
-                ))}
-              </div>
-            ) : (
-              <p className="text-center text-gray-500 py-12">
-                <NoServicesMessage />
-              </p>
-            )}
+            <ServiceGrid initialServices={services} initialMeta={meta} />
           </div>
         </section>
       </main>
@@ -97,9 +87,4 @@ function ServicesHero() {
       </div>
     </section>
   );
-}
-
-function NoServicesMessage() {
-  const t = useTranslations("services");
-  return <>{t("noServices")}</>;
 }

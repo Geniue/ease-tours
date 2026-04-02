@@ -21,16 +21,30 @@ class BlogController extends Controller
             $query->where('is_featured', true);
         }
 
+        $query->orderBy('published_at', 'desc');
+
+        // Flat list when limit is specified (homepage featured, sitemap, related)
         if ($request->has('limit')) {
-            $query->limit(min((int) $request->limit, 50));
+            $blogs = $query->limit(min((int) $request->limit, 500))->get();
+            return response()->json([
+                'status' => 'success',
+                'data' => $blogs,
+            ]);
         }
 
-        $blogs = $query->orderBy('published_at', 'desc')
-            ->get();
+        // Paginated response
+        $perPage = min((int) ($request->per_page ?? 9), 50);
+        $paginated = $query->paginate($perPage);
 
         return response()->json([
             'status' => 'success',
-            'data' => $blogs,
+            'data' => $paginated->items(),
+            'meta' => [
+                'current_page' => $paginated->currentPage(),
+                'last_page' => $paginated->lastPage(),
+                'per_page' => $paginated->perPage(),
+                'total' => $paginated->total(),
+            ],
         ]);
     }
 

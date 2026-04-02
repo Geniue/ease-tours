@@ -3,8 +3,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import BlogCard from "@/components/BlogCard";
-import { getBlogs, getCategories } from "@/lib/api";
+import { getBlogsPaginated, getCategories } from "@/lib/api";
 import BlogFilter from "@/components/BlogFilter";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
@@ -32,8 +31,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 export default async function BlogPage() {
-  const [blogs, categories] = await Promise.all([
-    getBlogs(),
+  const [{ data: blogs, meta }, categories] = await Promise.all([
+    getBlogsPaginated({ page: "1" }),
     getCategories(),
   ]);
 
@@ -44,7 +43,11 @@ export default async function BlogPage() {
         <BlogHero />
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <BlogFilter blogs={blogs} categories={categories} />
+            <BlogFilter
+              initialBlogs={blogs}
+              categories={categories}
+              initialMeta={meta}
+            />
           </div>
         </section>
       </main>

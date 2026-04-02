@@ -195,11 +195,18 @@ export interface ApiService {
   featured_image: string | null;
   featured_image_url: string | null;
   is_active: boolean;
+  is_featured: boolean;
   sort_order: number;
 }
 
-export async function getServices(): Promise<ApiService[]> {
-  const res = await fetch(`${API_URL}/services?all=1`, { next: { revalidate: 60 } });
+export async function getServices(params?: Record<string, string>): Promise<ApiService[]> {
+  const url = new URL(`${API_URL}/services`);
+  if (params) {
+    Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+  } else {
+    url.searchParams.set("all", "1");
+  }
+  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
   if (!res.ok) return [];
   const json: ListResponse<ApiService> = await res.json();
   return json.data;

@@ -3,18 +3,20 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import TourCard from "@/components/TourCard";
 import BlogCard from "@/components/BlogCard";
+import ServiceCard from "@/components/ServiceCard";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { getTrips, getBlogs } from "@/lib/api";
+import { getTrips, getBlogs, getServices } from "@/lib/api";
 import { Link } from "@/i18n/navigation";
 
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  const [trips, blogs] = await Promise.all([
+  const [trips, blogs, services] = await Promise.all([
     getTrips({ featured: "1" }),
     getBlogs({ featured: "1", limit: "3" }),
+    getServices({ featured: "1", limit: "6" }),
   ]);
 
   return (
@@ -37,9 +39,36 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* Featured Services */}
+        {services.length > 0 && (
+          <section className="py-20 bg-gray-50">
+            <div className="container mx-auto px-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+                <ServicesHeading />
+              </h2>
+              <p className="text-center text-gray-500 mb-14">
+                <ServicesSubheading />
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {services.map((service) => (
+                  <ServiceCard key={service.id} service={service} />
+                ))}
+              </div>
+              <div className="text-center mt-10">
+                <Link
+                  href="/services"
+                  className="inline-block bg-[#1a73a7] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#155d87] transition-colors"
+                >
+                  <ViewAllServicesText />
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Latest Blog Posts */}
         {blogs.length > 0 && (
-          <section className="py-20 bg-gray-50">
+          <section className="py-20">
             <div className="container mx-auto px-4">
               <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
                 <BlogHeading />
@@ -75,6 +104,21 @@ export default async function HomePage() {
 function ToursHeading() {
   const t = useTranslations();
   return <>{t("nav.tours")}</>;
+}
+
+function ServicesHeading() {
+  const t = useTranslations("services");
+  return <>{t("title")}</>;
+}
+
+function ServicesSubheading() {
+  const t = useTranslations("services");
+  return <>{t("subtitle")}</>;
+}
+
+function ViewAllServicesText() {
+  const t = useTranslations("services");
+  return <>{t("viewAll")}</>;
 }
 
 function BlogHeading() {

@@ -13,6 +13,19 @@ class ServiceController extends Controller
         $query = Service::where('is_active', true)
             ->orderBy('sort_order');
 
+        if ($request->boolean('featured')) {
+            $query->where('is_featured', true);
+        }
+
+        // Flat list when limit is specified (homepage featured, sitemap)
+        if ($request->has('limit')) {
+            $services = $query->limit(min((int) $request->limit, 500))->get();
+            return response()->json([
+                'status' => 'success',
+                'data' => $services,
+            ]);
+        }
+
         // Flat list for sitemap
         if ($request->boolean('all')) {
             return response()->json([

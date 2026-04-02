@@ -22,11 +22,13 @@ class Service extends Model
         'icon',
         'featured_image',
         'is_active',
+        'is_featured',
         'sort_order',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'is_featured' => 'boolean',
     ];
 
     protected $appends = ['featured_image_url'];

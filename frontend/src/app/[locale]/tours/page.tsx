@@ -86,18 +86,18 @@ function ToursIntro() {
           {t("introText")}
         </p>
         <h2 className="text-2xl font-bold text-foreground mb-4">{t("whyTitle")}</h2>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-start mb-6">
+        <ul className="inline-grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-4 text-start mb-6">
           <li className="flex items-start gap-2 text-foreground/80">
-            <span className="text-primary mt-1">✓</span> {t("whyItem1")}
+            <span className="text-primary mt-1 shrink-0">✓</span> {t("whyItem1")}
           </li>
           <li className="flex items-start gap-2 text-foreground/80">
-            <span className="text-primary mt-1">✓</span> {t("whyItem2")}
+            <span className="text-primary mt-1 shrink-0">✓</span> {t("whyItem2")}
           </li>
           <li className="flex items-start gap-2 text-foreground/80">
-            <span className="text-primary mt-1">✓</span> {t("whyItem3")}
+            <span className="text-primary mt-1 shrink-0">✓</span> {t("whyItem3")}
           </li>
           <li className="flex items-start gap-2 text-foreground/80">
-            <span className="text-primary mt-1">✓</span> {t("whyItem4")}
+            <span className="text-primary mt-1 shrink-0">✓</span> {t("whyItem4")}
           </li>
         </ul>
         <p className="text-foreground/60 text-sm">{t("browseCta")}</p>

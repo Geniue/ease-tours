@@ -32,6 +32,7 @@ export default function Navbar() {
 
   const leftLinks = [
     { href: "/hajj-umrah", label: t("hajjUmrah") },
+    { href: "/embassy", label: t("embassy") },
     { href: "/blog", label: t("blog") },
     { href: "/contact", label: t("contact") },
   ];

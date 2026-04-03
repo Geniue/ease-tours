@@ -6,7 +6,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [trips, blogs, services] = await Promise.all([getTrips(), getBlogs({ limit: "500" }), getServices()]);
 
-  const staticPages = ["", "/tours", "/blog", "/about", "/contact", "/hajj-umrah", "/services"];
+  const staticPages = ["", "/tours", "/blog", "/about", "/contact", "/hajj-umrah", "/services", "/embassy"];
   const locales = ["ar", "en"];
 
   const staticEntries: MetadataRoute.Sitemap = staticPages.flatMap((page) =>

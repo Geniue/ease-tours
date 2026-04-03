@@ -221,6 +221,43 @@ export async function getService(slug: string): Promise<ApiService | null> {
   return json.data;
 }
 
+// ── Embassies ──
+
+export interface ApiEmbassy {
+  id: number;
+  country_name_ar: string;
+  country_name_en: string;
+  slug: string;
+  flag_emoji: string | null;
+  appointment_status: "open" | "closed" | "stopped";
+  next_open_date: string | null;
+  next_close_date: string | null;
+  appointment_price: string | null;
+  price_currency: string;
+  notes_ar: string | null;
+  notes_en: string | null;
+  stopped_visas_ar: string | null;
+  stopped_visas_en: string | null;
+  is_active: boolean;
+  sort_order: number;
+}
+
+export async function getEmbassies(): Promise<ApiEmbassy[]> {
+  const res = await fetch(`${API_URL}/embassies`, { next: { revalidate: 60 } });
+  if (!res.ok) return [];
+  const json: ListResponse<ApiEmbassy> = await res.json();
+  return json.data;
+}
+
+export async function getEmbassy(slug: string): Promise<ApiEmbassy | null> {
+  const res = await fetch(`${API_URL}/embassies/${encodeURIComponent(slug)}`, {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) return null;
+  const json: { status: string; data: ApiEmbassy } = await res.json();
+  return json.data;
+}
+
 // ── Pagination ──
 
 export interface PaginatedMeta {

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\BlogController;
 use App\Http\Controllers\Api\V1\BookingController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\ContactMessageController;
+use App\Http\Controllers\Api\V1\EmbassyController;
 use App\Http\Controllers\Api\V1\ServiceController;
 use App\Http\Controllers\Api\V1\TripController;
 use Illuminate\Http\Request;
@@ -30,4 +31,7 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/services', [ServiceController::class, 'index']);
     Route::get('/services/{slug}', [ServiceController::class, 'show']);
+
+    Route::get('/embassies', [EmbassyController::class, 'index']);
+    Route::get('/embassies/{slug}', [EmbassyController::class, 'show']);
 });

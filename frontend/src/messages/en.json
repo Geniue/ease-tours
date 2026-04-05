@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "Ease Travel - Leading Tourism Company in Egypt",
-    "description": "Hajj & Umrah trips, inbound and outbound tourism at the best prices. Book your trip now with Ease Travel."
+    "title": "Ease Travel - Egypt Tours, Umrah Packages & Travel Experience",
+    "description": "Book your next travel experience with Ease Travel: Sharm El Sheikh tours, Luxor & Aswan Nile cruises, Umrah packages from Egypt, Istanbul & Dubai trips, flight & hotel booking, and Schengen visa services at competitive prices."
   },
   "nav": {
     "home": "Home",
@@ -18,11 +18,11 @@
   },
   "hero": {
     "slide1Title": "Discover the World",
-    "slide1Subtitle": "Premium tours at competitive prices",
+    "slide1Subtitle": "Curated travel experiences across Egypt and beyond",
     "slide2Title": "Enjoy Your Time",
-    "slide2Subtitle": "Spend the best moments with your family",
+    "slide2Subtitle": "Family trips to Sharm El Sheikh, Hurghada, Luxor & Aswan",
     "slide3Title": "Relaxing Time",
-    "slide3Subtitle": "Relax on the most beautiful beaches worldwide",
+    "slide3Subtitle": "Beach getaways — Istanbul, Dubai, Maldives and more",
     "searchPlaceholder": "Search your destination...",
     "cta": "Explore Tours"
   },
@@ -77,26 +77,26 @@
   },
   "whyUs": {
     "title": "Why Ease Travel?",
-    "licenseA": "Trusted Team",
-    "experience": "Extensive experience in tourism",
-    "hotels": "Partnered with premium hotels",
-    "transport": "Modern tourist transport fleet",
-    "guides": "Professional tour guides",
-    "satisfaction": "Your satisfaction is our goal"
+    "licenseA": "Trusted & Licensed Team",
+    "experience": "Years of travel experience in Egypt & worldwide",
+    "hotels": "Partnered with premium hotels in Egypt & abroad",
+    "transport": "Modern air-conditioned tourist transport fleet",
+    "guides": "Professional licensed tour guides",
+    "satisfaction": "Your satisfaction and travel experience is our priority"
   },
   "footer": {
     "rights": "All rights reserved",
     "contactUs": "Contact Us",
     "quickLinks": "Quick Links",
     "followUs": "Follow Us",
-    "description": "Leading tourism company in Egypt — Hajj & Umrah, inbound and outbound tourism."
+    "description": "Leading tourism company in Egypt — Hajj & Umrah, domestic & outbound tours, flight & hotel booking, and visa services."
   },
   "about": {
     "title": "About Us",
     "subtitle": "Ease Travel Tourism Company",
-    "description": "Ease Travel is an Egyptian tourism company specialized in providing comprehensive tourism services including Hajj & Umrah trips, inbound and outbound tourism. We always strive to provide the best services at competitive prices while ensuring the highest levels of quality and comfort for our customers.",
+    "description": "Ease Travel is an Egyptian tourism company delivering unforgettable travel experiences — Hajj & Umrah packages from Egypt, domestic tours (Sharm El Sheikh, Hurghada, Luxor & Aswan, Marsa Matrouh), and international trips (Istanbul, Dubai, Europe). We also offer flight & hotel booking, visa processing, and embassy appointment services at competitive prices.",
     "mission": "Our Mission",
-    "missionText": "To deliver an unforgettable travel experience for every customer, with attention to the finest details to ensure a comfortable and enjoyable trip.",
+    "missionText": "To deliver an unforgettable travel experience for every customer — from planning to return — with attention to the finest details to ensure a comfortable, enjoyable, and affordable trip.",
     "vision": "Our Vision",
     "visionText": "To be the leading tourism company in Egypt, contributing to the promotion of Egyptian tourism at the regional and international levels.",
     "values": "Our Values",
@@ -122,7 +122,7 @@
   "tours": {
     "title": "All Tours",
     "subtitle": "Discover Egypt & Beyond",
-    "introText": "Browse our curated collection of guided tour packages, private tours, and group adventures across Egypt and international destinations. Whether you're looking for a guided tour of the Pyramids, a private tour along the Nile, or an adventure-filled day trip from Hurghada — every itinerary is crafted by local travel experts to give you an authentic, hassle-free experience.",
+    "introText": "Browse our curated collection of guided tours, private tours, and group adventures across Egypt and international destinations: Sharm El Sheikh, Hurghada, Luxor & Aswan, Marsa Matrouh, Umrah packages from Egypt, and international trips to Istanbul, Dubai, and Europe. Whether you're looking for a guided tour of the Pyramids, a Nile cruise, or a honeymoon getaway — every itinerary is crafted by local travel experts to give you an authentic, hassle-free travel experience at the best prices.",
     "whyTitle": "Why Choose Our Tours?",
     "whyItem1": "Expert-led guided tours with licensed local guides",
     "whyItem2": "Flexible private tours tailored to your schedule",
@@ -134,7 +134,7 @@
   },
   "services": {
     "title": "Our Services",
-    "subtitle": "We offer a comprehensive range of premium tourism services",
+    "subtitle": "Complete tourism services: flights, hotels, visas, embassy appointments, group tours & honeymoon packages",
     "readMore": "Read More",
     "noServices": "No services available at the moment",
     "loadMore": "Load More",

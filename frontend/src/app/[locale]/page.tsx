@@ -1,4 +1,6 @@
 import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import TourCard from "@/components/TourCard";
@@ -10,7 +12,40 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { getTrips, getBlogs, getServices } from "@/lib/api";
 import { Link } from "@/i18n/navigation";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
+
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "metadata" });
+  const altLocale = locale === "ar" ? "en" : "ar";
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: {
+      canonical: `${SITE_URL}/${locale}`,
+      languages: {
+        [locale]: `${SITE_URL}/${locale}`,
+        [altLocale]: `${SITE_URL}/${altLocale}`,
+        "x-default": `${SITE_URL}/ar`,
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale: locale === "ar" ? "ar_EG" : "en_US",
+      siteName: locale === "ar" ? "إيز ترافل" : "Ease Travel",
+      title: t("title"),
+      description: t("description"),
+      url: `${SITE_URL}/${locale}`,
+    },
+  };
+}
 
 export default async function HomePage() {
   const [trips, blogs, services] = await Promise.all([

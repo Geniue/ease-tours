@@ -51,7 +51,7 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         {/* Mobile: Hamburger | Desktop: Language Switcher */}
-        <div className="flex items-center shrink-0">
+        <div className="flex items-center flex-1 lg:flex-none">
           {/* Mobile hamburger */}
           <button
             className={`lg:hidden ${linkColor}`}
@@ -115,7 +115,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile: Language Switcher (far end to balance hamburger) */}
-        <div className="lg:hidden shrink-0">
+        <div className="lg:hidden flex-1 flex justify-end">
           <Link href={pathname} locale={switchLocale}>
             <button
               className={`flex items-center gap-1 text-sm px-2.5 py-1.5 rounded-full border transition-colors cursor-pointer ${

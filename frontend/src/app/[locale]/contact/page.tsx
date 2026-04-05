@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description,
     alternates: {
       canonical: `${SITE_URL}/${locale}/contact`,
-      languages: { [locale]: `${SITE_URL}/${locale}/contact`, [altLocale]: `${SITE_URL}/${altLocale}/contact` },
+      languages: { [locale]: `${SITE_URL}/${locale}/contact`, [altLocale]: `${SITE_URL}/${altLocale}/contact`, "x-default": `${SITE_URL}/ar/contact` },
     },
     openGraph: { type: "website", locale: isAr ? "ar_EG" : "en_US", title, description, url: `${SITE_URL}/${locale}/contact` },
     twitter: { card: "summary_large_image", title, description },

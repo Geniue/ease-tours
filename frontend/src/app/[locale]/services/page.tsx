@@ -33,6 +33,7 @@ export async function generateMetadata({
       languages: {
         [locale]: `${SITE_URL}/${locale}/services`,
         [altLocale]: `${SITE_URL}/${altLocale}/services`,
+        "x-default": `${SITE_URL}/ar/services`,
       },
     },
     openGraph: {

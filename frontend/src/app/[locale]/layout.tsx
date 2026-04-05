@@ -33,14 +33,6 @@ export async function generateMetadata({
     description: t("description"),
     robots: "index, follow",
     metadataBase: new URL(SITE_URL),
-    alternates: {
-      canonical: `${SITE_URL}/${locale}`,
-      languages: {
-        [locale]: `${SITE_URL}/${locale}`,
-        [altLocale]: `${SITE_URL}/${altLocale}`,
-        "x-default": `${SITE_URL}/ar`,
-      },
-    },
     openGraph: {
       type: "website",
       locale: locale === "ar" ? "ar_EG" : "en_US",

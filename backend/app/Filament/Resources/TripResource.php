@@ -119,6 +119,23 @@ class TripResource extends Resource
                             ->visibility('public')
                             ->imageEditor()
                             ->maxSize(5120),
+                        Forms\Components\FileUpload::make('video')
+                            ->label('Video')
+                            ->directory('trips/videos')
+                            ->disk('public')
+                            ->visibility('public')
+                            ->acceptedFileTypes(['video/mp4', 'video/webm', 'video/ogg'])
+                            ->maxSize(102400)
+                            ->helperText('Upload MP4/WebM video (max 100MB)'),
+                        Forms\Components\FileUpload::make('video_thumbnail')
+                            ->label('Video Thumbnail')
+                            ->image()
+                            ->directory('trips/video-thumbnails')
+                            ->disk('public')
+                            ->visibility('public')
+                            ->imageEditor()
+                            ->maxSize(5120)
+                            ->helperText('Custom poster image for the video. Falls back to featured image.'),
                         Forms\Components\Group::make([
                             Forms\Components\Toggle::make('is_featured')
                                 ->label('Featured Trip'),

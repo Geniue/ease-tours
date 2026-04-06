@@ -24,6 +24,10 @@ export interface ApiTrip {
   currency: string;
   featured_image: string | null;
   featured_image_url: string | null;
+  video: string | null;
+  video_url: string | null;
+  video_thumbnail: string | null;
+  video_thumbnail_url: string | null;
   is_featured: boolean;
   is_active: boolean;
   coming_soon: boolean;

@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import { Clock, MapPin } from "lucide-react";
+import { Clock, MapPin, Play } from "lucide-react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { type ApiTrip } from "@/lib/api";
@@ -38,6 +38,12 @@ export default function TourCard({ tour }: { tour: ApiTrip }) {
             className="object-cover group-hover:scale-105 transition-transform duration-500"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
+        )}
+        {tour.video_url && (
+          <span className="absolute top-3 end-3 bg-black/70 text-white text-xs font-semibold px-2 py-1 rounded-full flex items-center gap-1 z-10">
+            <Play size={12} fill="currentColor" />
+            {isAr ? "فيديو" : "Video"}
+          </span>
         )}
       </div>
 

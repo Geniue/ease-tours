@@ -82,6 +82,20 @@ export function touristTripSchema(trip: ApiTrip, locale: string) {
     touristType: isAr ? trip.category.name_ar : trip.category.name_en,
     url: `${SITE_URL}/${locale}/tours/${encodeURIComponent(slug)}`,
     ...(trip.featured_image_url && { image: trip.featured_image_url }),
+    ...(trip.video_url && {
+      video: {
+        "@type": "VideoObject",
+        name: title,
+        description: description || title,
+        contentUrl: trip.video_url,
+        ...(trip.video_thumbnail_url
+          ? { thumbnailUrl: trip.video_thumbnail_url }
+          : trip.featured_image_url
+            ? { thumbnailUrl: trip.featured_image_url }
+            : {}),
+        uploadDate: trip.start_date || new Date().toISOString().split("T")[0],
+      },
+    }),
     ...(trip.itinerary_ar && {
       itinerary: {
         "@type": "ItemList",

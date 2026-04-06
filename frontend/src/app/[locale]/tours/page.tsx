@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title,
     description,
     alternates: {
-      canonical: `/${locale}/tours`,
-      languages: { [locale]: `/${locale}/tours`, [altLocale]: `/${altLocale}/tours`, "x-default": `/ar/tours` },
+      canonical: `${SITE_URL}/${locale}/tours`,
+      languages: { [locale]: `${SITE_URL}/${locale}/tours`, [altLocale]: `${SITE_URL}/${altLocale}/tours`, "x-default": `${SITE_URL}/ar/tours` },
     },
     openGraph: { type: "website", locale: isAr ? "ar_EG" : "en_US", title, description, url: `${SITE_URL}/${locale}/tours` },
     twitter: { card: "summary_large_image", title, description },

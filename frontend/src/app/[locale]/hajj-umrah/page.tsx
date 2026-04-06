@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title,
     description,
     alternates: {
-      canonical: `/${locale}/hajj-umrah`,
-      languages: { [locale]: `/${locale}/hajj-umrah`, [altLocale]: `/${altLocale}/hajj-umrah`, "x-default": `/ar/hajj-umrah` },
+      canonical: `${SITE_URL}/${locale}/hajj-umrah`,
+      languages: { [locale]: `${SITE_URL}/${locale}/hajj-umrah`, [altLocale]: `${SITE_URL}/${altLocale}/hajj-umrah`, "x-default": `${SITE_URL}/ar/hajj-umrah` },
     },
     openGraph: { type: "website", locale: isAr ? "ar_EG" : "en_US", title, description, url: `${SITE_URL}/${locale}/hajj-umrah` },
     twitter: { card: "summary_large_image", title, description },

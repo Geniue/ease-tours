@@ -14,19 +14,22 @@ export default function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
+  const isBehindHttps = request.headers.get("x-forwarded-proto") === "https";
+
   const response = intlMiddleware(request);
 
-  // Fix redirect URLs for Cloudflare Flexible SSL:
-  // Cloudflare terminates HTTPS and forwards HTTP to origin,
-  // so middleware generates http:// redirects. Correct them to https://.
-  const location = response.headers.get("location");
-  if (location?.startsWith("http://")) {
-    const proto = request.headers.get("x-forwarded-proto");
-    if (proto === "https") {
-      response.headers.set(
-        "location",
-        location.replace("http://", "https://")
-      );
+  if (isBehindHttps) {
+    // Fix redirect Location headers for Cloudflare Flexible SSL
+    const location = response.headers.get("location");
+    if (location?.startsWith("http://")) {
+      response.headers.set("location", location.replace("http://", "https://"));
+    }
+
+    // Fix Link headers: Next.js auto-generates hreflang Link headers
+    // using the request protocol (http:// behind Cloudflare). Rewrite to https.
+    const linkHeader = response.headers.get("link");
+    if (linkHeader?.includes("http://")) {
+      response.headers.set("link", linkHeader.replaceAll("http://", "https://"));
     }
   }
 

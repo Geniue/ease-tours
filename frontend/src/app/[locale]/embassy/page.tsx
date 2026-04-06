@@ -31,11 +31,11 @@ export async function generateMetadata({
     title,
     description,
     alternates: {
-      canonical: `${SITE_URL}/${locale}/embassy`,
+      canonical: `/${locale}/embassy`,
       languages: {
-        [locale]: `${SITE_URL}/${locale}/embassy`,
-        [altLocale]: `${SITE_URL}/${altLocale}/embassy`,
-        "x-default": `${SITE_URL}/ar/embassy`,
+        [locale]: `/${locale}/embassy`,
+        [altLocale]: `/${altLocale}/embassy`,
+        "x-default": `/ar/embassy`,
       },
     },
     openGraph: {

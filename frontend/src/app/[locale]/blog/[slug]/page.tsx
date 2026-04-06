@@ -31,11 +31,11 @@ export async function generateMetadata({
     title,
     description: excerpt || title,
     alternates: {
-      canonical: `${SITE_URL}/${locale}/blog/${encodeURIComponent(correctSlug)}`,
+      canonical: `/${locale}/blog/${encodeURIComponent(correctSlug)}`,
       languages: {
-        [locale]: `${SITE_URL}/${locale}/blog/${encodeURIComponent(correctSlug)}`,
-        [altLocale]: `${SITE_URL}/${altLocale}/blog/${encodeURIComponent(altSlug)}`,
-        "x-default": `${SITE_URL}/ar/blog/${encodeURIComponent(isAr ? correctSlug : altSlug)}`,
+        [locale]: `/${locale}/blog/${encodeURIComponent(correctSlug)}`,
+        [altLocale]: `/${altLocale}/blog/${encodeURIComponent(altSlug)}`,
+        "x-default": `/ar/blog/${encodeURIComponent(isAr ? correctSlug : altSlug)}`,
       },
     },
     openGraph: {

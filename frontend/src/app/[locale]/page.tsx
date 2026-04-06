@@ -29,11 +29,11 @@ export async function generateMetadata({
     title: t("title"),
     description: t("description"),
     alternates: {
-      canonical: `${SITE_URL}/${locale}`,
+      canonical: `/${locale}`,
       languages: {
-        [locale]: `${SITE_URL}/${locale}`,
-        [altLocale]: `${SITE_URL}/${altLocale}`,
-        "x-default": `${SITE_URL}/ar`,
+        [locale]: `/${locale}`,
+        [altLocale]: `/${altLocale}`,
+        "x-default": `/ar`,
       },
     },
     openGraph: {

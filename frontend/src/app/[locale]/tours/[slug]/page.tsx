@@ -32,11 +32,11 @@ export async function generateMetadata({
     title,
     description: description || title,
     alternates: {
-      canonical: `${SITE_URL}/${locale}/tours/${encodeURIComponent(correctSlug)}`,
+      canonical: `/${locale}/tours/${encodeURIComponent(correctSlug)}`,
       languages: {
-        [locale]: `${SITE_URL}/${locale}/tours/${encodeURIComponent(correctSlug)}`,
-        [altLocale]: `${SITE_URL}/${altLocale}/tours/${encodeURIComponent(altSlug)}`,
-        "x-default": `${SITE_URL}/ar/tours/${encodeURIComponent(isAr ? correctSlug : altSlug)}`,
+        [locale]: `/${locale}/tours/${encodeURIComponent(correctSlug)}`,
+        [altLocale]: `/${altLocale}/tours/${encodeURIComponent(altSlug)}`,
+        "x-default": `/ar/tours/${encodeURIComponent(isAr ? correctSlug : altSlug)}`,
       },
     },
     openGraph: {

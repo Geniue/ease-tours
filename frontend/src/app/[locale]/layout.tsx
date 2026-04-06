@@ -5,7 +5,7 @@ import { Cairo } from "next/font/google";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { hasLocale } from "next-intl";
-import HtmlAttrs from "@/components/HtmlAttrs";
+import Script from "next/script";
 import { JsonLd, organizationSchema, websiteSchema } from "@/lib/schemas";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
@@ -72,13 +72,21 @@ export default async function LocaleLayout({
   const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
-    <div className={`${cairo.variable} min-h-screen flex flex-col font-[family-name:var(--font-cairo)] antialiased`}>
-      <JsonLd data={organizationSchema(locale)} />
-      <JsonLd data={websiteSchema(locale)} />
-      <NextIntlClientProvider locale={locale} messages={messages}>
-        <HtmlAttrs />
-        {children}
-      </NextIntlClientProvider>
-    </div>
+    <html lang={locale} dir={dir} suppressHydrationWarning>
+      <body>
+        <div className={`${cairo.variable} min-h-screen flex flex-col font-[family-name:var(--font-cairo)] antialiased`}>
+          <JsonLd data={organizationSchema(locale)} />
+          <JsonLd data={websiteSchema(locale)} />
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </div>
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="zYKVFyEjUTFYgD8B6w/WVg"
+          strategy="afterInteractive"
+        />
+      </body>
+    </html>
   );
 }

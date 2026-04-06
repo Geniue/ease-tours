@@ -65,48 +65,19 @@ export default function TourDetailContent({ trip }: { trip: ApiTrip }) {
     <>
       {/* Hero Banner */}
       <section className="relative h-80 md:h-[28rem] overflow-hidden">
-        {hasVideo ? (
-          <>
-            <video
-              ref={videoRef}
-              src={trip.video_url!}
-              poster={videoPoster}
-              preload="metadata"
-              playsInline
-              controls={isVideoPlaying}
-              onPlay={() => setIsVideoPlaying(true)}
-              onPause={() => setIsVideoPlaying(false)}
-              onEnded={() => setIsVideoPlaying(false)}
-              className="absolute inset-0 w-full h-full object-cover"
-              aria-label={title}
-            />
-            {!isVideoPlaying && (
-              <button
-                onClick={() => videoRef.current?.play()}
-                className="absolute inset-0 z-10 flex items-center justify-center group cursor-pointer"
-                aria-label={isAr ? "تشغيل الفيديو" : "Play video"}
-              >
-                <span className="w-20 h-20 bg-white/90 group-hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
-                  <Play size={36} className="text-primary ms-1" fill="currentColor" />
-                </span>
-              </button>
-            )}
-          </>
-        ) : (
-          trip.featured_image_url && (
-            <Image
-              src={trip.featured_image_url}
-              alt={title}
-              fill
-              unoptimized
-              className="object-cover"
-              priority
-              sizes="100vw"
-            />
-          )
+        {trip.featured_image_url && (
+          <Image
+            src={trip.featured_image_url}
+            alt={title}
+            fill
+            unoptimized
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
         )}
-        <div className={`absolute inset-0 bg-gradient-to-t from-black/70 to-transparent ${isVideoPlaying ? "pointer-events-none opacity-0" : ""} transition-opacity`} />
-        <div className={`absolute inset-x-0 bottom-0 p-6 md:p-10 pt-20 ${isVideoPlaying ? "pointer-events-none opacity-0" : ""} transition-opacity`}>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 pt-20">
           <div className="container mx-auto">
             <span className="inline-block bg-primary text-white text-sm font-semibold px-3 py-1 rounded-full mb-3">
               {categoryName}
@@ -180,6 +151,44 @@ export default function TourDetailContent({ trip }: { trip: ApiTrip }) {
                   dangerouslySetInnerHTML={{ __html: inclusions }}
                 />
               </AccordionSection>
+            )}
+
+            {/* Video Section */}
+            {hasVideo && (
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+                <div className="p-5 border-b flex items-center gap-2">
+                  <Play size={20} className="text-primary" />
+                  <h2 className="font-bold text-lg text-foreground">
+                    {isAr ? "شاهد الفيديو" : "Watch Video"}
+                  </h2>
+                </div>
+                <div className="relative aspect-video bg-black">
+                  <video
+                    ref={videoRef}
+                    src={trip.video_url!}
+                    poster={videoPoster}
+                    preload="metadata"
+                    playsInline
+                    controls={isVideoPlaying}
+                    onPlay={() => setIsVideoPlaying(true)}
+                    onPause={() => setIsVideoPlaying(false)}
+                    onEnded={() => setIsVideoPlaying(false)}
+                    className="w-full h-full object-contain"
+                    aria-label={`${isAr ? "فيديو" : "Video"}: ${title}`}
+                  />
+                  {!isVideoPlaying && (
+                    <button
+                      onClick={() => videoRef.current?.play()}
+                      className="absolute inset-0 z-10 flex items-center justify-center group cursor-pointer bg-black/20"
+                      aria-label={isAr ? "تشغيل الفيديو" : "Play video"}
+                    >
+                      <span className="w-20 h-20 bg-white/90 group-hover:bg-white rounded-full flex items-center justify-center shadow-xl transition-all group-hover:scale-110">
+                        <Play size={36} className="text-primary ms-1" fill="currentColor" />
+                      </span>
+                    </button>
+                  )}
+                </div>
+              </div>
             )}
           </div>
 

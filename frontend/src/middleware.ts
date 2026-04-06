@@ -16,6 +16,12 @@ export default function middleware(request: NextRequest) {
 
   const isBehindHttps = request.headers.get("x-forwarded-proto") === "https";
 
+  // Force HTTPS protocol in request URL so Next.js resolves metadata URLs with https://
+  // (Cloudflare Flexible SSL terminates HTTPS at edge, origin receives http://)
+  if (isBehindHttps && request.nextUrl.protocol === "http:") {
+    request.nextUrl.protocol = "https:";
+  }
+
   const response = intlMiddleware(request);
 
   if (isBehindHttps) {

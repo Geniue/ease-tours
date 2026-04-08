@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\TripResource\Pages;
 
 use App\Filament\Resources\TripResource;
+use App\Services\IndexNowService;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
@@ -15,5 +16,10 @@ class EditTrip extends EditRecord
         return [
             Actions\DeleteAction::make(),
         ];
+    }
+
+    protected function afterSave(): void
+    {
+        app(IndexNowService::class)->submitTrip($this->record);
     }
 }

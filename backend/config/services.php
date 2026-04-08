@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'indexnow' => [
+        'key' => env('INDEXNOW_KEY', '6e32cb6065354c40beee3c20507e165d'),
+        'host' => env('INDEXNOW_HOST', 'ease-travel.online'),
+    ],
+
 ];

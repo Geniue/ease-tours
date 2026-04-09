@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next";
-import { getTrips, getBlogs, getServices } from "@/lib/api";
+import { getTrips, getBlogs, getServices, getGovernorates } from "@/lib/api";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [trips, blogs, services] = await Promise.all([getTrips(), getBlogs({ limit: "500" }), getServices()]);
+  const [trips, blogs, services, governorates] = await Promise.all([getTrips(), getBlogs({ limit: "500" }), getServices(), getGovernorates()]);
 
-  const staticPages = ["", "/tours", "/blog", "/about", "/contact", "/hajj-umrah", "/services", "/embassy"];
+  const staticPages = ["", "/tours", "/blog", "/about", "/contact", "/hajj-umrah", "/services", "/embassy", "/areas"];
   const locales = ["ar", "en"];
 
   const staticEntries: MetadataRoute.Sitemap = staticPages.flatMap((page) =>
@@ -45,5 +45,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
-  return [...staticEntries, ...tripEntries, ...blogEntries, ...serviceEntries];
+  const governorateEntries: MetadataRoute.Sitemap = governorates.flatMap((gov) =>
+    locales.map((locale) => ({
+      url: `${SITE_URL}/${locale}/areas/${encodeURIComponent(locale === "ar" ? gov.slug_ar : gov.slug_en)}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    }))
+  );
+
+  return [...staticEntries, ...tripEntries, ...blogEntries, ...serviceEntries, ...governorateEntries];
 }

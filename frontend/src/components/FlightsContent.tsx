@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import Script from "next/script";
 import {
   ChevronLeft,
   ChevronRight,
@@ -131,11 +130,6 @@ export default function FlightsContent({ faqs }: { faqs: Faq[] }) {
 
   return (
     <article dir={isAr ? "rtl" : "ltr"}>
-      {/* Travelpayouts Drive script — loads lazily */}
-      <Script
-        src="https://emrldtp.com/NTE2OTIw.js?t=516920"
-        strategy="lazyOnload"
-      />
 
       {/* ═══════ Hero + Search Widget ═══════ */}
       <section className="relative bg-gradient-to-br from-blue-950 via-blue-900 to-indigo-900 text-white overflow-hidden">

@@ -86,6 +86,10 @@ export default async function LocaleLayout({
           data-key="zYKVFyEjUTFYgD8B6w/WVg"
           strategy="afterInteractive"
         />
+        <Script
+          src="https://emrldtp.com/NTE2OTIw.js?t=516920"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );

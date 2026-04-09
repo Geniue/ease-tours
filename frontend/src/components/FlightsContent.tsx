@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import Script from "next/script";
 import {
   ChevronLeft,
   ChevronRight,
@@ -171,12 +170,7 @@ export default function FlightsContent({ faqs }: { faqs: Faq[] }) {
             </p>
 
             {/* Travelpayouts Flight Search Widget */}
-            <div className="max-w-4xl mx-auto">
-              <Script
-                src={`https://tpwdg.com/content?currency=egp&campaign_id=100&promo_id=7879&plain=false&border_radius=0&color_focused=%2332a8dd&special=%23C4C4C4&secondary=%23FFFFFF&light=%23FFFFFF&dark=%23262626&color_icons=%231A73A7&color_button=%23F59E0B&primary_override=%231A73A7&searchUrl=search.jetradar.com&locale=${locale}&powered_by=true&show_hotels=true&shmarker=717846&trs=516920`}
-                strategy="afterInteractive"
-              />
-            </div>
+            <TravelpayoutsWidget locale={locale} />
           </div>
         </div>
       </section>
@@ -434,6 +428,24 @@ export default function FlightsContent({ faqs }: { faqs: Faq[] }) {
       </section>
     </article>
   );
+}
+
+/* ── Travelpayouts Widget (renders inline) ── */
+function TravelpayoutsWidget({ locale }: { locale: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    // Clear any previous widget
+    containerRef.current.innerHTML = "";
+    const script = document.createElement("script");
+    script.async = true;
+    script.charset = "utf-8";
+    script.src = `https://tpwdg.com/content?currency=egp&campaign_id=100&promo_id=7879&plain=false&border_radius=0&color_focused=%2332a8dd&special=%23C4C4C4&secondary=%23FFFFFF&light=%23FFFFFF&dark=%23262626&color_icons=%231A73A7&color_button=%23F59E0B&primary_override=%231A73A7&searchUrl=search.jetradar.com&locale=${locale}&powered_by=true&show_hotels=true&shmarker=717846&trs=516920`;
+    containerRef.current.appendChild(script);
+  }, [locale]);
+
+  return <div ref={containerRef} className="max-w-4xl mx-auto" />;
 }
 
 /* ── FAQ Accordion Item ── */

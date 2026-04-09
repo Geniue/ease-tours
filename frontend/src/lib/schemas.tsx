@@ -1,4 +1,4 @@
-import type { ApiTrip, ApiBlog, ApiService } from "@/lib/api";
+import type { ApiTrip, ApiBlog, ApiService, ApiGovernorate } from "@/lib/api";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
@@ -202,6 +202,64 @@ export function serviceSchema(service: ApiService, locale: string) {
       "@type": "Country",
       name: "Egypt",
     },
+  };
+}
+
+// ── Governorate / Service Area (governorate pages) ──
+export function governorateSchema(gov: ApiGovernorate, locale: string) {
+  const isAr = locale === "ar";
+  const name = isAr ? gov.name_ar : gov.name_en;
+  const slug = isAr ? gov.slug_ar : gov.slug_en;
+  const excerpt = isAr ? gov.excerpt_ar : gov.excerpt_en;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${SITE_URL}/${locale}/areas/${encodeURIComponent(slug)}`,
+    name: isAr ? `إيز ترافل — ${name}` : `Ease Travel — ${name}`,
+    description: excerpt || name,
+    url: `${SITE_URL}/${locale}/areas/${encodeURIComponent(slug)}`,
+    ...(gov.featured_image_url && { image: gov.featured_image_url }),
+    telephone: "+201105001389",
+    priceRange: "$$",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: isAr ? gov.capital_ar : gov.capital_en,
+      addressRegion: name,
+      addressCountry: "EG",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: parseFloat(gov.latitude),
+      longitude: parseFloat(gov.longitude),
+    },
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: name,
+    },
+    parentOrganization: {
+      "@type": "TravelAgency",
+      name: isAr ? "إيز ترافل" : "Ease Travel",
+      url: SITE_URL,
+    },
+  };
+}
+
+// ── FAQ Page schema ──
+export function faqSchema(
+  faqs: Array<{ question: string; answer: string }>
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
   };
 }
 

@@ -298,3 +298,65 @@ export async function getServicesPaginated(
   const json = await res.json();
   return { data: json.data ?? [], meta: json.meta ?? empty.meta };
 }
+
+// ── Governorates ──
+
+export interface ApiGovernorate {
+  id: number;
+  name_ar: string;
+  name_en: string;
+  slug_ar: string;
+  slug_en: string;
+  capital_ar: string;
+  capital_en: string;
+  latitude: string;
+  longitude: string;
+  map_zoom: number;
+  meta_title_ar: string | null;
+  meta_title_en: string | null;
+  meta_description_ar: string | null;
+  meta_description_en: string | null;
+  excerpt_ar: string | null;
+  excerpt_en: string | null;
+  body_ar: string;
+  body_en: string;
+  faqs: Array<{
+    question_ar: string;
+    question_en: string;
+    answer_ar: string;
+    answer_en: string;
+  }> | null;
+  featured_image: string | null;
+  featured_image_url: string | null;
+  cover_image: string | null;
+  cover_image_url: string | null;
+  population: string | null;
+  area_km2: string | null;
+  region_ar: string | null;
+  region_en: string | null;
+  is_published: boolean;
+  is_featured: boolean;
+  sort_order: number;
+}
+
+export async function getGovernorates(params?: Record<string, string>): Promise<ApiGovernorate[]> {
+  const url = new URL(`${API_URL}/governorates`);
+  if (params) {
+    Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+  } else {
+    url.searchParams.set("limit", "27");
+  }
+  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
+  if (!res.ok) return [];
+  const json: ListResponse<ApiGovernorate> = await res.json();
+  return json.data;
+}
+
+export async function getGovernorate(slug: string): Promise<ApiGovernorate | null> {
+  const res = await fetch(`${API_URL}/governorates/${encodeURIComponent(slug)}`, {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) return null;
+  const json: { status: string; data: ApiGovernorate } = await res.json();
+  return json.data;
+}

@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             TripSeeder::class,
             BlogSeeder::class,
+            GovernorateSeeder::class,
         ]);
     }
 }

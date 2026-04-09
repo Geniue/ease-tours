@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\BookingController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\ContactMessageController;
 use App\Http\Controllers\Api\V1\EmbassyController;
+use App\Http\Controllers\Api\V1\GovernorateController;
 use App\Http\Controllers\Api\V1\ServiceController;
 use App\Http\Controllers\Api\V1\TripController;
 use Illuminate\Http\Request;
@@ -34,4 +35,7 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/embassies', [EmbassyController::class, 'index']);
     Route::get('/embassies/{slug}', [EmbassyController::class, 'show']);
+
+    Route::get('/governorates', [GovernorateController::class, 'index']);
+    Route::get('/governorates/{slug}', [GovernorateController::class, 'show']);
 });

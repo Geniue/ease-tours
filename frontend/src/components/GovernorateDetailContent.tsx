@@ -27,7 +27,9 @@ export default function GovernorateDetailContent({
     answer: isAr ? faq.answer_ar : faq.answer_en,
   }));
 
-  const mapSrc = `https://maps.google.com/maps?q=${gov.latitude},${gov.longitude}&z=${gov.map_zoom || 10}&output=embed&hl=${locale}`;
+  // Use place name query so Google Maps renders the administrative boundary (red border)
+  const mapQuery = encodeURIComponent(`${gov.name_en} Governorate, Egypt`);
+  const mapSrc = `https://maps.google.com/maps?q=${mapQuery}&z=${gov.map_zoom || 10}&output=embed&hl=${locale}`;
 
   return (
     <article>

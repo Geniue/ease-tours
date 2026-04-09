@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import Script from "next/script";
 import {
   ChevronLeft,
   ChevronRight,
@@ -169,25 +170,12 @@ export default function FlightsContent({ faqs }: { faqs: Faq[] }) {
                 : "Compare prices from 700+ airlines and book in seconds. Flights from Cairo, Alexandria, Sharm El Sheikh & Hurghada to 200+ destinations worldwide."}
             </p>
 
-            {/* Travelpayouts widget container */}
-            <div
-              id="tp-search-widget"
-              className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 max-w-3xl mx-auto"
-            >
-              <div className="text-gray-700 text-center">
-                <div className="flex items-center justify-center gap-2 text-blue-600 mb-3">
-                  <Search size={24} />
-                  <span className="font-bold text-lg">
-                    {isAr ? "ابحث عن رحلتك" : "Search Your Flight"}
-                  </span>
-                </div>
-                <p className="text-gray-500 text-sm mb-4">
-                  {isAr
-                    ? "اختر وجهتك وتاريخ السفر وقارن الأسعار فوراً"
-                    : "Choose your destination, travel date, and compare prices instantly"}
-                </p>
-                {/* The Travelpayouts Drive widget auto-injects here */}
-              </div>
+            {/* Travelpayouts Flight Search Widget */}
+            <div className="max-w-4xl mx-auto">
+              <Script
+                src={`https://tpwdg.com/content?currency=egp&campaign_id=100&promo_id=7879&plain=false&border_radius=0&color_focused=%2332a8dd&special=%23C4C4C4&secondary=%23FFFFFF&light=%23FFFFFF&dark=%23262626&color_icons=%231A73A7&color_button=%23F59E0B&primary_override=%231A73A7&searchUrl=search.jetradar.com&locale=${locale}&powered_by=true&show_hotels=true&shmarker=717846&trs=516920`}
+                strategy="afterInteractive"
+              />
             </div>
           </div>
         </div>

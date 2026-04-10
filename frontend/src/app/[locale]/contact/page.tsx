@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import ContactContent from "@/components/ContactContent";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
@@ -29,12 +26,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default function ContactPage() {
   return (
     <>
-      <Navbar />
       <main>
         <ContactContent />
       </main>
-      <Footer />
-      <WhatsAppButton />
     </>
   );
 }

@@ -139,7 +139,7 @@ export default function FlightsContent({ faqs }: { faqs: Faq[] }) {
           <div className="absolute bottom-10 right-10 text-[150px] leading-none">🌍</div>
         </div>
 
-        <div className="relative container mx-auto px-4 py-16 md:py-24">
+        <div className="relative container mx-auto px-4 pt-28 pb-16 md:pt-32 md:pb-24">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm text-blue-200 mb-8">
             <Link href="/" className="hover:text-white transition-colors">

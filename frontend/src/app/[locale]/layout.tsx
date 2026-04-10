@@ -7,6 +7,9 @@ import { routing } from "@/i18n/routing";
 import { hasLocale } from "next-intl";
 import Script from "next/script";
 import { JsonLd, organizationSchema, websiteSchema } from "@/lib/schemas";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
@@ -78,7 +81,10 @@ export default async function LocaleLayout({
           <JsonLd data={organizationSchema(locale)} />
           <JsonLd data={websiteSchema(locale)} />
           <NextIntlClientProvider locale={locale} messages={messages}>
+            <Navbar />
             {children}
+            <Footer />
+            <WhatsAppButton />
           </NextIntlClientProvider>
         </div>
         <Script

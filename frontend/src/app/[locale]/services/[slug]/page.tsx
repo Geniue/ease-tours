@@ -1,8 +1,5 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import { getService } from "@/lib/api";
 import ServiceDetailContent from "@/components/ServiceDetailContent";
 import { JsonLd, serviceSchema, breadcrumbSchema } from "@/lib/schemas";
@@ -92,12 +89,9 @@ export default async function ServiceDetailPage({
           },
         ])}
       />
-      <Navbar />
       <main>
         <ServiceDetailContent service={service} />
       </main>
-      <Footer />
-      <WhatsAppButton />
     </>
   );
 }

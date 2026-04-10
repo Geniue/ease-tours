@@ -1,8 +1,5 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import { getGovernorate } from "@/lib/api";
 import GovernorateDetailContent from "@/components/GovernorateDetailContent";
 import {
@@ -109,12 +106,9 @@ export default async function GovernorateDetailPage({
           },
         ])}
       />
-      <Navbar />
       <main>
         <GovernorateDetailContent governorate={gov} />
       </main>
-      <Footer />
-      <WhatsAppButton />
     </>
   );
 }

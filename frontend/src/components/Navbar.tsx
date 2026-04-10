@@ -21,6 +21,11 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
   const solid = scrolled || !isHome;
 
   const rightLinks = [
@@ -43,59 +48,75 @@ export default function Navbar() {
   const switchLocale = locale === "ar" ? "en" : "ar";
   const linkColor = solid ? "text-foreground" : "text-white";
 
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
   return (
-    <nav
+    <header
       className={`fixed top-0 start-0 end-0 z-50 transition-all duration-300 ${
         solid
           ? "bg-white/95 shadow-md backdrop-blur-sm"
           : "bg-transparent"
       }`}
+      role="banner"
     >
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
+      <nav
+        className="container mx-auto px-4 h-20 flex items-center justify-between"
+        aria-label={locale === "ar" ? "التنقل الرئيسي" : "Main navigation"}
+      >
         {/* Mobile: Hamburger | Desktop: Language Switcher */}
         <div className="flex items-center flex-1 lg:flex-none">
           {/* Mobile hamburger */}
           <button
             className={`lg:hidden ${linkColor}`}
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
+            aria-label={mobileOpen
+              ? (locale === "ar" ? "إغلاق القائمة" : "Close menu")
+              : (locale === "ar" ? "فتح القائمة" : "Open menu")}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
           >
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
           {/* Desktop language switcher */}
-          <Link href={pathname} locale={switchLocale} className="hidden lg:block">
-            <button
-              className={`flex items-center gap-1 text-sm px-3 py-1.5 rounded-full border transition-colors cursor-pointer ${
-                solid
-                  ? "border-foreground/20 hover:bg-primary/10"
-                  : "border-white/30 hover:bg-white/10"
-              } ${linkColor}`}
-            >
-              <Globe size={14} />
-              {switchLocale === "ar" ? "العربية" : "EN"}
-            </button>
+          <Link
+            href={pathname}
+            locale={switchLocale}
+            className={`hidden lg:flex items-center gap-1 text-sm px-3 py-1.5 rounded-full border transition-colors ${
+              solid
+                ? "border-foreground/20 hover:bg-primary/10"
+                : "border-white/30 hover:bg-white/10"
+            } ${linkColor}`}
+            aria-label={switchLocale === "ar" ? "التبديل للعربية" : "Switch to English"}
+          >
+            <Globe size={14} />
+            {switchLocale === "ar" ? "العربية" : "EN"}
           </Link>
         </div>
 
         {/* Right Links (desktop) */}
-        <div className="hidden lg:flex items-center gap-6 flex-1 justify-end">
+        <ul className="hidden lg:flex items-center gap-6 flex-1 justify-end list-none m-0 p-0">
           {rightLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`text-sm font-semibold transition-colors hover:text-accent ${linkColor}`}
-            >
-              {link.label}
-            </Link>
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className={`text-sm font-semibold transition-colors hover:text-accent ${
+                  isActive(link.href) ? "text-accent" : linkColor
+                }`}
+                {...(isActive(link.href) ? { "aria-current": "page" as const } : {})}
+              >
+                {link.label}
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
 
         {/* Centered Logo */}
-        <Link href="/" className="mx-4 lg:mx-8 shrink-0 mt-4">
+        <Link href="/" className="mx-4 lg:mx-8 shrink-0 mt-4" aria-label={locale === "ar" ? "إيز ترافل - الصفحة الرئيسية" : "Ease Travel - Home"}>
           <Image
             src="/logo.png"
-            alt="Ease Travel"
+            alt={locale === "ar" ? "إيز ترافل - شركة سياحة مصرية" : "Ease Travel - Egyptian Tourism Company"}
             width={160}
             height={160}
             className="h-36 lg:h-40 w-auto object-contain drop-shadow-md"
@@ -104,73 +125,94 @@ export default function Navbar() {
         </Link>
 
         {/* Left Links (desktop) */}
-        <div className="hidden lg:flex items-center gap-6 flex-1">
+        <ul className="hidden lg:flex items-center gap-6 flex-1 list-none m-0 p-0">
           {leftLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`text-sm font-semibold transition-colors hover:text-accent ${linkColor}`}
-            >
-              {link.label}
-            </Link>
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className={`text-sm font-semibold transition-colors hover:text-accent ${
+                  isActive(link.href) ? "text-accent" : linkColor
+                }`}
+                {...(isActive(link.href) ? { "aria-current": "page" as const } : {})}
+              >
+                {link.label}
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
 
         {/* Mobile: Language Switcher (far end to balance hamburger) */}
         <div className="lg:hidden flex-1 flex justify-end">
-          <Link href={pathname} locale={switchLocale}>
-            <button
-              className={`flex items-center gap-1 text-sm px-2.5 py-1.5 rounded-full border transition-colors cursor-pointer ${
-                solid
-                  ? "border-foreground/20 hover:bg-primary/10"
-                  : "border-white/30 hover:bg-white/10"
-              } ${linkColor}`}
-            >
-              <Globe size={14} />
-              {switchLocale === "ar" ? "العربية" : "EN"}
-            </button>
+          <Link
+            href={pathname}
+            locale={switchLocale}
+            className={`flex items-center gap-1 text-sm px-2.5 py-1.5 rounded-full border transition-colors ${
+              solid
+                ? "border-foreground/20 hover:bg-primary/10"
+                : "border-white/30 hover:bg-white/10"
+            } ${linkColor}`}
+            aria-label={switchLocale === "ar" ? "التبديل للعربية" : "Switch to English"}
+          >
+            <Globe size={14} />
+            {switchLocale === "ar" ? "العربية" : "EN"}
           </Link>
         </div>
-      </div>
+      </nav>
 
       {/* Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            id="mobile-menu"
+            role="navigation"
+            aria-label={locale === "ar" ? "قائمة الجوال" : "Mobile menu"}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             className="lg:hidden bg-white shadow-lg overflow-hidden"
           >
-            <div className="flex flex-col gap-2 p-4">
+            <ul className="flex flex-col gap-1 p-4 list-none m-0">
               {allLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="block py-2 text-foreground hover:text-primary font-medium"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {link.label}
-                </Link>
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={`block py-2.5 px-2 rounded-lg font-medium transition-colors ${
+                      isActive(link.href)
+                        ? "text-primary bg-primary/5"
+                        : "text-foreground hover:text-primary hover:bg-gray-50"
+                    }`}
+                    {...(isActive(link.href) ? { "aria-current": "page" as const } : {})}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
               ))}
-              <Link href={pathname} locale={switchLocale}>
-                <button className="flex items-center gap-1 text-sm mt-2 cursor-pointer">
+              <li>
+                <Link
+                  href={pathname}
+                  locale={switchLocale}
+                  className="flex items-center gap-1 text-sm mt-2 px-2 py-2"
+                  aria-label={switchLocale === "ar" ? "التبديل للعربية" : "Switch to English"}
+                >
                   <Globe size={16} />
                   {switchLocale === "ar" ? "العربية" : "English"}
-                </button>
-              </Link>
-              <a
-                href="https://wa.me/201105001389"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-accent text-white text-center font-semibold px-5 py-2 rounded-full mt-2"
-              >
-                {t("bookNow")}
-              </a>
-            </div>
+                </Link>
+              </li>
+              <li>
+                <a
+                  href="https://wa.me/201105001389"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-accent text-white text-center font-semibold px-5 py-2.5 rounded-full mt-2 block"
+                >
+                  {t("bookNow")}
+                </a>
+              </li>
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </header>
   );
 }

@@ -1,8 +1,5 @@
 import { useTranslations } from "next-intl";
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import { getBlogsPaginated, getCategories } from "@/lib/api";
 import BlogFilter from "@/components/BlogFilter";
 
@@ -38,7 +35,6 @@ export default async function BlogPage() {
 
   return (
     <>
-      <Navbar />
       <main>
         <BlogHero />
         <section className="py-16">
@@ -51,8 +47,6 @@ export default async function BlogPage() {
           </div>
         </section>
       </main>
-      <Footer />
-      <WhatsAppButton />
     </>
   );
 }

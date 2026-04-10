@@ -1,9 +1,6 @@
 import { useTranslations, useLocale } from "next-intl";
 import type { Metadata } from "next";
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import TourCard from "@/components/TourCard";
 import { getTrips, getCategories, getBlogs } from "@/lib/api";
 import { JsonLd, breadcrumbSchema } from "@/lib/schemas";
@@ -71,7 +68,6 @@ export default async function HajjUmrahPage({ params }: { params: Promise<{ loca
 
   return (
     <>
-      <Navbar />
       <main>
         <JsonLd data={breadcrumbSchema(breadcrumbs)} />
         <JsonLd data={faqSchema} />
@@ -218,8 +214,6 @@ export default async function HajjUmrahPage({ params }: { params: Promise<{ loca
           </div>
         </section>
       </main>
-      <Footer />
-      <WhatsAppButton />
     </>
   );
 }

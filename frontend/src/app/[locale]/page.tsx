@@ -1,14 +1,11 @@
 import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import TourCard from "@/components/TourCard";
 import BlogCard from "@/components/BlogCard";
 import ServiceCard from "@/components/ServiceCard";
 import WhyChooseUs from "@/components/WhyChooseUs";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import { getTrips, getBlogs, getServices } from "@/lib/api";
 import { Link } from "@/i18n/navigation";
 
@@ -56,7 +53,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <Navbar />
       <main>
         <Hero />
 
@@ -130,8 +126,6 @@ export default async function HomePage() {
 
         <WhyChooseUs />
       </main>
-      <Footer />
-      <WhatsAppButton />
     </>
   );
 }

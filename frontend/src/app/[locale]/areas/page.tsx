@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import { getGovernorates, getImageUrl } from "@/lib/api";
 import { JsonLd, breadcrumbSchema } from "@/lib/schemas";
 
@@ -77,10 +74,9 @@ export default async function AreasPage({
           { name: areasLabel, url: `${SITE_URL}/${locale}/areas` },
         ])}
       />
-      <Navbar />
       <main dir={isAr ? "rtl" : "ltr"}>
         {/* Hero */}
-        <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white py-16 md:py-24">
+        <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white pt-28 pb-16 md:pt-32 md:pb-24">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-3xl md:text-5xl font-bold mb-4">
               {isAr
@@ -214,8 +210,6 @@ export default async function AreasPage({
           </div>
         </section>
       </main>
-      <Footer />
-      <WhatsAppButton />
     </>
   );
 }

@@ -45,7 +45,7 @@ export default function GovernorateDetailContent({
             sizes="100vw"
           />
         )}
-        <div className="relative container mx-auto px-4 py-16 md:py-24">
+        <div className="relative container mx-auto px-4 pt-28 pb-16 md:pt-32 md:pb-24">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm text-blue-200 mb-6">
             <Link href="/" className="hover:text-white">

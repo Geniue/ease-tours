@@ -20,7 +20,7 @@ export default function ServiceDetailContent({
   const Chevron = isAr ? ChevronLeft : ChevronRight;
 
   return (
-    <article className="py-12">
+    <article className="pt-28 pb-12">
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-gray-500 mb-8">

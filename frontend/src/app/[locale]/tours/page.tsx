@@ -1,9 +1,6 @@
 import { useTranslations } from "next-intl";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import TourCard from "@/components/TourCard";
 import { getTrips, getCategories } from "@/lib/api";
 import ToursFilter from "@/components/ToursFilter";
@@ -40,7 +37,6 @@ export default async function ToursPage() {
 
   return (
     <>
-      <Navbar />
       <main>
         <ToursHero />
         <ToursIntro />
@@ -50,8 +46,6 @@ export default async function ToursPage() {
           </div>
         </section>
       </main>
-      <Footer />
-      <WhatsAppButton />
     </>
   );
 }

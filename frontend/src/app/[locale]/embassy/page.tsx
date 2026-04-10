@@ -1,8 +1,5 @@
 import { useTranslations, useLocale } from "next-intl";
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import EmbassyList from "@/components/EmbassyList";
 import { getEmbassies } from "@/lib/api";
 import { JsonLd, organizationSchema, breadcrumbSchema } from "@/lib/schemas";
@@ -126,7 +123,6 @@ export default async function EmbassyPage({
       {embassySchemas.map((schema, i) => (
         <JsonLd key={i} data={schema} />
       ))}
-      <Navbar />
       <main>
         <EmbassyHero />
 
@@ -200,8 +196,6 @@ export default async function EmbassyPage({
           </div>
         </section>
       </main>
-      <Footer />
-      <WhatsAppButton />
     </>
   );
 }

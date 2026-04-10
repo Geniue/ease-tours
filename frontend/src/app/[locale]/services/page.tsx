@@ -1,8 +1,5 @@
 import { useTranslations } from "next-intl";
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import ServiceGrid from "@/components/ServiceGrid";
 import { getServicesPaginated } from "@/lib/api";
 
@@ -52,7 +49,6 @@ export default async function ServicesPage() {
 
   return (
     <>
-      <Navbar />
       <main>
         <ServicesHero />
         <section className="py-16">
@@ -61,8 +57,6 @@ export default async function ServicesPage() {
           </div>
         </section>
       </main>
-      <Footer />
-      <WhatsAppButton />
     </>
   );
 }

@@ -1,7 +1,4 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import FlightsContent from "@/components/FlightsContent";
 import { JsonLd, breadcrumbSchema } from "@/lib/schemas";
 
@@ -199,12 +196,9 @@ export default async function FlightsPage({
           { name: flightsLabel, url: `${SITE_URL}/${locale}/booking/flights` },
         ])}
       />
-      <Navbar />
       <main>
         <FlightsContent faqs={faqs} />
       </main>
-      <Footer />
-      <WhatsAppButton />
     </>
   );
 }

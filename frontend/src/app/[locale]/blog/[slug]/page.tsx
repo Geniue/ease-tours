@@ -1,8 +1,5 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import { getBlog, getBlogs } from "@/lib/api";
 import BlogDetailContent from "@/components/BlogDetailContent";
 import { JsonLd, blogPostingSchema, breadcrumbSchema } from "@/lib/schemas";
@@ -92,12 +89,9 @@ export default async function BlogPostPage({
           { name: title, url: `${SITE_URL}/${locale}/blog/${encodeURIComponent(correctSlug)}` },
         ])}
       />
-      <Navbar />
       <main>
         <BlogDetailContent blog={blog} relatedBlogs={relatedBlogs} />
       </main>
-      <Footer />
-      <WhatsAppButton />
     </>
   );
 }

@@ -1,9 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getTrip, getBlogs } from "@/lib/api";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import TourDetailContent from "@/components/TourDetailContent";
 import RelatedBlogs from "@/components/RelatedBlogs";
 import { JsonLd, touristTripSchema, breadcrumbSchema } from "@/lib/schemas";
@@ -93,13 +90,10 @@ export default async function TourDetailPage({
           { name: title, url: `${SITE_URL}/${locale}/tours/${encodeURIComponent(correctSlug)}` },
         ])}
       />
-      <Navbar />
       <main>
         <TourDetailContent trip={trip} />
         <RelatedBlogs blogs={blogs} />
       </main>
-      <Footer />
-      <WhatsAppButton />
     </>
   );
 }

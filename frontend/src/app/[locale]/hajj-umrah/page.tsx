@@ -232,8 +232,12 @@ function HajjHero() {
       }}
     >
       <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute top-0 inset-x-0 z-10 pt-24">
+        <div className="container mx-auto px-4">
+          <Breadcrumbs items={[{ label: t("hajjUmrah") }]} variant="dark" />
+        </div>
+      </div>
       <div className="relative z-10 text-center">
-        <div className="mb-6"><Breadcrumbs items={[{ label: t("hajjUmrah") }]} variant="dark" /></div>
         <h1 className="text-4xl md:text-5xl font-bold">{t("hajjUmrah")}</h1>
       </div>
     </section>

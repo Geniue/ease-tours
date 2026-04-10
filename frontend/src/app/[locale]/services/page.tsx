@@ -80,8 +80,12 @@ function ServicesHero() {
       }}
     >
       <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute top-0 inset-x-0 z-10 pt-24">
+        <div className="container mx-auto px-4">
+          <Breadcrumbs items={[{ label: t("title") }]} variant="dark" />
+        </div>
+      </div>
       <div className="relative z-10 text-center">
-        <div className="mb-6"><Breadcrumbs items={[{ label: t("title") }]} variant="dark" /></div>
         <h1 className="text-4xl md:text-5xl font-bold">{t("title")}</h1>
         <p className="mt-4 text-lg text-white/80 max-w-2xl mx-auto">
           {t("subtitle")}

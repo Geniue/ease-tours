@@ -6,6 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import type { ApiGovernorate } from "@/lib/api";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function GovernorateDetailContent({
   governorate: gov,
@@ -46,18 +47,9 @@ export default function GovernorateDetailContent({
           />
         )}
         <div className="relative container mx-auto px-4 pt-28 pb-16 md:pt-32 md:pb-24">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-blue-200 mb-6">
-            <Link href="/" className="hover:text-white">
-              {isAr ? "الرئيسية" : "Home"}
-            </Link>
-            <Chevron size={14} />
-            <Link href="/areas" className="hover:text-white">
-              {isAr ? "مناطق الخدمة" : "Service Areas"}
-            </Link>
-            <Chevron size={14} />
-            <span className="text-white font-medium">{name}</span>
-          </nav>
+          <div className="mb-6">
+            <Breadcrumbs items={[{ label: isAr ? "مناطق الخدمة" : "Service Areas", href: "/areas" }, { label: name }]} variant="dark" />
+          </div>
 
           <h1 className="text-3xl md:text-5xl font-bold mb-4">
             {isAr

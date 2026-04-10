@@ -6,6 +6,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import type { ApiService } from "@/lib/api";
 
+import Breadcrumbs from "@/components/Breadcrumbs";
+
 export default function ServiceDetailContent({
   service,
 }: {
@@ -23,17 +25,9 @@ export default function ServiceDetailContent({
     <article className="pt-28 pb-12">
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-gray-500 mb-8">
-          <Link href="/" className="hover:text-[#1a73a7]">
-            {isAr ? "الرئيسية" : "Home"}
-          </Link>
-          <Chevron size={14} />
-          <Link href="/services" className="hover:text-[#1a73a7]">
-            {t("title")}
-          </Link>
-          <Chevron size={14} />
-          <span className="text-gray-800 font-medium">{title}</span>
-        </nav>
+        <div className="mb-8">
+          <Breadcrumbs items={[{ label: t("title"), href: "/services" }, { label: title }]} />
+        </div>
 
         {/* Featured Image */}
         {service.featured_image_url && (

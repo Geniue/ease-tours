@@ -1,6 +1,8 @@
 import { useTranslations } from "next-intl";
 import type { Metadata } from "next";
 import { Shield, Eye, Target, Users } from "lucide-react";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { JsonLd, breadcrumbSchema } from "@/lib/schemas";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
@@ -27,6 +29,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default function AboutPage() {
   return (
     <>
+      <JsonLd data={breadcrumbSchema([
+        { name: "الرئيسية", url: "https://ease-travel.online/ar" },
+        { name: "من نحن", url: "https://ease-travel.online/ar/about" },
+      ])} />
       <main>
         <AboutContent />
       </main>
@@ -58,6 +64,7 @@ function AboutContent() {
       >
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 text-center">
+          <div className="mb-6"><Breadcrumbs items={[{ label: t("title") }]} variant="dark" /></div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">{t("title")}</h1>
           <p className="text-xl md:text-2xl text-white/90">{t("subtitle")}</p>
         </div>

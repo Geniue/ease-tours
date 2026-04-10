@@ -4,6 +4,8 @@ import { getTranslations } from "next-intl/server";
 import TourCard from "@/components/TourCard";
 import { getTrips, getCategories } from "@/lib/api";
 import ToursFilter from "@/components/ToursFilter";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { JsonLd, breadcrumbSchema } from "@/lib/schemas";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
@@ -37,6 +39,10 @@ export default async function ToursPage() {
 
   return (
     <>
+      <JsonLd data={breadcrumbSchema([
+        { name: "\u0627\u0644\u0631\u0626\u064a\u0633\u064a\u0629", url: `${SITE_URL}/ar` },
+        { name: "\u0627\u0644\u0631\u062d\u0644\u0627\u062a", url: `${SITE_URL}/ar/tours` },
+      ])} />
       <main>
         <ToursHero />
         <ToursIntro />
@@ -64,6 +70,7 @@ function ToursHero() {
     >
       <div className="absolute inset-0 bg-black/50" />
       <div className="relative z-10 text-center">
+        <div className="mb-6"><Breadcrumbs items={[{ label: t("title") }]} variant="dark" /></div>
         <h1 className="text-4xl md:text-5xl font-bold">{t("title")}</h1>
         <p className="mt-3 text-lg md:text-xl text-white/90">{t("subtitle")}</p>
       </div>

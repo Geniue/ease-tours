@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getGovernorates, getImageUrl } from "@/lib/api";
 import { JsonLd, breadcrumbSchema } from "@/lib/schemas";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
@@ -78,6 +79,7 @@ export default async function AreasPage({
         {/* Hero */}
         <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white pt-28 pb-16 md:pt-32 md:pb-24">
           <div className="container mx-auto px-4 text-center">
+            <div className="mb-6"><Breadcrumbs items={[{ label: isAr ? "مناطق الخدمة" : "Service Areas" }]} variant="dark" /></div>
             <h1 className="text-3xl md:text-5xl font-bold mb-4">
               {isAr
                 ? "إيز ترافل تخدم جميع محافظات مصر"

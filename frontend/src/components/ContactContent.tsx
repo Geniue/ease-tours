@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Phone, Mail, MessageCircle, MapPin, CheckCircle } from "lucide-react";
 import { sendContactMessage } from "@/lib/api";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function ContactContent() {
   const t = useTranslations("contact");
@@ -72,6 +73,7 @@ export default function ContactContent() {
       >
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 text-center">
+          <div className="mb-6"><Breadcrumbs items={[{ label: t("title") }]} variant="dark" /></div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">{t("title")}</h1>
           <p className="text-xl md:text-2xl text-white/90">{t("subtitle")}</p>
         </div>

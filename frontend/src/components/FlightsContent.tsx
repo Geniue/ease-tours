@@ -14,6 +14,7 @@ import {
   Globe,
   CreditCard,
 } from "lucide-react";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 interface Faq {
   q: string;

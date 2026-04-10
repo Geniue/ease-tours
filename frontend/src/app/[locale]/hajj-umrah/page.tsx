@@ -4,6 +4,7 @@ import Link from "next/link";
 import TourCard from "@/components/TourCard";
 import { getTrips, getCategories, getBlogs } from "@/lib/api";
 import { JsonLd, breadcrumbSchema } from "@/lib/schemas";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
@@ -232,6 +233,7 @@ function HajjHero() {
     >
       <div className="absolute inset-0 bg-black/50" />
       <div className="relative z-10 text-center">
+        <div className="mb-6"><Breadcrumbs items={[{ label: t("hajjUmrah") }]} variant="dark" /></div>
         <h1 className="text-4xl md:text-5xl font-bold">{t("hajjUmrah")}</h1>
       </div>
     </section>

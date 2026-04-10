@@ -15,6 +15,7 @@ import {
 import Image from "next/image";
 import { type ApiTrip } from "@/lib/api";
 import BookingForm from "@/components/BookingForm";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function TourDetailContent({ trip }: { trip: ApiTrip }) {
   const t = useTranslations("tourDetail");
@@ -77,6 +78,11 @@ export default function TourDetailContent({ trip }: { trip: ApiTrip }) {
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+        <div className="absolute inset-x-0 top-0 p-6 md:p-10 pt-24 z-10">
+          <div className="container mx-auto">
+            <Breadcrumbs items={[{ label: isAr ? "الرحلات" : "Tours", href: "/tours" }, { label: title }]} variant="dark" />
+          </div>
+        </div>
         <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 pt-20">
           <div className="container mx-auto">
             <span className="inline-block bg-primary text-white text-sm font-semibold px-3 py-1 rounded-full mb-3">

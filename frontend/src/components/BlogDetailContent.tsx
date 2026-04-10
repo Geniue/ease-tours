@@ -5,6 +5,7 @@ import { Calendar, Tag } from "lucide-react";
 import Image from "next/image";
 import type { ApiBlog } from "@/lib/api";
 import BlogCard from "@/components/BlogCard";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function BlogDetailContent({
   blog,
@@ -50,6 +51,11 @@ export default function BlogDetailContent({
           <div className="w-full h-full bg-gradient-to-br from-[#1a73a7] to-[#0d4a6e]" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+        <div className="absolute inset-x-0 top-0 p-6 md:p-10 pt-24 z-10">
+          <div className="container mx-auto">
+            <Breadcrumbs items={[{ label: t("title"), href: "/blog" }, { label: title }]} variant="dark" />
+          </div>
+        </div>
         <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 pt-20">
           <div className="container mx-auto">
             <span className="inline-block bg-[#1a73a7] text-white text-sm font-semibold px-3 py-1 rounded-full mb-3">

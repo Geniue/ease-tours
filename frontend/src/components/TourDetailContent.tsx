@@ -77,12 +77,7 @@ export default function TourDetailContent({ trip }: { trip: ApiTrip }) {
             sizes="100vw"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/50" />
-        <div className="absolute inset-x-0 top-0 p-6 md:p-10 pt-24 z-10">
-          <div className="container mx-auto">
-            <Breadcrumbs items={[{ label: isAr ? "الرحلات" : "Tours", href: "/tours" }, { label: title }]} variant="dark" />
-          </div>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 pt-20">
           <div className="container mx-auto">
             <span className="inline-block bg-primary text-white text-sm font-semibold px-3 py-1 rounded-full mb-3">
@@ -110,6 +105,12 @@ export default function TourDetailContent({ trip }: { trip: ApiTrip }) {
           </div>
         </div>
       </section>
+
+      <div className="bg-gray-50 border-b">
+        <div className="container mx-auto px-4 py-3">
+          <Breadcrumbs items={[{ label: isAr ? "الرحلات" : "Tours", href: "/tours" }, { label: title }]} variant="light" />
+        </div>
+      </div>
 
       <div className="container mx-auto px-4 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

@@ -19,8 +19,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const isAr = locale === "ar";
   const title = isAr ? "جميع الرحلات السياحية" : "All Tours";
   const description = isAr
-    ? "استكشف جميع الرحلات السياحية مع إيز ترافل — جولات بمرشدين، رحلات خاصة، رحلات داخلية وخارجية وحج وعمرة بأفضل الأسعار"
-    : "Explore all tours with Ease Travel — guided tours, private tours, domestic & outbound trips, Hajj & Umrah packages at the best prices";
+    ? "اكتشف أفضل الرحلات السياحية في مصر والعالم مع إيز ترافل — جولات بمرشدين محليين، برامج سفر خاصة، حج وعمرة، ورحلات شهر عسل بأسعار تنافسية"
+    : "Discover curated travel experiences with Ease Travel — guided excursions, private getaways, Hajj & Umrah packages, Nile cruises, and honeymoon trips across Egypt and beyond";
   const altLocale = isAr ? "en" : "ar";
   return {
     title,
@@ -157,10 +157,11 @@ function ToursIntro() {
   return (
     <section className="py-12 bg-gray-50">
       <div className="container mx-auto px-4 max-w-4xl text-center">
+        <h2 className="text-2xl font-bold text-foreground mb-6">{t("introTitle")}</h2>
         <p className="text-foreground/70 text-lg leading-relaxed mb-8">
           {t("introText")}
         </p>
-        <h2 className="text-2xl font-bold text-foreground mb-4">{t("whyTitle")}</h2>
+        <h3 className="text-xl font-bold text-foreground mb-4">{t("whyTitle")}</h3>
         <ul className="inline-grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-4 text-start mb-6">
           <li className="flex items-start gap-2 text-foreground/80">
             <span className="text-primary mt-1 shrink-0">✓</span> {t("whyItem1")}

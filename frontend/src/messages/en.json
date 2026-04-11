@@ -124,15 +124,16 @@
   "tours": {
     "title": "All Tours",
     "subtitle": "Discover Egypt & Beyond",
-    "introText": "Browse our curated collection of guided tours, private tours, and group adventures across Egypt and international destinations: Sharm El Sheikh, Hurghada, Luxor & Aswan, Marsa Matrouh, Umrah packages from Egypt, and international trips to Istanbul, Dubai, and Europe. Whether you're looking for a guided tour of the Pyramids, a Nile cruise, or a honeymoon getaway — every itinerary is crafted by local travel experts to give you an authentic, hassle-free travel experience at the best prices.",
-    "whyTitle": "Why Choose Our Tours?",
-    "whyItem1": "Expert-led guided tours with licensed local guides",
-    "whyItem2": "Flexible private tours tailored to your schedule",
-    "whyItem3": "Small group tours for a more personal experience",
-    "whyItem4": "Best price guarantee on all tour packages",
-    "browseCta": "Browse tours below or contact us for a custom private tour designed just for you.",
+    "introTitle": "Your Gateway to Unforgettable Travel Experiences",
+    "introText": "From the golden sands of Sharm El Sheikh and the vibrant coral reefs of Hurghada, to the ancient temples of Luxor & Aswan and the tranquil beaches of Marsa Matrouh — we bring you handpicked travel experiences across Egypt's most iconic destinations. Planning a spiritual journey? Explore our Hajj & Umrah packages departing from Cairo and other Egyptian cities. Looking to venture abroad? Browse international itineraries to Istanbul, Dubai, and across Europe. Every trip is designed by seasoned local travel experts who know Egypt inside and out, ensuring authentic experiences, seamless logistics, and unbeatable value.",
+    "whyTitle": "Why Travel With Us?",
+    "whyItem1": "Licensed local guides who bring every destination to life with deep cultural knowledge",
+    "whyItem2": "Flexible private itineraries tailored to your schedule, group size, and budget",
+    "whyItem3": "Small group adventures capped at 15 travelers for a more personal, intimate experience",
+    "whyItem4": "Transparent pricing with a best-value guarantee — no hidden fees, no surprises",
+    "browseCta": "Explore the collection below, or reach out via WhatsApp to design a fully custom itinerary just for you.",
     "all": "All",
-    "noTrips": "No tours available at the moment"
+    "noTrips": "No trips available at the moment"
   },
   "services": {
     "title": "Our Services",

@@ -263,6 +263,54 @@ export function faqSchema(
   };
 }
 
+// ── ItemList (tours listing page — triggers rich results) ──
+export function itemListSchema(trips: ApiTrip[], locale: string) {
+  const isAr = locale === "ar";
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: isAr ? "جميع الرحلات السياحية — إيز ترافل" : "All Tours — Ease Travel",
+    description: isAr
+      ? "استكشف أفضل الرحلات السياحية في مصر والعالم مع إيز ترافل"
+      : "Explore the best tours in Egypt and worldwide with Ease Travel",
+    numberOfItems: trips.length,
+    itemListElement: trips.map((trip, i) => {
+      const title = isAr ? trip.title_ar : trip.title_en;
+      const slug = isAr ? trip.slug_ar : trip.slug_en;
+      const price = trip.discounted_price || trip.base_price;
+      return {
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "TouristTrip",
+          name: title,
+          url: `${SITE_URL}/${locale}/tours/${encodeURIComponent(slug)}`,
+          ...(trip.featured_image_url && { image: trip.featured_image_url }),
+          ...(trip.destination_en && {
+            touristDestination: {
+              "@type": "Place",
+              name: isAr ? trip.destination_ar : trip.destination_en,
+            },
+          }),
+          offers: {
+            "@type": "Offer",
+            price: parseFloat(price),
+            priceCurrency: trip.currency || "EGP",
+            availability: trip.is_active && !trip.coming_soon
+              ? "https://schema.org/InStock"
+              : "https://schema.org/PreOrder",
+          },
+          provider: {
+            "@type": "TravelAgency",
+            name: isAr ? "إيز ترافل" : "Ease Travel",
+            url: SITE_URL,
+          },
+        },
+      };
+    }),
+  };
+}
+
 // ── Render as <script type="application/ld+json"> ──
 export function JsonLd({ data }: { data: Record<string, unknown> | Record<string, unknown>[] }) {
   // Escape closing script tags to prevent XSS breakout

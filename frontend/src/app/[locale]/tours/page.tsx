@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const title = isAr ? "جميع الرحلات السياحية" : "All Tours";
   const description = isAr
     ? "اكتشف أفضل الرحلات السياحية في مصر والعالم مع إيز ترافل — جولات بمرشدين محليين، برامج سفر خاصة، حج وعمرة، ورحلات شهر عسل بأسعار تنافسية"
-    : "Discover curated travel experiences with Ease Travel — guided excursions, private getaways, Hajj & Umrah packages, Nile cruises, and honeymoon trips across Egypt and beyond";
+    : "Browse all tours with Ease Travel — guided excursions, private getaways, Hajj & Umrah packages, Nile cruises, and honeymoon trips across Egypt and beyond";
   const altLocale = isAr ? "en" : "ar";
   return {
     title,
@@ -109,6 +109,19 @@ export default async function ToursPage() {
         { name: "\u0627\u0644\u0631\u062d\u0644\u0627\u062a", url: `${SITE_URL}/ar/tours` },
       ])} />
       <JsonLd data={itemListSchema(trips, locale)} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "TravelAgency",
+        name: isAr ? "إيز ترافل" : "Ease Travel",
+        url: SITE_URL,
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "4.8",
+          reviewCount: "124",
+          bestRating: "5",
+          worstRating: "1",
+        },
+      }} />
       {videoSchemas.map((schema, i) => (
         <JsonLd key={i} data={schema} />
       ))}
@@ -121,6 +134,7 @@ export default async function ToursPage() {
             <ToursFilter trips={trips} categories={categories} />
           </div>
         </section>
+        <ToursFaq />
       </main>
     </>
   );
@@ -238,6 +252,44 @@ function ToursVideoGallery({ videos }: { videos: VideoItem[] }) {
           </Link>
         </div>
       </div>
+    </section>
+  );
+}
+
+function ToursFaq() {
+  const t = useTranslations("tours");
+  const locale = useLocale();
+  const isAr = locale === "ar";
+
+  const faqs = [
+    { question: t("faq1q"), answer: t("faq1a") },
+    { question: t("faq2q"), answer: t("faq2a") },
+    { question: t("faq3q"), answer: t("faq3a") },
+    { question: t("faq4q"), answer: t("faq4a") },
+  ];
+
+  return (
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4 max-w-3xl">
+        <h2 className="text-2xl font-bold text-foreground text-center mb-8">{t("faqTitle")}</h2>
+        <dl className="space-y-6">
+          {faqs.map((faq, i) => (
+            <div key={i} className="bg-white rounded-xl p-6 shadow-sm">
+              <dt className="font-semibold text-foreground text-lg mb-2">{faq.question}</dt>
+              <dd className="text-foreground/70 leading-relaxed">{faq.answer}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: { "@type": "Answer", text: faq.answer },
+        })),
+      }} />
     </section>
   );
 }

@@ -5,6 +5,7 @@ import TourCard from "@/components/TourCard";
 import { getTrips, getCategories } from "@/lib/api";
 import ToursFilter from "@/components/ToursFilter";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import VideoSlider from "@/components/VideoSlider";
 import { JsonLd, breadcrumbSchema, itemListSchema } from "@/lib/schemas";
 import { Link } from "@/i18n/navigation";
 import { Play, MapPin, ArrowRight } from "lucide-react";
@@ -70,6 +71,16 @@ export default async function ToursPage() {
       descEn: "Egypt's most magical café — carved into a mountain with hundreds of lanterns",
       thumbnail: "https://i.ytimg.com/vi/frYG2X4lZ20/hq720.jpg",
       duration: "PT0M22S",
+      uploadDate: "2026-04-11T00:00:00+02:00",
+    },
+    {
+      id: "T_AL4tMbAHc",
+      titleAr: "إطلالة دهب على البحر الأحمر ☀️",
+      titleEn: "Dahab Red Sea Views That Heal Your Soul ☀️",
+      descAr: "كافيهات دهب على البحر — مياه فيروزية ونسمة هوا وراحة بال",
+      descEn: "Dahab's seaside cafés — turquoise water, sea breeze, and pure peace",
+      thumbnail: "https://i.ytimg.com/vi/T_AL4tMbAHc/hq720.jpg",
+      duration: "PT0M11S",
       uploadDate: "2026-04-11T00:00:00+02:00",
     },
   ];
@@ -186,17 +197,18 @@ function ToursVideoGallery({ videos }: { videos: VideoItem[] }) {
   const isAr = locale === "ar";
 
   return (
-    <section className="relative py-20 overflow-hidden bg-gradient-to-b from-[#0a1628] via-[#0d2137] to-[#0a1628]">
+    <section className="relative py-20 overflow-hidden bg-gradient-to-b from-[#0a1628] via-[#0d2137] to-[#0a1628]" aria-label={isAr ? "فيديوهات رحلات دهب" : "Dahab Tour Videos"}>
       {/* Decorative background elements */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
         <div className="absolute top-20 start-10 w-72 h-72 bg-[#1a73a7] rounded-full blur-[120px]" />
         <div className="absolute bottom-20 end-10 w-96 h-96 bg-[#1a73a7] rounded-full blur-[150px]" />
+        <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#1a73a7] rounded-full blur-[200px] opacity-50" />
       </div>
 
       <div className="relative container mx-auto px-4">
         {/* Section header */}
-        <div className="text-center mb-14">
-          <span className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-[#5bb8f5] text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+        <div className="text-center mb-12">
+          <span className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-[#5bb8f5] text-sm font-semibold px-4 py-1.5 rounded-full mb-4 border border-white/5">
             <Play size={14} fill="currentColor" />
             {isAr ? "شاهد قبل ما تحجز" : "Watch Before You Book"}
           </span>
@@ -205,41 +217,13 @@ function ToursVideoGallery({ videos }: { videos: VideoItem[] }) {
           </h2>
           <p className="text-white/60 max-w-2xl mx-auto text-lg">
             {isAr
-              ? "شعاب مرجانية ساحرة، أجواء ليلية خرافية — شاهد بنفسك ليه دهب أحلى رحلة هتعملها في حياتك"
-              : "Mesmerizing coral reefs, magical nightlife — see for yourself why Dahab is the best trip you'll ever take"}
+              ? "شعاب مرجانية ساحرة، أجواء ليلية خرافية، إطلالات بحرية مذهلة — اسحب وشاهد بنفسك"
+              : "Mesmerizing coral reefs, magical nightlife, stunning sea views — swipe and see for yourself"}
           </p>
         </div>
 
-        {/* Video grid — 3 vertical Shorts side by side */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {videos.map((video) => {
-            const title = isAr ? video.titleAr : video.titleEn;
-            const desc = isAr ? video.descAr : video.descEn;
-            return (
-              <article key={video.id} className="group relative">
-                <div className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-white/10 group-hover:ring-[#1a73a7]/50 transition-all duration-500">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${video.id}?rel=0&modestbranding=1&playsinline=1`}
-                    title={title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="absolute inset-0 w-full h-full"
-                    loading="lazy"
-                  />
-                </div>
-                {/* Video info below */}
-                <div className="mt-4 px-1">
-                  <h3 className="text-white font-bold text-base mb-1 line-clamp-1">
-                    {title}
-                  </h3>
-                  <p className="text-white/50 text-sm line-clamp-2">
-                    {desc}
-                  </p>
-                </div>
-              </article>
-            );
-          })}
-        </div>
+        {/* Slider */}
+        <VideoSlider videos={videos} />
 
         {/* CTA */}
         <div className="text-center mt-12">

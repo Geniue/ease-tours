@@ -50,7 +50,7 @@ export default async function ToursPage() {
       descEn: "Stunning underwater world — vibrant coral reefs & tropical fish in the Red Sea",
       thumbnail: "https://i.ytimg.com/vi/x07XVtPgaIU/hq720.jpg",
       duration: "PT0M33S",
-      uploadDate: "2026-04-11",
+      uploadDate: "2026-04-11T00:00:00+02:00",
     },
     {
       id: "fO2g4AAE-SY",
@@ -60,7 +60,7 @@ export default async function ToursPage() {
       descEn: "Dive into the Red Sea's most beautiful reefs — crystal-clear water & mesmerizing marine life",
       thumbnail: "https://i.ytimg.com/vi/fO2g4AAE-SY/hq720.jpg",
       duration: "PT0M22S",
-      uploadDate: "2026-04-11",
+      uploadDate: "2026-04-11T00:00:00+02:00",
     },
     {
       id: "frYG2X4lZ20",
@@ -70,7 +70,7 @@ export default async function ToursPage() {
       descEn: "Egypt's most magical café — carved into a mountain with hundreds of lanterns",
       thumbnail: "https://i.ytimg.com/vi/frYG2X4lZ20/hq720.jpg",
       duration: "PT0M22S",
-      uploadDate: "2026-04-11",
+      uploadDate: "2026-04-11T00:00:00+02:00",
     },
   ];
 

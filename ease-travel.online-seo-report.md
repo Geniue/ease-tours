@@ -1,9 +1,9 @@
 # SEO Analysis Report: ease-travel.online
 
 > **URL:** https://ease-travel.online/en/tours  
-> **SEO Score:** 84/100  
+> **SEO Score:** 89/100  
 > **HTTPS:** Yes ✅  
-> **Load Time:** 0.337s  
+> **Load Time:** 0.429s  
 > **Analyzed:** 2026-04-12
 
 ## Target Countries
@@ -22,13 +22,13 @@
 | H2 Tags | ✅ Pass | 4 found |
 | Viewport Meta | ✅ Pass |  |
 | Canonical Tag | ✅ Pass | https://ease-travel.online/en/tours |
-| Structured Data | ❌ Fail |  |
+| Structured Data | ✅ Pass | TravelAgency, WebSite, BreadcrumbList, ItemList, TravelAgency, VideoObject, VideoObject, VideoObject, VideoObject, FAQPage |
 | Open Graph | ✅ Pass |  |
 | Twitter Cards | ✅ Pass |  |
 | Sitemap.xml | ✅ Pass |  |
 | Robots.txt | ✅ Pass |  |
 | Image Alt Tags | ✅ Pass | 0/13 missing alt |
-| Content Length | ✅ Pass | 771 words |
+| Content Length | ✅ Pass | 797 words |
 | Internal Links | ✅ Pass | 34 links |
 
 ## Meta Details
@@ -47,32 +47,31 @@
 - **H2:** Frequently Asked Questions
 - **H3:** 20 tags found
 
-## Issues Found (2)
+## Issues Found (1)
 
 ### ⚠️ Warnings
 
-- Low word count (771). Consider adding more content (800-2000 words).
-- No structured data (Schema.org) detected. Add LocalBusiness or Organization schema.
+- Low word count (797). Consider adding more content (800-2000 words).
 
 ## Keyword Opportunities (High Volume / Low Competition)
 
 | Keyword | Est. Volume | Competition | Score | On Page |
 |---------|-------------|-------------|-------|---------|
-| red sea global | 40.5K/mo | Low (5) | 8.1 | 0× |
-| red sea dugong | 40.5K/mo | Low (5) | 8.1 | 0× |
-| egypt travel advisory | 40.5K/mo | Low (5) | 8.1 | 0× |
-| egypt travel | 113.4K/mo | Low (15) | 7.56 | 2× |
-| travel egypt now | 41.0K/mo | Low (7) | 5.85 | 0× |
-| umrah packages | 81.0K/mo | Low (15) | 5.4 | 4× |
-| umrah packages 2026 | 81.0K/mo | Low (15) | 5.4 | 0× |
-| coral reefs | 81.0K/mo | Low (15) | 5.4 | 3× |
-| travel egypt | 113.4K/mo | Low (23) | 4.93 | 2× |
-| red sea | 113.4K/mo | Low (25) | 4.54 | 5× |
-| ease travel | 113.4K/mo | Low (25) | 4.54 | 3× |
-| umrah packages 2025 | 81.0K/mo | Low (20) | 4.05 | 0× |
-| travel egypt tours | 31.5K/mo | Low (12) | 2.62 | 0× |
-| tours ease | 25.2K/mo | Low (10) | 2.52 | 2× |
-| travel agency | 75.6K/mo | Medium (60) | 1.26 | 2× |
+| red sea global | 3.3K/mo | Low (5) | 0.65 | 0× |
+| red sea dugong | 3.0K/mo | Low (5) | 0.59 | 0× |
+| egypt travel advisory | 2.1K/mo | Low (5) | 0.42 | 0× |
+| ease travel | 10.0K/mo | Low (25) | 0.4 | 3× |
+| coral reefs | 5.7K/mo | Low (15) | 0.38 | 3× |
+| red sea | 9.1K/mo | Low (25) | 0.36 | 5× |
+| ease tours and treks | 1.8K/mo | Low (5) | 0.35 | 0× |
+| umrah packages 2026 | 5.1K/mo | Low (15) | 0.34 | 0× |
+| egypt travel | 4.8K/mo | Low (15) | 0.32 | 2× |
+| umrah packages | 4.7K/mo | Low (15) | 0.31 | 4× |
+| travel egypt now | 2.0K/mo | Low (7) | 0.28 | 0× |
+| umrah packages 2025 | 5.4K/mo | Low (20) | 0.27 | 0× |
+| travel egypt tours | 3.0K/mo | Low (12) | 0.25 | 0× |
+| travel egypt | 5.4K/mo | Low (23) | 0.23 | 2× |
+| travel agency | 10.5K/mo | Medium (60) | 0.17 | 2× |
 
 ## Top Keywords on Page
 
@@ -91,39 +90,33 @@
 | istanbul dubai | 2 | phrase |
 | across europe | 2 | phrase |
 | sea views | 2 | phrase |
+| nile cruise | 2 | phrase |
 | tours ease travel | 2 | phrase |
 | ease travel egypt | 2 | phrase |
 | travel egypt travel | 2 | phrase |
 | travel | 8 | word |
 | dahab | 8 | word |
 | umrah | 8 | word |
-| egypt | 7 | word |
 
 ## Recommendations
 
-1. **[🔴 HIGH] Target "red sea global" (High Volume / Low Competition)**
-   Est. 40,500/mo volume with Low competition. Create content targeting this keyword.
+1. **[🟡 MEDIUM] Expand Page Content**
+   Low word count (797). Consider adding more content (800-2000 words). Google favors comprehensive, in-depth content.
 
-2. **[🟡 MEDIUM] Expand Page Content**
-   Low word count (771). Consider adding more content (800-2000 words). Google favors comprehensive, in-depth content.
-
-3. **[🟡 MEDIUM] Add Structured Data Markup**
-   Implement LocalBusiness schema for rich snippets in search results. Free visibility boost.
-
-4. **[🔴 HIGH] Low-Competition Keyword Cluster Found**
+2. **[🔴 HIGH] Low-Competition Keyword Cluster Found**
    Create content around: "red sea global", "red sea dugong", "egypt travel advisory". These have good volume with minimal competition.
 
 ## Technical Summary
 
 | Property | Value |
 |----------|-------|
-| Word Count | 771 |
+| Word Count | 797 |
 | Images | 13 total, 0 missing alt |
 | Internal Links | 34 |
 | External Links | 5 |
-| Load Time | 0.337s |
+| Load Time | 0.429s |
 | HTTPS | Yes |
-| Schema.org | No |
+| Schema.org | TravelAgency, WebSite, BreadcrumbList, ItemList, TravelAgency, VideoObject, VideoObject, VideoObject, VideoObject, FAQPage |
 | Open Graph | Yes |
 | Twitter Cards | Yes |
 | Sitemap | Yes |
@@ -144,5 +137,4 @@ Place this file in your project root or `.github/` folder. Use the issues and re
 
 ### Suggested File Changes
 
-- **`<head>` section:** Add `<script type="application/ld+json">` with LocalBusiness schema
 

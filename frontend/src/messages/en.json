@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "Ease Travel - Egypt Tours, Umrah Packages & Travel Experience",
+    "title": "Ease Travel — Egypt Travel Agency",
     "description": "Book your next travel experience with Ease Travel: Sharm El Sheikh tours, Luxor & Aswan Nile cruises, Umrah packages from Egypt, Istanbul & Dubai trips, flight & hotel booking, and Schengen visa services at competitive prices."
   },
   "nav": {
@@ -141,6 +141,20 @@
     "faq3a": "We accept cash, bank transfers, and Vodafone Cash. A deposit secures your spot, with the balance due before departure.",
     "faq4q": "Are tours available in English?",
     "faq4a": "Absolutely. Our guides are fluent in Arabic and English. Other languages can be arranged on request.",
+    "faq5q": "Do you offer group tours from Egypt?",
+    "faq5a": "Yes. We run scheduled group departures to Dahab, Sharm El Sheikh, Hurghada, and Luxor every week. Group sizes are kept small — typically 8 to 15 travelers — so you get a social experience without the crowds.",
+    "faq6q": "How far in advance should I book Umrah packages?",
+    "faq6a": "We recommend booking Umrah at least 3 to 4 weeks ahead, especially during Ramadan and Hajj season. Our Umrah packages include flights, hotels near Al-Haram, ground transport, and visa processing.",
+    "destinationsTitle": "Popular Destinations We Cover",
+    "destinationsIntro": "Whether you dream of diving in the Red Sea, exploring pharaonic temples, or praying at Al-Masjid Al-Haram, we have an itinerary ready for you.",
+    "dest1Title": "Sharm El Sheikh & Dahab",
+    "dest1Text": "Crystal-clear water, world-class diving at Ras Mohammed and the Blue Hole, vibrant nightlife, and Bedouin desert safaris. Our Red Sea packages include hotel, transfers, and optional snorkeling or diving excursions.",
+    "dest2Title": "Luxor & Aswan",
+    "dest2Text": "Walk through the Valley of the Kings, sail on a traditional felucca, and witness the grandeur of Karnak Temple. Nile cruise options range from 3-night to 7-night itineraries with all meals included.",
+    "dest3Title": "Umrah from Egypt",
+    "dest3Text": "Complete Umrah packages departing from Cairo, Alexandria, and other cities. We handle flights, Makkah and Madinah hotels, internal transport, and visa paperwork so you can focus on your spiritual journey.",
+    "dest4Title": "International — Istanbul, Dubai & Europe",
+    "dest4Text": "Explore the Hagia Sophia and Grand Bazaar in Istanbul, the Burj Khalifa in Dubai, or Schengen-visa destinations across Europe. Our outbound packages include flights, accommodation, and guided city excursions.",
     "all": "All",
     "noTrips": "No trips available at the moment"
   },

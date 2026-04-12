@@ -313,8 +313,8 @@ export function itemListSchema(trips: ApiTrip[], locale: string) {
 
 // ── Render as <script type="application/ld+json"> ──
 export function JsonLd({ data }: { data: Record<string, unknown> | Record<string, unknown>[] }) {
-  // Escape closing script tags to prevent XSS breakout
-  const json = JSON.stringify(data).replace(/</g, "\\u003c");
+  // Only escape </script> to prevent XSS — keep all other content as clean JSON
+  const json = JSON.stringify(data).replace(/<\/script/gi, "\\u003c/script");
   return (
     <script
       type="application/ld+json"

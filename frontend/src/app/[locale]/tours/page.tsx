@@ -134,6 +134,7 @@ export default async function ToursPage() {
             <ToursFilter trips={trips} categories={categories} />
           </div>
         </section>
+        <ToursDestinations />
         <ToursFaq />
       </main>
     </>
@@ -256,6 +257,34 @@ function ToursVideoGallery({ videos }: { videos: VideoItem[] }) {
   );
 }
 
+function ToursDestinations() {
+  const t = useTranslations("tours");
+
+  const destinations = [
+    { title: t("dest1Title"), text: t("dest1Text") },
+    { title: t("dest2Title"), text: t("dest2Text") },
+    { title: t("dest3Title"), text: t("dest3Text") },
+    { title: t("dest4Title"), text: t("dest4Text") },
+  ];
+
+  return (
+    <section className="py-16">
+      <div className="container mx-auto px-4 max-w-5xl">
+        <h2 className="text-2xl font-bold text-foreground text-center mb-4">{t("destinationsTitle")}</h2>
+        <p className="text-foreground/60 text-center mb-10 max-w-2xl mx-auto">{t("destinationsIntro")}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {destinations.map((dest, i) => (
+            <div key={i} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+              <h3 className="font-bold text-foreground text-lg mb-2">{dest.title}</h3>
+              <p className="text-foreground/70 leading-relaxed">{dest.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ToursFaq() {
   const t = useTranslations("tours");
   const locale = useLocale();
@@ -266,6 +295,8 @@ function ToursFaq() {
     { question: t("faq2q"), answer: t("faq2a") },
     { question: t("faq3q"), answer: t("faq3a") },
     { question: t("faq4q"), answer: t("faq4a") },
+    { question: t("faq5q"), answer: t("faq5a") },
+    { question: t("faq6q"), answer: t("faq6a") },
   ];
 
   return (

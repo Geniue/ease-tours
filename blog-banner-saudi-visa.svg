@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0f2041;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a1628;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c8951a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f0d060;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c8951a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGradV" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#c8951a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f0d060;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c8951a;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <filter id="glow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.03">
+    <line x1="0" y1="0" x2="1200" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="200" y1="0" x2="1200" y2="500" stroke="#fff" stroke-width="1"/>
+    <line x1="400" y1="0" x2="1200" y2="400" stroke="#fff" stroke-width="1"/>
+    <line x1="0" y1="200" x2="1000" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="0" y1="400" x2="800" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="1200" y1="0" x2="0" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="1000" y1="0" x2="0" y2="500" stroke="#fff" stroke-width="1"/>
+    <line x1="800" y1="0" x2="0" y2="400" stroke="#fff" stroke-width="1"/>
+  </g>
+
+  <!-- Decorative airplane silhouette (background) -->
+  <g transform="translate(100, 80) scale(0.7)" opacity="0.04">
+    <path d="M250,0 L270,80 L350,180 L500,200 L350,220 L270,320 L310,380 L270,360 L250,400 L230,360 L190,380 L230,320 L150,220 L0,200 L150,180 L230,80 Z" fill="#f0d060"/>
+  </g>
+
+  <!-- Top gold accent bar -->
+  <rect x="0" y="0" width="1200" height="5" fill="url(#goldGrad)"/>
+
+  <!-- ALERT BADGE - top right -->
+  <g transform="translate(1050, 30)">
+    <rect x="-60" y="0" width="120" height="36" rx="18" fill="#e74c3c" filter="url(#shadow)"/>
+    <text x="0" y="24" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="16" font-weight="bold">🚨 تنبيه عاجل</text>
+  </g>
+
+  <!-- Main Title Area -->
+  <!-- Title line 1 -->
+  <text x="600" y="75" text-anchor="middle" fill="url(#goldGrad)" font-family="Arial, sans-serif" font-size="22" font-weight="bold" letter-spacing="2">تحديث هام</text>
+
+  <!-- Main headline -->
+  <text x="600" y="125" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="38" font-weight="bold">إلغاء تأشيرة السعودية عند الوصول</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="170" text-anchor="middle" fill="#8eafd4" font-family="Arial, sans-serif" font-size="24">لمواطني 14 دولة — من بينهم مصر 🇪🇬</text>
+
+  <!-- Divider line -->
+  <line x1="40" y1="195" x2="1160" y2="195" stroke="url(#goldGrad)" stroke-width="2" opacity="0.5"/>
+
+  <!-- RIGHT SECTION: Key Decision Points -->
+  <g transform="translate(620, 210)">
+
+    <!-- Point 1: Main Decision -->
+    <g transform="translate(0, 0)">
+      <circle cx="540" cy="18" r="20" fill="#e74c3c" opacity="0.9"/>
+      <text x="540" y="24" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">1</text>
+      <text x="510" y="18" text-anchor="end" fill="#ffffff" font-family="Arial, sans-serif" font-size="17" font-weight="bold">القرار الرئيسي</text>
+      <text x="510" y="42" text-anchor="end" fill="#a0b8d0" font-family="Arial, sans-serif" font-size="14">التأشيرة عند الوصول ❌ لم تعد متاحة</text>
+    </g>
+
+    <!-- Point 2: Even with Schengen/US/UK -->
+    <g transform="translate(0, 65)">
+      <circle cx="540" cy="18" r="20" fill="#e67e22" opacity="0.9"/>
+      <text x="540" y="24" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">2</text>
+      <text x="510" y="18" text-anchor="end" fill="#ffffff" font-family="Arial, sans-serif" font-size="17" font-weight="bold">حتى حاملي فيزا شنغن وأمريكا</text>
+      <text x="510" y="42" text-anchor="end" fill="#a0b8d0" font-family="Arial, sans-serif" font-size="14">القيود تنطبق عليهم أيضاً ❌</text>
+    </g>
+
+    <!-- Point 3: Exception -->
+    <g transform="translate(0, 130)">
+      <circle cx="540" cy="18" r="20" fill="#27ae60" opacity="0.9"/>
+      <text x="540" y="24" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">3</text>
+      <text x="510" y="18" text-anchor="end" fill="#ffffff" font-family="Arial, sans-serif" font-size="17" font-weight="bold">الاستثناء الوحيد</text>
+      <text x="510" y="42" text-anchor="end" fill="#a0b8d0" font-family="Arial, sans-serif" font-size="14">تأشيرة سياحية سعودية (e-Visa) صادرة مسبقاً ✅</text>
+    </g>
+
+    <!-- Point 4: Duration -->
+    <g transform="translate(0, 195)">
+      <circle cx="540" cy="18" r="20" fill="#3498db" opacity="0.9"/>
+      <text x="540" y="24" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">4</text>
+      <text x="510" y="18" text-anchor="end" fill="#ffffff" font-family="Arial, sans-serif" font-size="17" font-weight="bold">مدة القرار</text>
+      <text x="510" y="42" text-anchor="end" fill="#a0b8d0" font-family="Arial, sans-serif" font-size="14">حتى إشعار آخر (غير محدد) ⏳</text>
+    </g>
+  </g>
+
+  <!-- RIGHT SECTION: 14 Countries Grid -->
+  <g transform="translate(40, 215)">
+    <!-- Section header -->
+    <rect x="0" y="0" width="520" height="38" rx="6" fill="url(#goldGrad)" filter="url(#shadow)"/>
+    <text x="260" y="27" text-anchor="middle" fill="#0a1628" font-family="Arial, sans-serif" font-size="18" font-weight="bold">🌍 الدول الـ 14 المتأثرة بالقرار</text>
+
+    <!-- Countries grid - Row 1 -->
+    <g transform="translate(0, 50)">
+      <rect x="0" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="60" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇪🇬 مصر</text>
+
+      <rect x="130" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="190" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇯🇴 الأردن</text>
+
+      <rect x="260" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="320" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇹🇳 تونس</text>
+
+      <rect x="390" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="450" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇩🇿 الجزائر</text>
+    </g>
+
+    <!-- Countries grid - Row 2 -->
+    <g transform="translate(0, 90)">
+      <rect x="0" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="60" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇲🇦 المغرب</text>
+
+      <rect x="130" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="190" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇵🇰 باكستان</text>
+
+      <rect x="260" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="320" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇧🇩 بنغلاديش</text>
+
+      <rect x="390" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="450" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇳🇬 نيجيريا</text>
+    </g>
+
+    <!-- Countries grid - Row 3 -->
+    <g transform="translate(0, 130)">
+      <rect x="0" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="60" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇮🇩 إندونيسيا</text>
+
+      <rect x="130" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="190" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇪🇹 إثيوبيا</text>
+
+      <rect x="260" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="320" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇸🇩 السودان</text>
+
+      <rect x="390" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="450" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇾🇪 اليمن</text>
+    </g>
+
+    <!-- Countries grid - Row 4 -->
+    <g transform="translate(65, 170)">
+      <rect x="0" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="60" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇮🇳 الهند</text>
+
+      <rect x="130" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="190" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇮🇶 العراق</text>
+    </g>
+  </g>
+
+  <!-- Bottom Solution Bar -->
+  <rect x="0" y="480" width="1200" height="90" fill="#0d1f3c" opacity="0.9"/>
+  <line x1="0" y1="480" x2="1200" y2="480" stroke="url(#goldGrad)" stroke-width="2"/>
+
+  <!-- Solution text -->
+  <text x="1160" y="515" text-anchor="end" fill="#27ae60" font-family="Arial, sans-serif" font-size="22" font-weight="bold">✅ الحل: استخرج التأشيرة الإلكترونية (e-Visa) قبل السفر — إيز ترافل بتساعدك!</text>
+
+  <text x="1160" y="548" text-anchor="end" fill="#8eafd4" font-family="Arial, sans-serif" font-size="16">التأشيرة بتصدر خلال دقائق لساعات من خلال منصة Visit Saudi الرسمية أو من خلال إيز ترافل</text>
+
+  <!-- Bottom bar with contact -->
+  <rect x="0" y="575" width="1200" height="55" fill="url(#goldGrad)"/>
+
+  <!-- Contact info -->
+  <text x="1160" y="608" text-anchor="end" fill="#0a1628" font-family="Arial, sans-serif" font-size="20" font-weight="bold">📞 01105001389  |  💬 واتساب  |  🌐 ease-travel.online/ar</text>
+
+  <!-- Brand -->
+  <g transform="translate(40, 588)">
+    <text x="0" y="20" fill="#0a1628" font-family="Arial, sans-serif" font-size="24" font-weight="bold">EASE TRAVEL</text>
+  </g>
+
+  <!-- Decorative corner accents -->
+  <path d="M0,0 L40,0 L40,3 L3,3 L3,40 L0,40 Z" fill="url(#goldGrad)" opacity="0.6"/>
+  <path d="M1200,0 L1160,0 L1160,3 L1197,3 L1197,40 L1200,40 Z" fill="url(#goldGrad)" opacity="0.6"/>
+  <path d="M0,630 L40,630 L40,627 L3,627 L3,590 L0,590 Z" fill="url(#goldGrad)" opacity="0.3"/>
+  <path d="M1200,630 L1160,630 L1160,627 L1197,627 L1197,590 L1200,590 Z" fill="url(#goldGrad)" opacity="0.3"/>
+
+</svg>

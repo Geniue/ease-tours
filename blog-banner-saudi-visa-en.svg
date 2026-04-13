@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0f2041;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a1628;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c8951a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f0d060;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c8951a;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.03">
+    <line x1="0" y1="0" x2="1200" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="200" y1="0" x2="1200" y2="500" stroke="#fff" stroke-width="1"/>
+    <line x1="400" y1="0" x2="1200" y2="400" stroke="#fff" stroke-width="1"/>
+    <line x1="0" y1="200" x2="1000" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="0" y1="400" x2="800" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="1200" y1="0" x2="0" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="1000" y1="0" x2="0" y2="500" stroke="#fff" stroke-width="1"/>
+    <line x1="800" y1="0" x2="0" y2="400" stroke="#fff" stroke-width="1"/>
+  </g>
+
+  <!-- Decorative airplane silhouette (background) -->
+  <g transform="translate(950, 80) scale(0.7)" opacity="0.04">
+    <path d="M250,0 L270,80 L350,180 L500,200 L350,220 L270,320 L310,380 L270,360 L250,400 L230,360 L190,380 L230,320 L150,220 L0,200 L150,180 L230,80 Z" fill="#f0d060"/>
+  </g>
+
+  <!-- Top gold accent bar -->
+  <rect x="0" y="0" width="1200" height="5" fill="url(#goldGrad)"/>
+
+  <!-- ALERT BADGE - top left -->
+  <g transform="translate(40, 30)">
+    <rect x="0" y="0" width="150" height="36" rx="18" fill="#e74c3c" filter="url(#shadow)"/>
+    <text x="75" y="24" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">🚨 URGENT ALERT</text>
+  </g>
+
+  <!-- Main Title Area -->
+  <text x="40" y="115" fill="url(#goldGrad)" font-family="Arial, sans-serif" font-size="20" font-weight="bold" letter-spacing="3">BREAKING UPDATE</text>
+  <text x="40" y="162" fill="#ffffff" font-family="Arial, sans-serif" font-size="38" font-weight="bold">Saudi Arabia Suspends Visa on Arrival</text>
+  <text x="40" y="200" fill="#8eafd4" font-family="Arial, sans-serif" font-size="24">for Citizens of 14 Countries — Including Egypt 🇪🇬</text>
+
+  <!-- Divider line -->
+  <line x1="40" y1="220" x2="1160" y2="220" stroke="url(#goldGrad)" stroke-width="2" opacity="0.5"/>
+
+  <!-- LEFT SECTION: 14 Countries Grid -->
+  <g transform="translate(40, 240)">
+    <!-- Section header -->
+    <rect x="0" y="0" width="520" height="38" rx="6" fill="url(#goldGrad)" filter="url(#shadow)"/>
+    <text x="260" y="27" text-anchor="middle" fill="#0a1628" font-family="Arial, sans-serif" font-size="18" font-weight="bold">🌍 The 14 Affected Countries</text>
+
+    <!-- Countries grid - Row 1 -->
+    <g transform="translate(0, 50)">
+      <rect x="0" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="60" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13" font-weight="bold">🇪🇬 Egypt</text>
+
+      <rect x="130" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="190" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇯🇴 Jordan</text>
+
+      <rect x="260" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="320" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇹🇳 Tunisia</text>
+
+      <rect x="390" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="450" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇩🇿 Algeria</text>
+    </g>
+
+    <!-- Countries grid - Row 2 -->
+    <g transform="translate(0, 90)">
+      <rect x="0" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="60" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇲🇦 Morocco</text>
+
+      <rect x="130" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="190" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇵🇰 Pakistan</text>
+
+      <rect x="260" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="320" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇧🇩 Bangladesh</text>
+
+      <rect x="390" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="450" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇳🇬 Nigeria</text>
+    </g>
+
+    <!-- Countries grid - Row 3 -->
+    <g transform="translate(0, 130)">
+      <rect x="0" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="60" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇮🇩 Indonesia</text>
+
+      <rect x="130" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="190" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇪🇹 Ethiopia</text>
+
+      <rect x="260" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="320" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇸🇩 Sudan</text>
+
+      <rect x="390" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="450" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇾🇪 Yemen</text>
+    </g>
+
+    <!-- Countries grid - Row 4 -->
+    <g transform="translate(65, 170)">
+      <rect x="0" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="60" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇮🇳 India</text>
+
+      <rect x="130" y="0" width="120" height="32" rx="4" fill="#162a4a"/>
+      <text x="190" y="22" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="13">🇮🇶 Iraq</text>
+    </g>
+  </g>
+
+  <!-- RIGHT SECTION: Key Decision Points -->
+  <g transform="translate(620, 245)">
+
+    <!-- Point 1: Main Decision -->
+    <g transform="translate(0, 0)">
+      <circle cx="20" cy="18" r="20" fill="#e74c3c" opacity="0.9"/>
+      <text x="20" y="24" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">1</text>
+      <text x="50" y="18" fill="#ffffff" font-family="Arial, sans-serif" font-size="17" font-weight="bold">The Main Decision</text>
+      <text x="50" y="40" fill="#a0b8d0" font-family="Arial, sans-serif" font-size="14">Visa on Arrival ❌ No longer available</text>
+    </g>
+
+    <!-- Point 2: Even with Schengen/US/UK -->
+    <g transform="translate(0, 55)">
+      <circle cx="20" cy="18" r="20" fill="#e67e22" opacity="0.9"/>
+      <text x="20" y="24" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">2</text>
+      <text x="50" y="18" fill="#ffffff" font-family="Arial, sans-serif" font-size="17" font-weight="bold">Schengen / US / UK Visa Holders</text>
+      <text x="50" y="40" fill="#a0b8d0" font-family="Arial, sans-serif" font-size="14">Restrictions apply to them too ❌</text>
+    </g>
+
+    <!-- Point 3: Exception -->
+    <g transform="translate(0, 110)">
+      <circle cx="20" cy="18" r="20" fill="#27ae60" opacity="0.9"/>
+      <text x="20" y="24" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">3</text>
+      <text x="50" y="18" fill="#ffffff" font-family="Arial, sans-serif" font-size="17" font-weight="bold">The Only Exception</text>
+      <text x="50" y="40" fill="#a0b8d0" font-family="Arial, sans-serif" font-size="14">Pre-issued Saudi e-Visa ✅ still valid</text>
+    </g>
+
+    <!-- Point 4: Duration -->
+    <g transform="translate(0, 165)">
+      <circle cx="20" cy="18" r="20" fill="#3498db" opacity="0.9"/>
+      <text x="20" y="24" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">4</text>
+      <text x="50" y="18" fill="#ffffff" font-family="Arial, sans-serif" font-size="17" font-weight="bold">Duration</text>
+      <text x="50" y="40" fill="#a0b8d0" font-family="Arial, sans-serif" font-size="14">Until further notice (indefinite) ⏳</text>
+    </g>
+  </g>
+
+  <!-- Bottom Solution Bar -->
+  <rect x="0" y="480" width="1200" height="90" fill="#0d1f3c" opacity="0.9"/>
+  <line x1="0" y1="480" x2="1200" y2="480" stroke="url(#goldGrad)" stroke-width="2"/>
+
+  <text x="40" y="515" fill="#27ae60" font-family="Arial, sans-serif" font-size="22" font-weight="bold">✅ Solution: Get your Saudi e-Visa online before traveling — Ease Travel can help!</text>
+  <text x="40" y="548" fill="#8eafd4" font-family="Arial, sans-serif" font-size="16">The e-Visa is issued within minutes to hours via the official Visit Saudi platform or through Ease Travel.</text>
+
+  <!-- Bottom bar with contact -->
+  <rect x="0" y="575" width="1200" height="55" fill="url(#goldGrad)"/>
+
+  <!-- Brand -->
+  <g transform="translate(40, 588)">
+    <text x="0" y="22" fill="#0a1628" font-family="Arial, sans-serif" font-size="24" font-weight="bold">EASE TRAVEL</text>
+  </g>
+
+  <!-- Contact info -->
+  <text x="1160" y="608" text-anchor="end" fill="#0a1628" font-family="Arial, sans-serif" font-size="20" font-weight="bold">📞 01105001389  |  💬 WhatsApp  |  🌐 ease-travel.online</text>
+
+  <!-- Decorative corner accents -->
+  <path d="M0,0 L40,0 L40,3 L3,3 L3,40 L0,40 Z" fill="url(#goldGrad)" opacity="0.6"/>
+  <path d="M1200,0 L1160,0 L1160,3 L1197,3 L1197,40 L1200,40 Z" fill="url(#goldGrad)" opacity="0.6"/>
+  <path d="M0,630 L40,630 L40,627 L3,627 L3,590 L0,590 Z" fill="url(#goldGrad)" opacity="0.3"/>
+  <path d="M1200,630 L1160,630 L1160,627 L1197,627 L1197,590 L1200,590 Z" fill="url(#goldGrad)" opacity="0.3"/>
+
+</svg>

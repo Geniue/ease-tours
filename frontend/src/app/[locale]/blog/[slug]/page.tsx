@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getBlog, getBlogs } from "@/lib/api";
 import BlogDetailContent from "@/components/BlogDetailContent";
-import { JsonLd, blogPostingSchema, breadcrumbSchema } from "@/lib/schemas";
+import { JsonLd, blogPostingSchema, breadcrumbSchema, organizationSchema, websiteSchema } from "@/lib/schemas";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
@@ -24,9 +24,15 @@ export async function generateMetadata({
   const altLocale = isAr ? "en" : "ar";
   const altSlug = isAr ? blog.slug_en : blog.slug_ar;
 
+  const metaTitle = (isAr ? blog.seo_title_ar : blog.seo_title_en) || title;
+  const metaDescription =
+    (isAr ? blog.seo_description_ar : blog.seo_description_en) || excerpt || title;
+  const keywords = isAr ? blog.keywords_ar : blog.keywords_en;
+
   return {
-    title,
-    description: excerpt || title,
+    title: metaTitle,
+    description: metaDescription,
+    ...(keywords && { keywords }),
     alternates: {
       canonical: `${SITE_URL}/${locale}/blog/${encodeURIComponent(correctSlug)}`,
       languages: {
@@ -38,18 +44,19 @@ export async function generateMetadata({
     openGraph: {
       type: "article",
       locale: isAr ? "ar_EG" : "en_US",
-      title,
-      description: excerpt || title,
+      title: metaTitle,
+      description: metaDescription,
       url: `${SITE_URL}/${locale}/blog/${encodeURIComponent(correctSlug)}`,
       ...(blog.published_at && { publishedTime: blog.published_at }),
+      ...(blog.updated_at && { modifiedTime: blog.updated_at }),
       ...(blog.featured_image_url && {
-        images: [{ url: blog.featured_image_url, alt: title }],
+        images: [{ url: blog.featured_image_url, alt: metaTitle }],
       }),
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description: excerpt || title,
+      title: metaTitle,
+      description: metaDescription,
       ...(blog.featured_image_url && { images: [blog.featured_image_url] }),
     },
   };
@@ -89,6 +96,8 @@ export default async function BlogPostPage({
           { name: title, url: `${SITE_URL}/${locale}/blog/${encodeURIComponent(correctSlug)}` },
         ])}
       />
+      <JsonLd data={organizationSchema(locale)} />
+      <JsonLd data={websiteSchema(locale)} />
       <main>
         <BlogDetailContent blog={blog} relatedBlogs={relatedBlogs} />
       </main>

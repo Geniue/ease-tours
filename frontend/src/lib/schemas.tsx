@@ -1,4 +1,5 @@
 import type { ApiTrip, ApiBlog, ApiService, ApiGovernorate } from "@/lib/api";
+import { countWords } from "@/lib/blogUtils";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
@@ -146,6 +147,9 @@ export function blogPostingSchema(blog: ApiBlog, locale: string) {
   const title = isAr ? blog.title_ar : blog.title_en;
   const excerpt = isAr ? blog.excerpt_ar : blog.excerpt_en;
   const slug = isAr ? blog.slug_ar : blog.slug_en;
+  const keywords = isAr ? blog.keywords_ar : blog.keywords_en;
+  const body = isAr ? blog.body_ar : blog.body_en;
+  const categoryName = isAr ? blog.category.name_ar : blog.category.name_en;
 
   return {
     "@context": "https://schema.org",
@@ -153,9 +157,19 @@ export function blogPostingSchema(blog: ApiBlog, locale: string) {
     headline: title,
     ...(excerpt && { description: excerpt }),
     url: `${SITE_URL}/${locale}/blog/${encodeURIComponent(slug)}`,
-    ...(blog.featured_image_url && { image: blog.featured_image_url }),
+    ...(blog.featured_image_url && {
+      image: {
+        "@type": "ImageObject",
+        url: blog.featured_image_url,
+        description: title,
+      },
+    }),
     ...(blog.published_at && { datePublished: blog.published_at }),
+    ...(blog.updated_at && { dateModified: blog.updated_at }),
     inLanguage: isAr ? "ar-EG" : "en",
+    articleSection: categoryName,
+    ...(keywords && { keywords }),
+    wordCount: countWords(body),
     author: {
       "@type": "Organization",
       name: isAr ? "إيز ترافل" : "Ease Travel",

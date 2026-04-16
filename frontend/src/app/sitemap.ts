@@ -30,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogEntries: MetadataRoute.Sitemap = blogs.flatMap((blog) =>
     locales.map((locale) => ({
       url: `${SITE_URL}/${locale}/blog/${encodeURIComponent(locale === "ar" ? blog.slug_ar : blog.slug_en)}`,
-      lastModified: blog.published_at ? new Date(blog.published_at) : new Date(),
+      lastModified: new Date(blog.updated_at),
       changeFrequency: "monthly" as const,
       priority: 0.7,
     }))

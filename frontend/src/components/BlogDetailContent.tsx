@@ -4,6 +4,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Calendar, Tag } from "lucide-react";
 import Image from "next/image";
 import type { ApiBlog } from "@/lib/api";
+import { processBodyImages } from "@/lib/blogUtils";
 import BlogCard from "@/components/BlogCard";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
@@ -19,7 +20,7 @@ export default function BlogDetailContent({
   const isAr = locale === "ar";
 
   const title = isAr ? blog.title_ar : blog.title_en;
-  const body = isAr ? blog.body_ar : blog.body_en;
+  const body = processBodyImages(isAr ? blog.body_ar : blog.body_en);
   const categoryName = isAr ? blog.category.name_ar : blog.category.name_en;
 
   const publishedDate = blog.published_at

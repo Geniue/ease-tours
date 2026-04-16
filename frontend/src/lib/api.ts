@@ -155,6 +155,13 @@ export interface ApiBlog {
   is_published: boolean;
   is_featured: boolean;
   published_at: string | null;
+  updated_at: string;
+  seo_title_ar: string | null;
+  seo_title_en: string | null;
+  seo_description_ar: string | null;
+  seo_description_en: string | null;
+  keywords_ar: string | null;
+  keywords_en: string | null;
   category: {
     id: number;
     name_ar: string;

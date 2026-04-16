@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /f/ease-tours/backend/app/Models -type f -exec grep -l \"class \" {} \\\\;)",
+      "Bash(ls -lh /f/ease-tours/*.md)",
+      "Bash(xargs cat *)",
+      "WebFetch(domain:www.egypttoursportal.com)",
+      "Bash(grep -E \"\\\\.\\(php|php-fpm\\)$|Blog\")",
+      "Bash(xargs grep *)",
+      "Bash(find /f/ease-tours -name \".env.example\" -exec cat {} \\\\;)",
+      "Bash(php artisan tinker '--execute= *)"
+    ]
+  }
+}

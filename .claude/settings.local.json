@@ -8,7 +8,8 @@
       "Bash(grep -E \"\\\\.\\(php|php-fpm\\)$|Blog\")",
       "Bash(xargs grep *)",
       "Bash(find /f/ease-tours -name \".env.example\" -exec cat {} \\\\;)",
-      "Bash(php artisan tinker '--execute= *)"
+      "Bash(php artisan tinker '--execute= *)",
+      "Bash(php artisan *)"
     ]
   }
 }

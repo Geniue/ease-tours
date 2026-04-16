@@ -102,14 +102,14 @@ https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?q=80&w=1400&h=700&f
 
 ## Body (English)
 
-> **To test inline images:** In the rich text editor, click the 📎 attach button to upload images from your device. They will be stored at `/storage/blogs/body-images/` and inserted automatically. The 4 `<img>` tags below use Unsplash URLs — replace any of them with your own uploaded images.
+> **To add images:** In the rich text editor, click the 📎 attach button to upload images from your device. They will be stored at `/storage/blogs/body-images/` and inserted automatically. Place them at the `<!-- IMAGE -->` marker positions suggested in the content below (markers are not HTML — remove them and insert your image via the editor).
 
 ```html
 <p>Deep within the northeastern corner of modern <strong>Cairo</strong>, where ancient sands still hold millennia of secrets, lies the site of one of the most sacred and intellectually magnificent cities the world has ever known — <strong>Heliopolis</strong>. Known to the ancient Egyptians as <em>Iunu</em> (the Pillared City), this legendary metropolis was the <strong>spiritual heart of ancient Egypt</strong>, the primary seat of sun worship, and a center of cosmological philosophy that shaped civilizations for thousands of years.</p>
 
 <p>Long before Athens built its Agora or Rome rose from seven hills, <strong>Heliopolis ancient Egypt</strong> was already a thriving capital of religious and scientific thought. Its priests developed the world's first formal creation mythology, its astronomers calculated a solar calendar still in use today, and its temples attracted the greatest thinkers of antiquity — from Pythagoras to Plato — who came to study at the feet of its learned priests.</p>
 
-<img src="https://images.unsplash.com/photo-1568322445389-f64ac2515020?q=80&w=1200&h=550&fit=crop" alt="Ancient Egyptian temple ruins with towering columns and hieroglyphic inscriptions representing the sacred temples that once stood in Heliopolis">
+<!-- IMAGE: Ancient Egyptian temple ruins / sacred temples of Heliopolis -->
 
 <h2>Where Is Ancient Heliopolis Located Today?</h2>
 
@@ -139,7 +139,7 @@ https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?q=80&w=1400&h=700&f
 
 <p>No feature defined ancient Heliopolis more dramatically than its <strong>obelisks</strong>. These towering monolithic pillars — quarried from red granite at Aswan and transported hundreds of miles by Nile barge — represented the <strong>primordial mound of creation</strong> and the <strong>first rays of the rising sun at dawn</strong>. Heliopolis is believed to have housed more obelisks than any other site in ancient Egypt. Visitors approaching the city would have seen dozens of these gleaming stone needles catching the sunlight, their electrum-capped tips blazing like earthbound suns.</p>
 
-<img src="https://images.unsplash.com/photo-1554931670-4ebfabf46ddb?q=80&w=1200&h=550&fit=crop" alt="Towering Egyptian obelisk inscribed with ancient hieroglyphs, similar to the magnificent obelisks that once lined the sacred avenues of Heliopolis">
+<!-- IMAGE: Egyptian obelisk with hieroglyphic inscriptions / the obelisks of Heliopolis -->
 
 <h3>The Obelisk of Senusret I: The Last Guardian of Heliopolis</h3>
 
@@ -182,7 +182,7 @@ https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?q=80&w=1400&h=700&f
 
 <p>At the very heart of the Great Temple of Ra in Heliopolis stood the most sacred object in all of ancient Egypt: the <strong>Benben Stone</strong>. This pyramidal or conical stone — housed within a special inner sanctuary called the <em>Benbentet</em> — was believed to be the <strong>primordial mound that emerged from the waters of chaos at the dawn of creation</strong>. According to Heliopolitan theology, the Benben Stone was the first solid ground upon which the first light of creation fell. Upon its apex, the self-created god Atum first manifested in physical form.</p>
 
-<img src="https://images.unsplash.com/photo-1471874708374-aabe49e3d7f7?q=80&w=1200&h=550&fit=crop" alt="Ancient Egyptian desert at sunrise with golden light, symbolizing the sacred sunrise mythology of Heliopolis and the primordial creation story of the Benben Stone">
+<!-- IMAGE: Egyptian desert at sunrise / the Benben Stone creation myth -->
 
 <h3>The Benben's Architectural Legacy</h3>
 <ul>
@@ -217,7 +217,7 @@ https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?q=80&w=1400&h=700&f
 
 <p>The contrast between ancient Heliopolis's magnificence and its current physical state is one of archaeology's most poignant stories. What was once a city of towering temples, sacred lakes, processional avenues lined with sphinxes, and the greatest library of knowledge in the ancient world is today largely buried beneath Cairo's urban sprawl.</p>
 
-<img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=1200&h=550&fit=crop" alt="Archaeological site in Egypt with ancient stone columns and ruins, representing the surviving remnants of the ancient Heliopolis temple complex in modern-day Al-Matariya">
+<!-- IMAGE: Archaeological ruins / Al-Matariya Heliopolis site today -->
 
 <h3>Surviving Monuments and Artifacts</h3>
 <ul>
@@ -264,7 +264,7 @@ https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?q=80&w=1400&h=700&f
 
 <p>قبل أن تبني أثينا أغورا الشهيرة أو تقوم روما على تلالها السبع، كانت <strong>هليوبوليس مصر القديمة</strong> تزدهر بالفكر الديني والعلمي. أبدع كهانتها أول أسطورة خلق منظّمة في التاريخ، وحسب فلكيّوها تقويماً شمسياً لا يزال أساسه قائماً حتى اليوم، واستقطبت معابدها أعظم العقول في العالم القديم — من فيثاغورس إلى أفلاطون.</p>
 
-<img src="https://images.unsplash.com/photo-1568322445389-f64ac2515020?q=80&w=1200&h=550&fit=crop" alt="أطلال معبد مصري قديم بأعمدة شامخة ونقوش هيروغليفية تمثل المعابد المقدسة التي كانت تقف في هليوبوليس">
+<!-- IMAGE: أطلال معبد مصري / المعابد المقدسة في هليوبوليس -->
 
 <h2>أين تقع هليوبوليس القديمة اليوم؟</h2>
 
@@ -286,7 +286,7 @@ https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?q=80&w=1400&h=700&f
 
 <p>لا شيء ميّز هليوبوليس القديمة كما فعلت <strong>المسلات</strong>. هذه الأعمدة الصخرية الأحادية الضخمة — المنحوتة من الجرانيت الأحمر في أسوان والمنقولة بالزوارق النيلية — مثّلت <strong>التلّة البدائية للخلق</strong> و<strong>أولى أشعة الشمس عند الفجر</strong>. ويُعتقد أن هليوبوليس احتضنت عدداً من المسلات يفوق أي موقع آخر في مصر القديمة.</p>
 
-<img src="https://images.unsplash.com/photo-1554931670-4ebfabf46ddb?q=80&w=1200&h=550&fit=crop" alt="مسلة مصرية شاهقة منقوشة بالهيروغليفية، مماثلة للمسلات العظيمة التي كانت تصطف في أزقة هليوبوليس المقدسة">
+<!-- IMAGE: مسلة مصرية بالهيروغليفية / مسلات هليوبوليس -->
 
 <h3>مسلة سنوسرت الأول: الحارس الأخير لهليوبوليس</h3>
 
@@ -312,7 +312,7 @@ https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?q=80&w=1400&h=700&f
 
 <p>في قلب معبد رع العظيم كان يوجد أقدس الأشياء في مصر القديمة: <strong>حجر البنبن</strong>. يُعتقد أن هذا الحجر الهرمي هو <strong>التلة الأولى التي برزت من مياه الفوضى في فجر الخلق</strong> — أول بقعة أرض ارتطم بها شعاع الشمس الأول.</p>
 
-<img src="https://images.unsplash.com/photo-1471874708374-aabe49e3d7f7?q=80&w=1200&h=550&fit=crop" alt="صحراء مصر القديمة عند شروق الشمس بضوء ذهبي، ترمز إلى أساطير هليوبوليس المقدسة وقصة الخلق البدائية">
+<!-- IMAGE: صحراء مصر عند الشروق / أسطورة البنبن والخلق -->
 
 <h3>الإرث المعماري لحجر البنبن</h3>
 <ul>
@@ -342,7 +342,7 @@ https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?q=80&w=1400&h=700&f
 
 <h2>إرث هليوبوليس: ما تبقّى حتى اليوم</h2>
 
-<img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=1200&h=550&fit=crop" alt="موقع أثري في مصر بأعمدة حجرية وأطلال قديمة، يمثّل البقايا الباقية من مجمع معبد هليوبوليس في حي المطرية بالقاهرة">
+<!-- IMAGE: الموقع الأثري لهليوبوليس / حي المطرية بالقاهرة اليوم -->
 
 <h3>ما بقي من المعالم والآثار</h3>
 <ul>
@@ -377,7 +377,7 @@ https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?q=80&w=1400&h=700&f
 - [x] H3 tags: 5 subsections
 - [x] Word count: ~2,100 words (EN) + ~1,400 words (AR)
 - [x] Main keyword "heliopolis egypt" / "هليوبوليس مصر": appears in title, H2s, body, meta
-- [x] 4 inline images with descriptive alt text
+- [ ] 4 inline images — upload via admin 📎 attach button at the `<!-- IMAGE -->` markers
 - [x] Keywords field: 10 terms covering all LSI variations
 - [x] Internal link opportunity: mention Ease Travel tours (Cairo tours, Egypt packages)
 - [x] Structured data: BlogPosting, BreadcrumbList, Organization, WebSite (auto by frontend)

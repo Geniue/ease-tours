@@ -2,23 +2,18 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
+    public function register(): void {}
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        //
+        // Ensure upload directories exist on every boot (safe on all environments)
+        foreach (['blogs', 'blogs/body-images', 'trips', 'services'] as $dir) {
+            Storage::disk('public')->makeDirectory($dir);
+        }
     }
 }

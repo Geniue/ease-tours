@@ -74,11 +74,48 @@ class BlogResource extends Resource
                         Forms\Components\RichEditor::make('body_ar')
                             ->label('Body (Arabic)')
                             ->required()
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsDirectory('blogs/body-images')
+                            ->fileAttachmentsVisibility('public'),
                         Forms\Components\RichEditor::make('body_en')
                             ->label('Body (English)')
                             ->required()
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsDirectory('blogs/body-images')
+                            ->fileAttachmentsVisibility('public'),
+                    ]),
+
+                Forms\Components\Section::make('SEO')
+                    ->description('Leave blank to auto-generate from title and excerpt.')
+                    ->columns(2)
+                    ->collapsed()
+                    ->schema([
+                        Forms\Components\TextInput::make('seo_title_ar')
+                            ->label('SEO Title (Arabic)')
+                            ->maxLength(60)
+                            ->helperText('Recommended: 50–60 characters'),
+                        Forms\Components\TextInput::make('seo_title_en')
+                            ->label('SEO Title (English)')
+                            ->maxLength(60)
+                            ->helperText('Recommended: 50–60 characters'),
+                        Forms\Components\Textarea::make('seo_description_ar')
+                            ->label('Meta Description (Arabic)')
+                            ->rows(2)
+                            ->maxLength(160)
+                            ->helperText('Recommended: 120–160 characters'),
+                        Forms\Components\Textarea::make('seo_description_en')
+                            ->label('Meta Description (English)')
+                            ->rows(2)
+                            ->maxLength(160)
+                            ->helperText('Recommended: 120–160 characters'),
+                        Forms\Components\TextInput::make('keywords_ar')
+                            ->label('Keywords (Arabic)')
+                            ->helperText('Comma-separated, e.g. رحلات, سياحة, مصر'),
+                        Forms\Components\TextInput::make('keywords_en')
+                            ->label('Keywords (English)')
+                            ->helperText('Comma-separated, e.g. tours, travel, Egypt'),
                     ]),
 
                 Forms\Components\Section::make('Media & Publishing')

@@ -126,7 +126,7 @@ class BlogResource extends Resource
                             ->directory('blogs')
                             ->disk('public')
                             ->visibility('public')
-                            ->maxSize(5120),
+                            ->maxSize(10240),
                         Forms\Components\Group::make([
                             Forms\Components\Toggle::make('is_published')
                                 ->label('Published'),

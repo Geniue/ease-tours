@@ -4,9 +4,9 @@ return [
 
     'temporary_file_upload' => [
 
-        'disk' => null,
+        'disk' => 'public',
 
-        'directory' => null,
+        'directory' => 'livewire-tmp',
 
         'middleware' => null,
 

@@ -12,7 +12,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Ensure upload directories exist on every boot (safe on all environments)
-        foreach (['blogs', 'blogs/body-images', 'trips', 'services'] as $dir) {
+        foreach (['blogs', 'blogs/body-images', 'trips', 'services', 'livewire-tmp'] as $dir) {
             Storage::disk('public')->makeDirectory($dir);
         }
     }

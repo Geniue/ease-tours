@@ -11,7 +11,6 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Maatwebsite\Excel\Facades\Excel;
 
 class ClientTransactionResource extends Resource
 {
@@ -182,9 +181,7 @@ class ClientTransactionResource extends Resource
                         }
 
                         $import = new ClientTransactionImport();
-                        // $data['file'] is a TemporaryUploadedFile (extends UploadedFile)
-                        // maatwebsite/excel accepts it directly
-                        Excel::import($import, $data['file']);
+                        $import->import($data['file']);
 
                         Notification::make()
                             ->title('Import successful')

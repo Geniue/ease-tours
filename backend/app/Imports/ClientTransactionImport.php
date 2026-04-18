@@ -4,15 +4,13 @@ namespace App\Imports;
 
 use App\Models\ClientTransaction;
 use Carbon\Carbon;
-use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
-use Illuminate\Support\Collection;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
 
-class ClientTransactionImport implements ToCollection, WithCalculatedFormulas
+class ClientTransactionImport
 {
     private int $imported = 0;
 
-    // Known header names → our canonical key
     private const COLUMN_MAP = [
         'date'          => 'date',
         'clint'         => 'client',
@@ -39,43 +37,55 @@ class ClientTransactionImport implements ToCollection, WithCalculatedFormulas
         'current mon'   => 'current_money',
     ];
 
-    public function collection(Collection $rows): void
+    public function import(mixed $file): void
     {
-        // ── Step 1: find the header row ──────────────────────────────────
-        // Scan every row looking for one that contains "clint" or "client"
-        // alongside "date" — that's our header regardless of its position.
-        $headerIndex = null;
-        $colMap      = [];  // column position → canonical key
+        $path        = is_string($file) ? $file : $file->getRealPath();
+        $spreadsheet = IOFactory::load($path);
+        $sheet       = $spreadsheet->getActiveSheet();
 
-        foreach ($rows as $i => $row) {
-            $normalized = $row->map(fn ($v) => strtolower(trim((string) $v)));
+        // ── Find header row ─────────────────────────────────────────────
+        $headerRowNum = null;
+        $colMap       = []; // column letter/index → canonical key
+
+        foreach ($sheet->getRowIterator() as $row) {
+            $cells  = $row->getCellIterator();
+            $cells->setIterateOnlyExistingCells(false);
+
+            $rowValues = [];
+            foreach ($cells as $cell) {
+                $rowValues[$cell->getColumn()] = strtolower(trim((string) $cell->getValue()));
+            }
 
             if (
-                $normalized->contains('date') &&
-                ($normalized->contains('clint') || $normalized->contains('client'))
+                in_array('date', $rowValues, true) &&
+                (in_array('clint', $rowValues, true) || in_array('client', $rowValues, true))
             ) {
-                $headerIndex = $i;
+                $headerRowNum = $row->getRowIndex();
 
-                foreach ($normalized as $pos => $label) {
+                foreach ($rowValues as $col => $label) {
                     $key = self::COLUMN_MAP[$label] ?? null;
                     if ($key) {
-                        $colMap[$pos] = $key;
+                        $colMap[$col] = $key;
                     }
                 }
                 break;
             }
         }
 
-        if ($headerIndex === null || empty($colMap)) {
-            return; // no recognisable header found
+        if ($headerRowNum === null || empty($colMap)) {
+            return;
         }
 
-        // ── Step 2: process every row after the header ───────────────────
-        foreach ($rows->slice($headerIndex + 1) as $row) {
-            // Build an associative array using detected column positions
+        // ── Process data rows ────────────────────────────────────────────
+        $highestRow = $sheet->getHighestDataRow();
+
+        for ($rowNum = $headerRowNum + 1; $rowNum <= $highestRow; $rowNum++) {
+
+            // Build associative array from detected column positions
             $data = [];
-            foreach ($colMap as $pos => $key) {
-                $data[$key] = $row[$pos] ?? null;
+            foreach ($colMap as $col => $key) {
+                $cell        = $sheet->getCell($col . $rowNum);
+                $data[$key]  = $cell->getCalculatedValue();
             }
 
             $clientName = trim((string) ($data['client'] ?? ''));
@@ -86,12 +96,24 @@ class ClientTransactionImport implements ToCollection, WithCalculatedFormulas
             $netPrice  = $this->parseAmount($data['net_price']  ?? 0);
             $sellPrice = $this->parseAmount($data['sell_price'] ?? 0);
 
-            // Skip rows where both prices are zero and the name looks like a
-            // formula artefact (all-numeric or single char)
-            if ($netPrice === 0.0 && $sellPrice === 0.0 && strlen($clientName) <= 1) {
-                continue;
-            }
+            // ── Detect row background colour ─────────────────────────────
+            // Red background → client cancelled (lost)
+            // Blue background → money not collected (LOST in current_money)
+            // We read the fill of the first data column
+            $firstCol    = array_key_first($colMap);
+            $fillRgb     = $sheet
+                ->getStyle($firstCol . $rowNum)
+                ->getFill()
+                ->getStartColor()
+                ->getRGB();
 
+            $colorStatus = $this->colorToStatus($fillRgb);
+
+            // Explicit status from the "case" column wins unless colour says "lost"
+            $textStatus = $this->parseStatus($data['status'] ?? 'waiting');
+            $status     = ($colorStatus === 'lost') ? 'lost' : $textStatus;
+
+            // current_money: "LOST" text or blue row → null (not collected)
             $rawMoney     = $data['current_money'] ?? null;
             $currentMoney = null;
             if (
@@ -103,11 +125,11 @@ class ClientTransactionImport implements ToCollection, WithCalculatedFormulas
             }
 
             ClientTransaction::create([
-                'transaction_date' => $this->parseDate($data['date']       ?? null),
+                'transaction_date' => $this->parseDate($data['date']      ?? null),
                 'client_name'      => $clientName,
-                'service'          => trim((string) ($data['service']      ?? '')),
-                'status'           => $this->parseStatus($data['status']   ?? 'waiting'),
-                'follow_up_date'   => $this->parseDate($data['follow_up']  ?? null),
+                'service'          => trim((string) ($data['service']     ?? '')),
+                'status'           => $status,
+                'follow_up_date'   => $this->parseDate($data['follow_up'] ?? null),
                 'net_price'        => $netPrice,
                 'sell_price'       => $sellPrice,
                 'profit'           => $sellPrice - $netPrice,
@@ -123,17 +145,37 @@ class ClientTransactionImport implements ToCollection, WithCalculatedFormulas
         return $this->imported;
     }
 
+    // ── Colour detection ─────────────────────────────────────────────────
+
+    private function colorToStatus(string $rgb): ?string
+    {
+        if (strlen($rgb) !== 6) {
+            return null;
+        }
+
+        $r = hexdec(substr($rgb, 0, 2));
+        $g = hexdec(substr($rgb, 2, 2));
+        $b = hexdec(substr($rgb, 4, 2));
+
+        // Red: R dominant, G and B low → cancelled/lost
+        if ($r > 150 && $r > $g * 1.8 && $r > $b * 1.8) {
+            return 'lost';
+        }
+
+        return null;
+    }
+
+    // ── Helpers ──────────────────────────────────────────────────────────
+
     private function parseDate(mixed $value): ?string
     {
         if ($value === null || trim((string) $value) === '') {
             return null;
         }
 
-        // Excel serial number
         if (is_numeric($value)) {
             try {
-                return \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject((float) $value)
-                    ->format('Y-m-d');
+                return ExcelDate::excelToDateTimeObject((float) $value)->format('Y-m-d');
             } catch (\Throwable) {
                 return null;
             }

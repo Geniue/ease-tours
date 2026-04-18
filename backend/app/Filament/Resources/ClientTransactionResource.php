@@ -11,7 +11,6 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ClientTransactionResource extends Resource
@@ -170,8 +169,7 @@ class ClientTransactionResource extends Resource
                                 'text/csv',
                                 'text/plain',
                             ])
-                            ->disk('local')
-                            ->directory('imports')
+                            ->storeFiles(false)
                             ->required(),
                         Forms\Components\Toggle::make('clear_existing')
                             ->label('Clear all existing records before import')
@@ -183,10 +181,10 @@ class ClientTransactionResource extends Resource
                             ClientTransaction::truncate();
                         }
 
-                        $path    = Storage::disk('local')->path($data['file']);
-                        $import  = new ClientTransactionImport();
-
-                        Excel::import($import, $path);
+                        $import = new ClientTransactionImport();
+                        // $data['file'] is a TemporaryUploadedFile (extends UploadedFile)
+                        // maatwebsite/excel accepts it directly
+                        Excel::import($import, $data['file']);
 
                         Notification::make()
                             ->title('Import successful')

@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Client;
 use App\Models\ClientTransaction;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -124,7 +125,13 @@ class ClientTransactionImport
                 $currentMoney = (float) $rawMoney;
             }
 
+            $client = Client::firstOrCreate(
+                ['name' => $clientName],
+                ['name' => $clientName]
+            );
+
             ClientTransaction::create([
+                'client_id'        => $client->id,
                 'transaction_date' => $this->parseDate($data['date']      ?? null),
                 'client_name'      => $clientName,
                 'service'          => trim((string) ($data['service']     ?? '')),

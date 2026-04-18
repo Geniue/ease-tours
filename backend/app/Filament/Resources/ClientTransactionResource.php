@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\ClientResource\Pages\ViewClient;
 use App\Filament\Resources\ClientTransactionResource\Pages;
 use App\Imports\ClientTransactionImport;
 use App\Models\ClientTransaction;
@@ -197,6 +198,15 @@ class ClientTransactionResource extends Resource
                     ->url(fn () => route('filament.admin.pages.accounting-report')),
             ])
             ->actions([
+                Tables\Actions\Action::make('client_profile')
+                    ->label('Profile')
+                    ->icon('heroicon-o-user-circle')
+                    ->color('gray')
+                    ->visible(fn (ClientTransaction $record) => $record->client_id !== null)
+                    ->url(fn (ClientTransaction $record) => $record->client_id
+                        ? ViewClient::getUrl(['record' => $record->client_id])
+                        : null
+                    ),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ClientTransaction extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'client_id',
         'transaction_date',
         'client_name',
         'service',
@@ -30,6 +32,11 @@ class ClientTransaction extends Model
         'profit'           => 'decimal:2',
         'current_money'    => 'decimal:2',
     ];
+
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(Client::class);
+    }
 
     protected static function booted(): void
     {

@@ -2,191 +2,260 @@
     @php
         $data = $this->getViewData();
         $s    = $data['summary'];
-
-        $profitMarginColor = $s['profit_margin'] >= 20 ? 'text-emerald-600 dark:text-emerald-400'
-                           : ($s['profit_margin'] >= 10 ? 'text-yellow-600 dark:text-yellow-400'
-                           : 'text-red-600 dark:text-red-400');
+        $collectionRate = $s['collection_rate'];
+        $profitMargin   = $s['profit_margin'];
     @endphp
 
-    {{-- ══════════════════════════════════════════ HERO STATS ══ --}}
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 mb-6">
+    <style>
+        .ar-card {
+            border-radius: 16px;
+            padding: 20px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .ar-card-shine::before {
+            content: '';
+            position: absolute;
+            top: -40px; right: -40px;
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+        }
+        .ar-card-shine::after {
+            content: '';
+            position: absolute;
+            bottom: -30px; left: -30px;
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+        }
+        .ar-badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 2px 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .ar-table th {
+            padding: 10px 16px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+        }
+        .ar-table td {
+            padding: 12px 16px;
+            font-size: 13px;
+        }
+        .ar-progress {
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.15);
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .ar-progress-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.75);
+            transition: width 0.6s ease;
+        }
+        .ar-section {
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .ar-section-header {
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom-width: 1px;
+        }
+        .ar-row-hover:hover {
+            background: rgba(99, 102, 241, 0.04);
+        }
+    </style>
 
-        {{-- Revenue Card --}}
-        <div class="col-span-1 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 p-6 text-white shadow-lg">
-            <div class="flex items-start justify-between">
-                <div>
-                    <p class="text-xs font-semibold uppercase tracking-widest text-indigo-200">Total Revenue</p>
-                    <p class="mt-2 text-3xl font-extrabold">EGP {{ number_format($s['total_revenue'], 0) }}</p>
-                    <p class="mt-1 text-sm text-indigo-200">From {{ number_format($s['done']) }} completed deals</p>
-                </div>
-                <div class="rounded-xl bg-white/15 p-3">
-                    <x-heroicon-o-banknotes class="h-7 w-7 text-white"/>
-                </div>
-            </div>
-            <div class="mt-4 h-1 w-full rounded-full bg-white/20">
-                <div class="h-1 rounded-full bg-white" style="width: {{ min(100, $s['collection_rate']) }}%"></div>
-            </div>
-            <p class="mt-1 text-xs text-indigo-200">{{ $s['collection_rate'] }}% collected</p>
+    {{-- ══════════════════════════ TOP 4 KPI CARDS ══ --}}
+    <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:14px; margin-bottom:20px;">
+
+        {{-- Revenue --}}
+        <div class="ar-card ar-card-shine" style="background: linear-gradient(135deg, #6366f1, #4338ca); color:#fff;">
+            <p style="font-size:11px;font-weight:700;letter-spacing:.08em;opacity:.75;text-transform:uppercase;">Total Revenue</p>
+            <p style="font-size:26px;font-weight:800;margin-top:4px;line-height:1.1;">EGP {{ number_format($s['total_revenue'], 0) }}</p>
+            <p style="font-size:12px;opacity:.7;margin-top:3px;">{{ $s['done'] }} completed deals</p>
+            <div class="ar-progress"><div class="ar-progress-fill" style="width:{{ min(100,$collectionRate) }}%;"></div></div>
+            <p style="font-size:11px;opacity:.6;margin-top:4px;">{{ $collectionRate }}% collected</p>
         </div>
 
-        {{-- Profit Card --}}
-        <div class="col-span-1 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 p-6 text-white shadow-lg">
-            <div class="flex items-start justify-between">
-                <div>
-                    <p class="text-xs font-semibold uppercase tracking-widest text-emerald-200">Total Profit</p>
-                    <p class="mt-2 text-3xl font-extrabold">EGP {{ number_format($s['total_profit'], 0) }}</p>
-                    <p class="mt-1 text-sm text-emerald-200">{{ $s['profit_margin'] }}% profit margin</p>
-                </div>
-                <div class="rounded-xl bg-white/15 p-3">
-                    <x-heroicon-o-arrow-trending-up class="h-7 w-7 text-white"/>
-                </div>
-            </div>
-            <div class="mt-4 h-1 w-full rounded-full bg-white/20">
-                <div class="h-1 rounded-full bg-white" style="width: {{ min(100, $s['profit_margin']) }}%"></div>
-            </div>
-            <p class="mt-1 text-xs text-emerald-200">{{ $s['profit_margin'] }}% margin on done deals</p>
+        {{-- Profit --}}
+        <div class="ar-card ar-card-shine" style="background: linear-gradient(135deg, #10b981, #059669); color:#fff;">
+            <p style="font-size:11px;font-weight:700;letter-spacing:.08em;opacity:.75;text-transform:uppercase;">Total Profit</p>
+            <p style="font-size:26px;font-weight:800;margin-top:4px;line-height:1.1;">EGP {{ number_format($s['total_profit'], 0) }}</p>
+            <p style="font-size:12px;opacity:.7;margin-top:3px;">{{ $profitMargin }}% profit margin</p>
+            <div class="ar-progress"><div class="ar-progress-fill" style="width:{{ min(100,$profitMargin) }}%;"></div></div>
+            <p style="font-size:11px;opacity:.6;margin-top:4px;">On done deals only</p>
         </div>
 
-        {{-- Pipeline + Outstanding --}}
-        <div class="col-span-1 grid grid-rows-2 gap-4">
-            <div class="rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 p-4 text-white shadow-md flex items-center gap-4">
-                <div class="rounded-xl bg-white/20 p-2.5">
-                    <x-heroicon-o-clock class="h-6 w-6"/>
-                </div>
-                <div>
-                    <p class="text-xs font-semibold uppercase tracking-wide text-amber-100">Pending Pipeline</p>
-                    <p class="text-xl font-bold">EGP {{ number_format($s['pending_revenue'], 0) }}</p>
-                    <p class="text-xs text-amber-100">{{ $s['waiting'] }} deals in progress</p>
-                </div>
-            </div>
-            <div class="rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 p-4 text-white shadow-md flex items-center gap-4">
-                <div class="rounded-xl bg-white/20 p-2.5">
-                    <x-heroicon-o-exclamation-circle class="h-6 w-6"/>
-                </div>
-                <div>
-                    <p class="text-xs font-semibold uppercase tracking-wide text-orange-100">Outstanding Balance</p>
-                    <p class="text-xl font-bold">EGP {{ number_format($data['totalOutstanding'], 0) }}</p>
-                    <p class="text-xs text-orange-100">{{ $data['outstanding']->count() }} clients owe balance</p>
-                </div>
-            </div>
+        {{-- Collected --}}
+        <div class="ar-card ar-card-shine" style="background: linear-gradient(135deg, #0ea5e9, #0284c7); color:#fff;">
+            <p style="font-size:11px;font-weight:700;letter-spacing:.08em;opacity:.75;text-transform:uppercase;">Cash Collected</p>
+            <p style="font-size:26px;font-weight:800;margin-top:4px;line-height:1.1;">EGP {{ number_format($s['total_collected'], 0) }}</p>
+            <p style="font-size:12px;opacity:.7;margin-top:3px;">Of EGP {{ number_format($s['total_revenue'], 0) }} total</p>
+            <div class="ar-progress"><div class="ar-progress-fill" style="width:{{ min(100,$collectionRate) }}%;"></div></div>
+            <p style="font-size:11px;opacity:.6;margin-top:4px;">{{ $collectionRate }}% collection rate</p>
+        </div>
+
+        {{-- Outstanding --}}
+        <div class="ar-card ar-card-shine" style="background: linear-gradient(135deg, #f59e0b, #d97706); color:#fff;">
+            <p style="font-size:11px;font-weight:700;letter-spacing:.08em;opacity:.75;text-transform:uppercase;">Outstanding</p>
+            <p style="font-size:26px;font-weight:800;margin-top:4px;line-height:1.1;">EGP {{ number_format($data['totalOutstanding'], 0) }}</p>
+            <p style="font-size:12px;opacity:.7;margin-top:3px;">{{ $data['outstanding']->count() }} clients owe balance</p>
+            <div class="ar-progress"><div class="ar-progress-fill" style="width:{{ $s['total_revenue'] > 0 ? min(100, round(($data['totalOutstanding']/$s['total_revenue'])*100)) : 0 }}%;"></div></div>
+            <p style="font-size:11px;opacity:.6;margin-top:4px;">From delivered services</p>
         </div>
     </div>
 
-    {{-- ══════════════════════════════════════ STATUS COUNTER ROW ══ --}}
-    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 mb-6">
+    {{-- ══════════════════════════ STATUS MINI STATS ══ --}}
+    <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:12px; margin-bottom:20px;">
+
         @php
-            $counters = [
-                ['label'=>'All Transactions', 'value'=>$s['total'],   'icon'=>'heroicon-o-clipboard-document-list', 'bg'=>'bg-gray-50 dark:bg-gray-800',       'text'=>'text-gray-700 dark:text-gray-200',  'ring'=>'ring-gray-200 dark:ring-gray-700'],
-                ['label'=>'Done',             'value'=>$s['done'],    'icon'=>'heroicon-o-check-badge',             'bg'=>'bg-green-50 dark:bg-green-900/20',   'text'=>'text-green-700 dark:text-green-300','ring'=>'ring-green-200 dark:ring-green-800'],
-                ['label'=>'Waiting',          'value'=>$s['waiting'], 'icon'=>'heroicon-o-clock',                   'bg'=>'bg-yellow-50 dark:bg-yellow-900/20', 'text'=>'text-yellow-700 dark:text-yellow-300','ring'=>'ring-yellow-200 dark:ring-yellow-800'],
-                ['label'=>'Lost',             'value'=>$s['lost'],    'icon'=>'heroicon-o-x-circle',                'bg'=>'bg-red-50 dark:bg-red-900/20',       'text'=>'text-red-700 dark:text-red-300',    'ring'=>'ring-red-200 dark:ring-red-800'],
+            $miniStats = [
+                ['label'=>'All Transactions', 'val'=>$s['total'],   'icon'=>'📋', 'bg'=>'#1e293b', 'border'=>'#334155', 'text'=>'#94a3b8', 'num'=>'#f1f5f9'],
+                ['label'=>'Done',             'val'=>$s['done'],    'icon'=>'✅', 'bg'=>'#052e16', 'border'=>'#14532d', 'text'=>'#86efac', 'num'=>'#4ade80'],
+                ['label'=>'Waiting',          'val'=>$s['waiting'], 'icon'=>'⏳', 'bg'=>'#422006', 'border'=>'#713f12', 'text'=>'#fde047', 'num'=>'#fbbf24'],
+                ['label'=>'Lost',             'val'=>$s['lost'],    'icon'=>'❌', 'bg'=>'#2d0a0a', 'border'=>'#7f1d1d', 'text'=>'#fca5a5', 'num'=>'#f87171'],
             ];
         @endphp
-        @foreach($counters as $c)
-            <div class="rounded-xl ring-1 {{ $c['ring'] }} {{ $c['bg'] }} px-5 py-4 flex items-center gap-3">
-                <x-dynamic-component :component="$c['icon']" class="h-8 w-8 {{ $c['text'] }} opacity-70 flex-shrink-0"/>
+
+        @foreach($miniStats as $ms)
+            <div style="background:{{ $ms['bg'] }}; border:1px solid {{ $ms['border'] }}; border-radius:12px; padding:16px 20px; display:flex; align-items:center; gap:14px;">
+                <span style="font-size:26px; line-height:1;">{{ $ms['icon'] }}</span>
                 <div>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ $c['label'] }}</p>
-                    <p class="text-2xl font-extrabold {{ $c['text'] }}">{{ number_format($c['value']) }}</p>
+                    <p style="font-size:11px; color:{{ $ms['text'] }}; font-weight:600; letter-spacing:.04em; text-transform:uppercase;">{{ $ms['label'] }}</p>
+                    <p style="font-size:28px; font-weight:800; color:{{ $ms['num'] }}; line-height:1.1;">{{ number_format($ms['val']) }}</p>
                 </div>
             </div>
         @endforeach
     </div>
 
-    {{-- ══════════════════════════════════════ BY SERVICE TABLE ══ --}}
-    <div class="rounded-2xl ring-1 ring-gray-200 dark:ring-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden mb-6">
-        <div class="flex items-center gap-3 px-6 py-4 border-b border-gray-100 dark:border-gray-700">
-            <x-heroicon-o-squares-2x2 class="h-5 w-5 text-gray-400"/>
-            <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Revenue by Service</h2>
+    {{-- ══════════════════════════ PIPELINE + PENDING ══ --}}
+    @if($s['waiting'] > 0 || $s['pending_revenue'] > 0)
+    <div style="background: linear-gradient(135deg,#1e1b4b,#312e81); border-radius:14px; padding:18px 24px; display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; color:#fff;">
+        <div style="display:flex;align-items:center;gap:14px;">
+            <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:10px;">
+                <svg style="width:22px;height:22px;color:#a5b4fc;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <div>
+                <p style="font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:.07em;font-weight:700;">Pending Pipeline</p>
+                <p style="font-size:22px;font-weight:800;line-height:1.1;">EGP {{ number_format($s['pending_revenue'], 0) }}</p>
+            </div>
         </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm">
+        <div style="text-align:right;">
+            <p style="font-size:12px;opacity:.6;">{{ $s['waiting'] }} deals in progress</p>
+            <p style="font-size:12px;opacity:.4;margin-top:2px;">Potential if all close</p>
+        </div>
+    </div>
+    @endif
+
+    {{-- ══════════════════════════ BY SERVICE ══ --}}
+    <div class="ar-section" style="border:1px solid #1e293b; background:#0f172a; margin-bottom:20px;">
+        <div class="ar-section-header" style="background:#1e293b; border-color:#334155;">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:16px;">📊</span>
+                <span style="font-weight:700; color:#f1f5f9; font-size:14px;">Revenue by Service</span>
+            </div>
+            <span style="font-size:12px;color:#64748b;">{{ $data['byService']->count() }} services</span>
+        </div>
+        <div style="overflow-x:auto;">
+            <table class="ar-table" style="width:100%;border-collapse:collapse;">
                 <thead>
-                    <tr class="bg-gray-50 dark:bg-gray-700/40 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                        <th class="px-5 py-3 text-left">Service</th>
-                        <th class="px-4 py-3 text-center">Total</th>
-                        <th class="px-4 py-3 text-center">Done</th>
-                        <th class="px-4 py-3 text-center">Wait</th>
-                        <th class="px-4 py-3 text-center">Lost</th>
-                        <th class="px-4 py-3 text-right">Revenue</th>
-                        <th class="px-4 py-3 text-right">Cost</th>
-                        <th class="px-4 py-3 text-right">Profit</th>
+                    <tr style="background:#1a2332; color:#64748b;">
+                        <th style="text-align:left;">Service</th>
+                        <th style="text-align:center;">Total</th>
+                        <th style="text-align:center;">Done</th>
+                        <th style="text-align:center;">Waiting</th>
+                        <th style="text-align:center;">Lost</th>
+                        <th style="text-align:right;">Revenue</th>
+                        <th style="text-align:right;">Cost</th>
+                        <th style="text-align:right;">Profit</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700/50">
-                    @foreach ($data['byService'] as $row)
+                <tbody>
+                    @foreach ($data['byService'] as $i => $row)
                         @php $pct = $row->total_sell > 0 ? round(($row->total_profit / $row->total_sell) * 100) : 0; @endphp
-                        <tr class="group hover:bg-primary-50/40 dark:hover:bg-primary-900/10 transition-colors">
-                            <td class="px-5 py-3.5 font-medium text-gray-900 dark:text-white max-w-[220px]">
-                                <span class="block truncate" title="{{ $row->service }}">{{ $row->service ?: '—' }}</span>
+                        <tr class="ar-row-hover" style="border-top:1px solid #1e293b; {{ $i % 2 === 1 ? 'background:rgba(255,255,255,0.015);' : '' }}">
+                            <td style="font-weight:600; color:#e2e8f0; max-width:200px;">
+                                <span style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="{{ $row->service }}">
+                                    {{ $row->service ?: '—' }}
+                                </span>
                             </td>
-                            <td class="px-4 py-3.5 text-center text-gray-600 dark:text-gray-400">{{ $row->count }}</td>
-                            <td class="px-4 py-3.5 text-center">
-                                <span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/40 px-2 py-0.5 text-xs font-semibold text-green-700 dark:text-green-300">{{ $row->done_count }}</span>
-                            </td>
-                            <td class="px-4 py-3.5 text-center">
-                                <span class="inline-flex items-center rounded-full bg-yellow-100 dark:bg-yellow-900/40 px-2 py-0.5 text-xs font-semibold text-yellow-700 dark:text-yellow-300">{{ $row->waiting_count }}</span>
-                            </td>
-                            <td class="px-4 py-3.5 text-center">
-                                <span class="inline-flex items-center rounded-full bg-red-100 dark:bg-red-900/40 px-2 py-0.5 text-xs font-semibold text-red-700 dark:text-red-300">{{ $row->lost_count }}</span>
-                            </td>
-                            <td class="px-4 py-3.5 text-right font-medium text-gray-700 dark:text-gray-300">EGP {{ number_format($row->total_sell, 0) }}</td>
-                            <td class="px-4 py-3.5 text-right text-gray-500 dark:text-gray-400">EGP {{ number_format($row->total_net, 0) }}</td>
-                            <td class="px-4 py-3.5 text-right">
-                                <span class="font-bold {{ $row->total_profit > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500' }}">
+                            <td style="text-align:center;color:#94a3b8;">{{ $row->count }}</td>
+                            <td style="text-align:center;"><span class="ar-badge" style="background:#052e16;color:#4ade80;">{{ $row->done_count }}</span></td>
+                            <td style="text-align:center;"><span class="ar-badge" style="background:#422006;color:#fbbf24;">{{ $row->waiting_count }}</span></td>
+                            <td style="text-align:center;"><span class="ar-badge" style="background:#2d0a0a;color:#f87171;">{{ $row->lost_count }}</span></td>
+                            <td style="text-align:right;color:#cbd5e1;font-weight:500;">EGP {{ number_format($row->total_sell, 0) }}</td>
+                            <td style="text-align:right;color:#64748b;">EGP {{ number_format($row->total_net, 0) }}</td>
+                            <td style="text-align:right;">
+                                <span style="font-weight:700; color:{{ $row->total_profit > 0 ? '#4ade80' : '#f87171' }};">
                                     EGP {{ number_format($row->total_profit, 0) }}
                                 </span>
-                                <span class="ml-1 text-xs {{ $pct >= 20 ? 'text-emerald-500' : 'text-gray-400' }}">{{ $pct }}%</span>
+                                <span style="color:{{ $pct>=20?'#34d399':'#94a3b8' }};font-size:11px;margin-left:4px;">{{ $pct }}%</span>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <tr class="bg-gray-50 dark:bg-gray-700/40 font-bold text-gray-900 dark:text-white text-sm border-t-2 border-gray-200 dark:border-gray-600">
-                        <td class="px-5 py-3">TOTAL</td>
-                        <td class="px-4 py-3 text-center">{{ $data['byService']->sum('count') }}</td>
-                        <td class="px-4 py-3 text-center text-emerald-600">{{ $data['byService']->sum('done_count') }}</td>
-                        <td class="px-4 py-3 text-center text-yellow-600">{{ $data['byService']->sum('waiting_count') }}</td>
-                        <td class="px-4 py-3 text-center text-red-600">{{ $data['byService']->sum('lost_count') }}</td>
-                        <td class="px-4 py-3 text-right">EGP {{ number_format($data['byService']->sum('total_sell'), 0) }}</td>
-                        <td class="px-4 py-3 text-right text-gray-500">EGP {{ number_format($data['byService']->sum('total_net'), 0) }}</td>
-                        <td class="px-4 py-3 text-right text-emerald-600">EGP {{ number_format($data['byService']->sum('total_profit'), 0) }}</td>
+                    <tr style="background:#1e293b;border-top:2px solid #334155;">
+                        <td style="padding:12px 16px;font-weight:800;color:#f1f5f9;font-size:13px;">TOTAL</td>
+                        <td style="text-align:center;padding:12px 16px;color:#94a3b8;font-weight:700;">{{ $data['byService']->sum('count') }}</td>
+                        <td style="text-align:center;padding:12px 16px;color:#4ade80;font-weight:700;">{{ $data['byService']->sum('done_count') }}</td>
+                        <td style="text-align:center;padding:12px 16px;color:#fbbf24;font-weight:700;">{{ $data['byService']->sum('waiting_count') }}</td>
+                        <td style="text-align:center;padding:12px 16px;color:#f87171;font-weight:700;">{{ $data['byService']->sum('lost_count') }}</td>
+                        <td style="text-align:right;padding:12px 16px;color:#e2e8f0;font-weight:700;">EGP {{ number_format($data['byService']->sum('total_sell'), 0) }}</td>
+                        <td style="text-align:right;padding:12px 16px;color:#64748b;font-weight:700;">EGP {{ number_format($data['byService']->sum('total_net'), 0) }}</td>
+                        <td style="text-align:right;padding:12px 16px;color:#4ade80;font-weight:800;font-size:14px;">EGP {{ number_format($data['byService']->sum('total_profit'), 0) }}</td>
                     </tr>
                 </tfoot>
             </table>
         </div>
     </div>
 
-    {{-- ═══════════════════════════════════════ MONTHLY PERF ══ --}}
+    {{-- ══════════════════════════ MONTHLY ══ --}}
     @if ($data['byMonth']->isNotEmpty())
-    <div class="rounded-2xl ring-1 ring-gray-200 dark:ring-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden mb-6">
-        <div class="flex items-center gap-3 px-6 py-4 border-b border-gray-100 dark:border-gray-700">
-            <x-heroicon-o-calendar-days class="h-5 w-5 text-gray-400"/>
-            <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Monthly Performance</h2>
+    <div class="ar-section" style="border:1px solid #1e293b; background:#0f172a; margin-bottom:20px;">
+        <div class="ar-section-header" style="background:#1e293b; border-color:#334155;">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:16px;">📅</span>
+                <span style="font-weight:700; color:#f1f5f9; font-size:14px;">Monthly Performance</span>
+            </div>
+            <span style="font-size:12px;color:#64748b;">{{ $data['byMonth']->count() }} month(s)</span>
         </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm">
+        <div style="overflow-x:auto;">
+            <table class="ar-table" style="width:100%;border-collapse:collapse;">
                 <thead>
-                    <tr class="bg-gray-50 dark:bg-gray-700/40 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                        <th class="px-5 py-3 text-left">Month</th>
-                        <th class="px-4 py-3 text-center">Total</th>
-                        <th class="px-4 py-3 text-center">Done</th>
-                        <th class="px-4 py-3 text-center">Waiting</th>
-                        <th class="px-4 py-3 text-right">Revenue</th>
-                        <th class="px-4 py-3 text-right">Profit</th>
-                        <th class="px-4 py-3 text-right">Collected</th>
+                    <tr style="background:#1a2332; color:#64748b;">
+                        <th style="text-align:left;">Month</th>
+                        <th style="text-align:center;">Total</th>
+                        <th style="text-align:center;">Done</th>
+                        <th style="text-align:center;">Waiting</th>
+                        <th style="text-align:right;">Revenue</th>
+                        <th style="text-align:right;">Profit</th>
+                        <th style="text-align:right;">Collected</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700/50">
-                    @foreach ($data['byMonth'] as $row)
-                        <tr class="hover:bg-primary-50/40 dark:hover:bg-primary-900/10 transition-colors">
-                            <td class="px-5 py-3.5 font-semibold text-gray-900 dark:text-white">{{ $row->month_label }}</td>
-                            <td class="px-4 py-3.5 text-center text-gray-600 dark:text-gray-400">{{ $row->count }}</td>
-                            <td class="px-4 py-3.5 text-center font-medium text-emerald-600 dark:text-emerald-400">{{ $row->done_count }}</td>
-                            <td class="px-4 py-3.5 text-center font-medium text-yellow-600 dark:text-yellow-400">{{ $row->waiting_count }}</td>
-                            <td class="px-4 py-3.5 text-right font-medium text-gray-700 dark:text-gray-300">EGP {{ number_format($row->total_sell, 0) }}</td>
-                            <td class="px-4 py-3.5 text-right font-bold text-emerald-600 dark:text-emerald-400">EGP {{ number_format($row->total_profit, 0) }}</td>
-                            <td class="px-4 py-3.5 text-right text-blue-600 dark:text-blue-400">EGP {{ number_format($row->total_collected, 0) }}</td>
+                <tbody>
+                    @foreach ($data['byMonth'] as $i => $row)
+                        <tr class="ar-row-hover" style="border-top:1px solid #1e293b; {{ $i % 2 === 1 ? 'background:rgba(255,255,255,0.015);' : '' }}">
+                            <td style="font-weight:700; color:#e2e8f0;">{{ $row->month_label }}</td>
+                            <td style="text-align:center;color:#94a3b8;">{{ $row->count }}</td>
+                            <td style="text-align:center;font-weight:600;color:#4ade80;">{{ $row->done_count }}</td>
+                            <td style="text-align:center;font-weight:600;color:#fbbf24;">{{ $row->waiting_count }}</td>
+                            <td style="text-align:right;color:#cbd5e1;font-weight:500;">EGP {{ number_format($row->total_sell, 0) }}</td>
+                            <td style="text-align:right;font-weight:700;color:#4ade80;">EGP {{ number_format($row->total_profit, 0) }}</td>
+                            <td style="text-align:right;color:#60a5fa;">EGP {{ number_format($row->total_collected, 0) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -195,62 +264,60 @@
     </div>
     @endif
 
-    {{-- ════════════════════════════════════ OUTSTANDING TABLE ══ --}}
+    {{-- ══════════════════════════ OUTSTANDING ══ --}}
     @if ($data['outstanding']->isNotEmpty())
-    <div class="rounded-2xl ring-1 ring-orange-200 dark:ring-orange-800 bg-white dark:bg-gray-800 shadow-sm overflow-hidden mb-6">
-        <div class="flex items-center justify-between gap-3 px-6 py-4 border-b border-orange-100 dark:border-orange-900/50">
-            <div class="flex items-center gap-3">
-                <x-heroicon-o-exclamation-triangle class="h-5 w-5 text-orange-500"/>
+    <div class="ar-section" style="border:1px solid #431407; background:#0f172a; margin-bottom:20px;">
+        <div class="ar-section-header" style="background:#1c0a02; border-color:#431407;">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:16px;">⚠️</span>
                 <div>
-                    <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Outstanding Balances</h2>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Services delivered but not fully paid</p>
+                    <p style="font-weight:700; color:#fed7aa; font-size:14px;">Outstanding Balances</p>
+                    <p style="font-size:11px;color:#92400e;margin-top:1px;">Services delivered — payment incomplete</p>
                 </div>
             </div>
-            <div class="text-right">
-                <p class="text-xs text-orange-500 uppercase font-semibold tracking-wide">Total Due</p>
-                <p class="text-lg font-extrabold text-orange-600 dark:text-orange-400">EGP {{ number_format($data['totalOutstanding'], 0) }}</p>
+            <div style="text-align:right;">
+                <p style="font-size:11px;color:#92400e;text-transform:uppercase;font-weight:700;letter-spacing:.06em;">Total Due</p>
+                <p style="font-size:22px;font-weight:800;color:#fb923c;">EGP {{ number_format($data['totalOutstanding'], 0) }}</p>
             </div>
         </div>
 
-        {{-- Explanation banner --}}
-        <div class="bg-orange-50 dark:bg-orange-900/10 border-b border-orange-100 dark:border-orange-900/30 px-6 py-3">
-            <p class="text-xs text-orange-700 dark:text-orange-300">
-                <strong>What is this?</strong>
-                These are completed deals where the client received the service but has not paid the full amount yet.
-                The "Balance Due" column shows how much each client still owes you.
+        <div style="background:#1c0d02;border-bottom:1px solid #431407;padding:12px 20px;">
+            <p style="font-size:12px;color:#a16207;line-height:1.6;">
+                <strong style="color:#fbbf24;">What is "Outstanding Balance"?</strong>
+                These are completed (Done) deals where you already delivered the service to the client,
+                but they have not paid the full amount yet. The <strong style="color:#fb923c;">Balance Due</strong>
+                column shows exactly how much each client still owes you.
             </p>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm">
+        <div style="overflow-x:auto;">
+            <table class="ar-table" style="width:100%;border-collapse:collapse;">
                 <thead>
-                    <tr class="bg-orange-50/60 dark:bg-orange-900/10 text-xs font-semibold uppercase tracking-wide text-orange-700 dark:text-orange-400">
-                        <th class="px-5 py-3 text-left">Client</th>
-                        <th class="px-4 py-3 text-left">Service</th>
-                        <th class="px-4 py-3 text-center">Date</th>
-                        <th class="px-4 py-3 text-right">Sell Price</th>
-                        <th class="px-4 py-3 text-right">Collected</th>
-                        <th class="px-4 py-3 text-right">Balance Due</th>
+                    <tr style="background:#1a0e02; color:#92400e;">
+                        <th style="text-align:left;">Client</th>
+                        <th style="text-align:left;">Service</th>
+                        <th style="text-align:center;">Date</th>
+                        <th style="text-align:right;">Sell Price</th>
+                        <th style="text-align:right;">Collected</th>
+                        <th style="text-align:right;">Balance Due</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-orange-50 dark:divide-orange-900/20">
-                    @foreach ($data['outstanding'] as $row)
+                <tbody>
+                    @foreach ($data['outstanding'] as $i => $row)
                         @php $paidPct = $row->sell_price > 0 ? round(($row->current_money / $row->sell_price) * 100) : 0; @endphp
-                        <tr class="hover:bg-orange-50/70 dark:hover:bg-orange-900/10 transition-colors">
-                            <td class="px-5 py-3.5 font-semibold text-gray-900 dark:text-white">{{ $row->client_name }}</td>
-                            <td class="px-4 py-3.5 text-gray-600 dark:text-gray-400 max-w-[180px]">
-                                <span class="block truncate" title="{{ $row->service }}">{{ $row->service ?: '—' }}</span>
+                        <tr class="ar-row-hover" style="border-top:1px solid #431407; {{ $i % 2 === 1 ? 'background:rgba(251,146,60,0.03);' : '' }}">
+                            <td style="font-weight:700;color:#fed7aa;">{{ $row->client_name }}</td>
+                            <td style="color:#d97706;max-width:180px;">
+                                <span style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="{{ $row->service }}">{{ $row->service ?: '—' }}</span>
                             </td>
-                            <td class="px-4 py-3.5 text-center text-gray-500 dark:text-gray-400 whitespace-nowrap text-xs">
-                                {{ $row->transaction_date?->format('d/m/Y') }}
+                            <td style="text-align:center;color:#92400e;font-size:12px;white-space:nowrap;">{{ $row->transaction_date?->format('d/m/Y') }}</td>
+                            <td style="text-align:right;color:#fde68a;font-weight:500;">EGP {{ number_format($row->sell_price, 0) }}</td>
+                            <td style="text-align:right;">
+                                <span style="color:#4ade80;font-weight:600;">EGP {{ number_format($row->current_money, 0) }}</span>
+                                <span style="color:#374151;font-size:11px;margin-left:3px;">({{ $paidPct }}%)</span>
                             </td>
-                            <td class="px-4 py-3.5 text-right font-medium text-gray-700 dark:text-gray-300">EGP {{ number_format($row->sell_price, 0) }}</td>
-                            <td class="px-4 py-3.5 text-right">
-                                <span class="text-emerald-600 dark:text-emerald-400 font-medium">EGP {{ number_format($row->current_money, 0) }}</span>
-                                <span class="ml-1 text-xs text-gray-400">({{ $paidPct }}%)</span>
-                            </td>
-                            <td class="px-4 py-3.5 text-right">
-                                <span class="inline-flex items-center rounded-lg bg-orange-100 dark:bg-orange-900/40 px-3 py-1 text-sm font-bold text-orange-700 dark:text-orange-300">
+                            <td style="text-align:right;">
+                                <span style="display:inline-block;background:#431407;color:#fb923c;font-weight:800;font-size:13px;padding:4px 14px;border-radius:8px;white-space:nowrap;">
                                     EGP {{ number_format($row->balance, 0) }}
                                 </span>
                             </td>
@@ -262,47 +329,47 @@
     </div>
     @endif
 
-    {{-- ════════════════════════════════════════ TOP CLIENTS ══ --}}
-    <div class="rounded-2xl ring-1 ring-gray-200 dark:ring-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-hidden mb-6">
-        <div class="flex items-center gap-3 px-6 py-4 border-b border-gray-100 dark:border-gray-700">
-            <x-heroicon-o-trophy class="h-5 w-5 text-yellow-500"/>
-            <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Top 10 Clients by Profit</h2>
+    {{-- ══════════════════════════ TOP CLIENTS ══ --}}
+    <div class="ar-section" style="border:1px solid #1e293b; background:#0f172a; margin-bottom:20px;">
+        <div class="ar-section-header" style="background:#1e293b; border-color:#334155;">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:18px;">🏆</span>
+                <span style="font-weight:700; color:#f1f5f9; font-size:14px;">Top 10 Clients by Profit</span>
+            </div>
         </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm">
+        <div style="overflow-x:auto;">
+            <table class="ar-table" style="width:100%;border-collapse:collapse;">
                 <thead>
-                    <tr class="bg-gray-50 dark:bg-gray-700/40 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                        <th class="px-5 py-3 text-center w-12">#</th>
-                        <th class="px-4 py-3 text-left">Client</th>
-                        <th class="px-4 py-3 text-center">Services</th>
-                        <th class="px-4 py-3 text-right">Revenue</th>
-                        <th class="px-4 py-3 text-right">Profit</th>
-                        <th class="px-4 py-3 text-right">Collected</th>
+                    <tr style="background:#1a2332; color:#64748b;">
+                        <th style="text-align:center;width:50px;">#</th>
+                        <th style="text-align:left;">Client</th>
+                        <th style="text-align:center;">Services</th>
+                        <th style="text-align:right;">Revenue</th>
+                        <th style="text-align:right;">Profit</th>
+                        <th style="text-align:right;">Collected</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700/50">
+                <tbody>
                     @foreach ($data['topClients'] as $i => $row)
                         @php
-                            $medal = match($i) { 0=>'🥇', 1=>'🥈', 2=>'🥉', default=>null };
-                            $isTop3 = $i < 3;
+                            $medals = ['🥇','🥈','🥉'];
+                            $medal = $medals[$i] ?? null;
                         @endphp
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/20 transition-colors {{ $isTop3 ? 'bg-yellow-50/40 dark:bg-yellow-900/5' : '' }}">
-                            <td class="px-5 py-3.5 text-center">
+                        <tr class="ar-row-hover" style="border-top:1px solid #1e293b; {{ $i < 3 ? 'background:rgba(234,179,8,0.04);' : ($i % 2 === 1 ? 'background:rgba(255,255,255,0.015);':'') }}">
+                            <td style="text-align:center;font-size:18px;">
                                 @if($medal)
-                                    <span class="text-lg">{{ $medal }}</span>
+                                    {{ $medal }}
                                 @else
-                                    <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-xs font-bold text-gray-500">{{ $i+1 }}</span>
+                                    <span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#1e293b;color:#64748b;font-size:11px;font-weight:700;">{{ $i+1 }}</span>
                                 @endif
                             </td>
-                            <td class="px-4 py-3.5 font-semibold text-gray-900 dark:text-white">{{ $row->client_name }}</td>
-                            <td class="px-4 py-3.5 text-center">
-                                <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/40 px-2.5 py-0.5 text-xs font-semibold text-blue-700 dark:text-blue-300">
-                                    {{ $row->count }}
-                                </span>
+                            <td style="font-weight:{{ $i < 3 ? '700' : '600' }};color:{{ $i < 3 ? '#fde68a' : '#e2e8f0' }};">{{ $row->client_name }}</td>
+                            <td style="text-align:center;">
+                                <span class="ar-badge" style="background:#1e3a5f;color:#60a5fa;">{{ $row->count }}</span>
                             </td>
-                            <td class="px-4 py-3.5 text-right font-medium text-gray-700 dark:text-gray-300">EGP {{ number_format($row->total_sell, 0) }}</td>
-                            <td class="px-4 py-3.5 text-right font-bold text-emerald-600 dark:text-emerald-400">EGP {{ number_format($row->total_profit, 0) }}</td>
-                            <td class="px-4 py-3.5 text-right text-blue-600 dark:text-blue-400">EGP {{ number_format($row->total_collected ?? 0, 0) }}</td>
+                            <td style="text-align:right;color:#cbd5e1;font-weight:500;">EGP {{ number_format($row->total_sell, 0) }}</td>
+                            <td style="text-align:right;font-weight:700;color:#4ade80;">EGP {{ number_format($row->total_profit, 0) }}</td>
+                            <td style="text-align:right;color:#60a5fa;">EGP {{ number_format($row->total_collected ?? 0, 0) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -310,9 +377,8 @@
         </div>
     </div>
 
-    {{-- Footer --}}
-    <p class="text-center text-xs text-gray-400 dark:text-gray-600 pb-4">
-        Report generated {{ now()->format('d M Y, H:i') }} &middot; Ease Travel Accounting System
+    <p style="text-align:center;font-size:11px;color:#334155;padding-bottom:16px;">
+        Generated {{ now()->format('d M Y, H:i') }} &middot; Ease Travel Accounting System
     </p>
 
 </x-filament-panels::page>

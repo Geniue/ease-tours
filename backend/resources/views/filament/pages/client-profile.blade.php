@@ -5,202 +5,243 @@
         $stats  = $data['stats'];
         $txns   = $data['transactions'];
 
-        $initials = collect(explode(' ', $client->name))->map(fn($w) => strtoupper(substr($w,0,1)))->take(2)->implode('');
+        $words    = array_filter(explode(' ', $client->name));
+        $initials = strtoupper(substr($words[0] ?? 'C', 0, 1) . substr($words[1] ?? '', 0, 1));
+
+        $doneRate = $stats['total'] > 0 ? round(($stats['done'] / $stats['total']) * 100) : 0;
+        $collRate = $stats['total_revenue'] > 0 ? round(($stats['total_collected'] / $stats['total_revenue']) * 100) : 0;
     @endphp
 
-    {{-- ══════════════════════════════════════════ CLIENT HEADER ══ --}}
-    <div class="rounded-2xl bg-gradient-to-r from-primary-600 to-primary-800 p-6 mb-6 text-white shadow-lg">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+    <style>
+        .cp-card { border-radius:14px; padding:18px 22px; position:relative; overflow:hidden; }
+        .cp-card-shine::before { content:''; position:absolute; top:-30px; right:-30px; width:100px; height:100px; border-radius:50%; background:rgba(255,255,255,.08); }
+        .cp-stat-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:18px; }
+        .cp-fin-row  { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:18px; }
+        .cp-section  { border-radius:14px; overflow:hidden; margin-bottom:18px; }
+        .cp-th { padding:10px 16px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; }
+        .cp-td { padding:12px 16px; font-size:13px; }
+        .cp-row-hover:hover { background:rgba(99,102,241,.04); }
+        .cp-badge { display:inline-flex; align-items:center; border-radius:999px; padding:2px 10px; font-size:11px; font-weight:700; }
+        @media(max-width:768px){
+            .cp-stat-row, .cp-fin-row { grid-template-columns:repeat(2,1fr); }
+        }
+    </style>
+
+    {{-- ══════════════════════════════════════ HERO HEADER ══ --}}
+    <div style="background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4338ca 100%); border-radius:18px; padding:28px 32px; margin-bottom:18px; color:#fff; position:relative; overflow:hidden;">
+
+        {{-- decorative circles --}}
+        <div style="position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.05);"></div>
+        <div style="position:absolute;bottom:-40px;right:120px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.04);"></div>
+
+        <div style="display:flex;align-items:flex-start;gap:20px;position:relative;z-index:1;">
+
             {{-- Avatar --}}
-            <div class="flex-shrink-0 h-16 w-16 rounded-full bg-white/20 flex items-center justify-center text-2xl font-bold">
+            <div style="width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;flex-shrink:0;">
                 {{ $initials }}
             </div>
 
             {{-- Info --}}
-            <div class="flex-1 min-w-0">
-                <h1 class="text-2xl font-bold truncate">{{ $client->name }}</h1>
-                <div class="mt-1 flex flex-wrap gap-x-5 gap-y-1 text-sm text-white/80">
+            <div style="flex:1;min-width:0;">
+                <h1 style="font-size:24px;font-weight:800;line-height:1.2;margin:0;">{{ $client->name }}</h1>
+
+                <div style="display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:8px;">
                     @if($client->phone)
-                        <span class="flex items-center gap-1">
-                            <x-heroicon-o-phone class="h-4 w-4"/> {{ $client->phone }}
+                        <span style="font-size:13px;opacity:.75;display:flex;align-items:center;gap:5px;">
+                            📞 {{ $client->phone }}
                         </span>
                     @endif
                     @if($client->email)
-                        <span class="flex items-center gap-1">
-                            <x-heroicon-o-envelope class="h-4 w-4"/> {{ $client->email }}
+                        <span style="font-size:13px;opacity:.75;display:flex;align-items:center;gap:5px;">
+                            ✉️ {{ $client->email }}
                         </span>
                     @endif
                     @if($client->passport_number)
-                        <span class="flex items-center gap-1">
-                            <x-heroicon-o-credit-card class="h-4 w-4"/> {{ $client->passport_number }}
+                        <span style="font-size:13px;opacity:.75;display:flex;align-items:center;gap:5px;">
+                            🪪 {{ $client->passport_number }}
                         </span>
                     @endif
                     @if($client->nationality)
-                        <span class="flex items-center gap-1">
-                            <x-heroicon-o-globe-alt class="h-4 w-4"/> {{ $client->nationality }}
+                        <span style="font-size:13px;opacity:.75;display:flex;align-items:center;gap:5px;">
+                            🌍 {{ $client->nationality }}
                         </span>
                     @endif
                 </div>
+
                 @if($client->notes)
-                    <p class="mt-2 text-sm text-white/70 italic">{{ $client->notes }}</p>
+                    <p style="font-size:12px;opacity:.55;margin-top:8px;font-style:italic;max-width:600px;">{{ $client->notes }}</p>
                 @endif
             </div>
 
             {{-- Member since --}}
-            <div class="text-right text-sm text-white/60 flex-shrink-0">
+            <div style="text-align:right;flex-shrink:0;opacity:.6;font-size:12px;">
                 <p>Client since</p>
-                <p class="font-medium text-white/90">{{ $client->created_at->format('M Y') }}</p>
+                <p style="font-weight:700;font-size:14px;opacity:1;color:#c7d2fe;margin-top:2px;">{{ $client->created_at->format('M Y') }}</p>
+            </div>
+        </div>
+
+        {{-- Mini progress bars --}}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px;position:relative;z-index:1;">
+            <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;opacity:.65;margin-bottom:5px;">
+                    <span>Deal success rate</span><span>{{ $doneRate }}%</span>
+                </div>
+                <div style="height:5px;border-radius:999px;background:rgba(255,255,255,.15);">
+                    <div style="height:5px;border-radius:999px;background:#a5b4fc;width:{{ $doneRate }}%;"></div>
+                </div>
+            </div>
+            <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;opacity:.65;margin-bottom:5px;">
+                    <span>Collection rate</span><span>{{ $collRate }}%</span>
+                </div>
+                <div style="height:5px;border-radius:999px;background:rgba(255,255,255,.15);">
+                    <div style="height:5px;border-radius:999px;background:#6ee7b7;width:{{ $collRate }}%;"></div>
+                </div>
             </div>
         </div>
     </div>
 
-    {{-- ════════════════════════════════════════════ STATS GRID ══ --}}
-    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 mb-6">
+    {{-- ══════════════════════════════════════ STATUS COUNTERS ══ --}}
+    <div class="cp-stat-row">
         @php
-            $statCards = [
-                ['label'=>'Total Services',  'value'=> $stats['total'],                                    'icon'=>'heroicon-o-clipboard-document-list', 'color'=>'blue'],
-                ['label'=>'Deals Done',       'value'=> $stats['done'],                                     'icon'=>'heroicon-o-check-circle',            'color'=>'green'],
-                ['label'=>'Waiting',          'value'=> $stats['waiting'],                                  'icon'=>'heroicon-o-clock',                   'color'=>'yellow'],
-                ['label'=>'Lost',             'value'=> $stats['lost'],                                     'icon'=>'heroicon-o-x-circle',                'color'=>'red'],
+            $counters = [
+                ['icon'=>'📋','label'=>'Total Services','val'=>$stats['total'],  'bg'=>'#1e293b','border'=>'#334155','tc'=>'#94a3b8','vc'=>'#f1f5f9'],
+                ['icon'=>'✅','label'=>'Done',          'val'=>$stats['done'],   'bg'=>'#052e16','border'=>'#14532d','tc'=>'#86efac','vc'=>'#4ade80'],
+                ['icon'=>'⏳','label'=>'Waiting',       'val'=>$stats['waiting'],'bg'=>'#422006','border'=>'#713f12','tc'=>'#fde047','vc'=>'#fbbf24'],
+                ['icon'=>'❌','label'=>'Lost',           'val'=>$stats['lost'],  'bg'=>'#2d0a0a','border'=>'#7f1d1d','tc'=>'#fca5a5','vc'=>'#f87171'],
             ];
         @endphp
-
-        @foreach($statCards as $card)
-            @php
-                $colorMap = [
-                    'blue'   => ['bg'=>'bg-blue-50 dark:bg-blue-900/20',   'text'=>'text-blue-600 dark:text-blue-400',   'icon'=>'text-blue-400'],
-                    'green'  => ['bg'=>'bg-green-50 dark:bg-green-900/20', 'text'=>'text-green-600 dark:text-green-400', 'icon'=>'text-green-400'],
-                    'yellow' => ['bg'=>'bg-yellow-50 dark:bg-yellow-900/20','text'=>'text-yellow-600 dark:text-yellow-400','icon'=>'text-yellow-400'],
-                    'red'    => ['bg'=>'bg-red-50 dark:bg-red-900/20',     'text'=>'text-red-600 dark:text-red-400',     'icon'=>'text-red-400'],
-                ];
-                $c = $colorMap[$card['color']];
-            @endphp
-            <div class="rounded-xl {{ $c['bg'] }} p-4 flex items-center gap-3">
-                <x-dynamic-component :component="$card['icon']" class="h-8 w-8 {{ $c['icon'] }} flex-shrink-0"/>
+        @foreach($counters as $c)
+            <div style="background:{{ $c['bg'] }};border:1px solid {{ $c['border'] }};border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:12px;">
+                <span style="font-size:24px;line-height:1;flex-shrink:0;">{{ $c['icon'] }}</span>
                 <div>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ $card['label'] }}</p>
-                    <p class="text-2xl font-bold {{ $c['text'] }}">{{ $card['value'] }}</p>
+                    <p style="font-size:11px;color:{{ $c['tc'] }};font-weight:600;text-transform:uppercase;letter-spacing:.04em;">{{ $c['label'] }}</p>
+                    <p style="font-size:26px;font-weight:800;color:{{ $c['vc'] }};line-height:1.1;">{{ $c['val'] }}</p>
                 </div>
             </div>
         @endforeach
     </div>
 
-    {{-- ══════════════════════════════════════ FINANCIAL SUMMARY ══ --}}
-    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 mb-6">
+    {{-- ══════════════════════════════════════ FINANCIAL CARDS ══ --}}
+    <div class="cp-fin-row">
         @php
-            $finCards = [
-                ['label'=>'Total Revenue',    'value'=>'EGP '.number_format($stats['total_revenue'],0),   'sub'=>'From done deals',        'border'=>'border-indigo-200 dark:border-indigo-700',  'bg'=>'bg-indigo-50 dark:bg-indigo-900/20',  'text'=>'text-indigo-700 dark:text-indigo-300'],
-                ['label'=>'Total Profit',     'value'=>'EGP '.number_format($stats['total_profit'],0),    'sub'=>'Net earnings',           'border'=>'border-emerald-200 dark:border-emerald-700','bg'=>'bg-emerald-50 dark:bg-emerald-900/20','text'=>'text-emerald-700 dark:text-emerald-300'],
-                ['label'=>'Collected',        'value'=>'EGP '.number_format($stats['total_collected'],0), 'sub'=>'Cash received',          'border'=>'border-green-200 dark:border-green-700',   'bg'=>'bg-green-50 dark:bg-green-900/20',    'text'=>'text-green-700 dark:text-green-300'],
-                ['label'=>'Outstanding',      'value'=>'EGP '.number_format($stats['outstanding'],0),     'sub'=>'Balance due',            'border'=>'border-orange-200 dark:border-orange-700', 'bg'=>'bg-orange-50 dark:bg-orange-900/20',  'text'=>'text-orange-700 dark:text-orange-300'],
+            $fins = [
+                ['icon'=>'💰','label'=>'Total Revenue',  'val'=>'EGP '.number_format($stats['total_revenue'],0), 'sub'=>'From done deals', 'grad'=>'linear-gradient(135deg,#6366f1,#4338ca)'],
+                ['icon'=>'📈','label'=>'Total Profit',   'val'=>'EGP '.number_format($stats['total_profit'],0),  'sub'=>'Net earnings',    'grad'=>'linear-gradient(135deg,#10b981,#059669)'],
+                ['icon'=>'🏦','label'=>'Collected',      'val'=>'EGP '.number_format($stats['total_collected'],0),'sub'=>'Cash received',  'grad'=>'linear-gradient(135deg,#0ea5e9,#0284c7)'],
+                ['icon'=>'⚠️','label'=>'Outstanding',    'val'=>'EGP '.number_format($stats['outstanding'],0),   'sub'=>'Balance due',     'grad'=>'linear-gradient(135deg,#f59e0b,#d97706)'],
             ];
         @endphp
-
-        @foreach($finCards as $card)
-            <div class="rounded-xl border {{ $card['border'] }} {{ $card['bg'] }} p-5">
-                <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">{{ $card['label'] }}</p>
-                <p class="mt-1 text-xl font-bold {{ $card['text'] }}">{{ $card['value'] }}</p>
-                <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{{ $card['sub'] }}</p>
+        @foreach($fins as $f)
+            <div class="cp-card cp-card-shine" style="background:{{ $f['grad'] }};color:#fff;">
+                <p style="font-size:18px;margin-bottom:4px;">{{ $f['icon'] }}</p>
+                <p style="font-size:11px;font-weight:700;letter-spacing:.07em;opacity:.7;text-transform:uppercase;">{{ $f['label'] }}</p>
+                <p style="font-size:20px;font-weight:800;line-height:1.2;margin-top:4px;">{{ $f['val'] }}</p>
+                <p style="font-size:11px;opacity:.6;margin-top:3px;">{{ $f['sub'] }}</p>
             </div>
         @endforeach
     </div>
 
-    {{-- ════════════════════════════════════ TRANSACTION HISTORY ══ --}}
-    <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
-        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-            <h2 class="text-base font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                <x-heroicon-o-clipboard-document-list class="h-5 w-5 text-gray-400"/>
-                Service History
-            </h2>
-            <span class="text-sm text-gray-500 dark:text-gray-400">{{ $txns->count() }} record(s)</span>
+    {{-- ══════════════════════════════════════ SERVICE HISTORY ══ --}}
+    <div class="cp-section" style="border:1px solid #1e293b;background:#0f172a;">
+        <div style="background:#1e293b;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #334155;">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:16px;">🗂️</span>
+                <span style="font-weight:700;color:#f1f5f9;font-size:14px;">Service History</span>
+            </div>
+            <span style="font-size:12px;color:#64748b;">{{ $txns->count() }} record(s)</span>
         </div>
 
         @if($txns->isEmpty())
-            <div class="flex flex-col items-center justify-center py-16 text-center">
-                <x-heroicon-o-document-text class="h-12 w-12 text-gray-300 dark:text-gray-600 mb-3"/>
-                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">No services yet</p>
-                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Click "Add Service" to create the first transaction.</p>
+            <div style="padding:60px 20px;text-align:center;">
+                <p style="font-size:40px;margin-bottom:12px;">📭</p>
+                <p style="font-size:15px;font-weight:600;color:#475569;">No services yet</p>
+                <p style="font-size:13px;color:#334155;margin-top:6px;">Click <strong style="color:#a5b4fc;">Add Service</strong> above to create the first transaction for this client.</p>
             </div>
         @else
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm">
+            <div style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;">
                     <thead>
-                        <tr class="bg-gray-50 dark:bg-gray-700/50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                            <th class="px-4 py-3">Date</th>
-                            <th class="px-4 py-3">Service</th>
-                            <th class="px-4 py-3 text-center">Status</th>
-                            <th class="px-4 py-3 text-center">Follow Up</th>
-                            <th class="px-4 py-3 text-right">Sell Price</th>
-                            <th class="px-4 py-3 text-right">Net Cost</th>
-                            <th class="px-4 py-3 text-right">Profit</th>
-                            <th class="px-4 py-3 text-right">Collected</th>
-                            <th class="px-4 py-3 text-right">Balance</th>
-                            <th class="px-4 py-3"></th>
+                        <tr style="background:#1a2332;">
+                            <th class="cp-th" style="text-align:left;color:#64748b;">Date</th>
+                            <th class="cp-th" style="text-align:left;color:#64748b;">Service</th>
+                            <th class="cp-th" style="text-align:center;color:#64748b;">Status</th>
+                            <th class="cp-th" style="text-align:center;color:#64748b;">Follow Up</th>
+                            <th class="cp-th" style="text-align:right;color:#64748b;">Sell</th>
+                            <th class="cp-th" style="text-align:right;color:#64748b;">Cost</th>
+                            <th class="cp-th" style="text-align:right;color:#64748b;">Profit</th>
+                            <th class="cp-th" style="text-align:right;color:#64748b;">Collected</th>
+                            <th class="cp-th" style="text-align:right;color:#64748b;">Balance</th>
+                            <th class="cp-th"></th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100 dark:divide-gray-700/50">
-                        @foreach($txns as $txn)
+                    <tbody>
+                        @foreach($txns as $i => $txn)
                             @php
                                 $balance = max(0, (float)$txn->sell_price - (float)$txn->current_money);
-                                $statusConfig = [
-                                    'done'    => ['bg'=>'bg-green-100 dark:bg-green-900/40',  'text'=>'text-green-700 dark:text-green-300',  'label'=>'Done'],
-                                    'waiting' => ['bg'=>'bg-yellow-100 dark:bg-yellow-900/40','text'=>'text-yellow-700 dark:text-yellow-300','label'=>'Waiting'],
-                                    'lost'    => ['bg'=>'bg-red-100 dark:bg-red-900/40',      'text'=>'text-red-700 dark:text-red-300',      'label'=>'Lost'],
+                                $statusMap = [
+                                    'done'    => ['bg'=>'#052e16','color'=>'#4ade80','label'=>'Done'],
+                                    'waiting' => ['bg'=>'#422006','color'=>'#fbbf24','label'=>'Waiting'],
+                                    'lost'    => ['bg'=>'#2d0a0a','color'=>'#f87171','label'=>'Lost'],
                                 ];
-                                $sc = $statusConfig[$txn->status] ?? $statusConfig['waiting'];
+                                $sc = $statusMap[$txn->status] ?? $statusMap['waiting'];
                             @endphp
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/20 transition-colors">
-                                <td class="px-4 py-3 text-gray-700 dark:text-gray-300 whitespace-nowrap">
+                            <tr class="cp-row-hover" style="border-top:1px solid #1e293b;{{ $i % 2 === 1 ? 'background:rgba(255,255,255,.015);' : '' }}">
+                                <td class="cp-td" style="color:#94a3b8;white-space:nowrap;font-size:12px;">
                                     {{ $txn->transaction_date?->format('d/m/Y') ?? '—' }}
                                 </td>
-                                <td class="px-4 py-3 font-medium text-gray-900 dark:text-white max-w-[180px]">
-                                    <span class="block truncate" title="{{ $txn->service }}">
+                                <td class="cp-td" style="max-width:180px;">
+                                    <span style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;color:#e2e8f0;" title="{{ $txn->service }}">
                                         {{ $txn->service ?: '—' }}
                                     </span>
                                     @if($txn->notes)
-                                        <span class="text-xs text-gray-400 dark:text-gray-500 block truncate italic">{{ $txn->notes }}</span>
+                                        <span style="display:block;font-size:11px;color:#475569;font-style:italic;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ $txn->notes }}</span>
                                     @endif
                                 </td>
-                                <td class="px-4 py-3 text-center">
-                                    <span class="inline-flex items-center rounded-full {{ $sc['bg'] }} px-2.5 py-0.5 text-xs font-medium {{ $sc['text'] }}">
-                                        {{ $sc['label'] }}
-                                    </span>
+                                <td class="cp-td" style="text-align:center;">
+                                    <span class="cp-badge" style="background:{{ $sc['bg'] }};color:{{ $sc['color'] }};">{{ $sc['label'] }}</span>
                                 </td>
-                                <td class="px-4 py-3 text-center text-gray-500 dark:text-gray-400 whitespace-nowrap text-xs">
+                                <td class="cp-td" style="text-align:center;color:#64748b;font-size:12px;white-space:nowrap;">
                                     {{ $txn->follow_up_date?->format('d/m/Y') ?? '—' }}
                                 </td>
-                                <td class="px-4 py-3 text-right text-gray-700 dark:text-gray-300 font-medium whitespace-nowrap">
-                                    {{ $txn->sell_price > 0 ? 'EGP '.number_format($txn->sell_price, 0) : '—' }}
+                                <td class="cp-td" style="text-align:right;color:#cbd5e1;font-weight:500;white-space:nowrap;">
+                                    {{ $txn->sell_price > 0 ? 'EGP '.number_format($txn->sell_price,0) : '—' }}
                                 </td>
-                                <td class="px-4 py-3 text-right text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                                    {{ $txn->net_price > 0 ? 'EGP '.number_format($txn->net_price, 0) : '—' }}
+                                <td class="cp-td" style="text-align:right;color:#64748b;white-space:nowrap;">
+                                    {{ $txn->net_price > 0 ? 'EGP '.number_format($txn->net_price,0) : '—' }}
                                 </td>
-                                <td class="px-4 py-3 text-right font-semibold whitespace-nowrap {{ (float)$txn->profit > 0 ? 'text-green-600 dark:text-green-400' : 'text-gray-400' }}">
-                                    {{ (float)$txn->profit > 0 ? 'EGP '.number_format($txn->profit, 0) : '—' }}
+                                <td class="cp-td" style="text-align:right;white-space:nowrap;font-weight:700;color:{{ (float)$txn->profit > 0 ? '#4ade80' : '#475569' }};">
+                                    {{ (float)$txn->profit > 0 ? 'EGP '.number_format($txn->profit,0) : '—' }}
                                 </td>
-                                <td class="px-4 py-3 text-right whitespace-nowrap {{ $txn->current_money > 0 ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400' }}">
-                                    {{ $txn->current_money > 0 ? 'EGP '.number_format($txn->current_money, 0) : '—' }}
+                                <td class="cp-td" style="text-align:right;white-space:nowrap;color:{{ $txn->current_money > 0 ? '#60a5fa' : '#334155' }};">
+                                    {{ $txn->current_money > 0 ? 'EGP '.number_format($txn->current_money,0) : '—' }}
                                 </td>
-                                <td class="px-4 py-3 text-right whitespace-nowrap font-semibold {{ $balance > 0 && $txn->status === 'done' ? 'text-orange-600 dark:text-orange-400' : 'text-gray-400' }}">
-                                    {{ ($balance > 0 && $txn->status === 'done') ? 'EGP '.number_format($balance, 0) : '—' }}
+                                <td class="cp-td" style="text-align:right;white-space:nowrap;">
+                                    @if($balance > 0 && $txn->status === 'done')
+                                        <span style="background:#431407;color:#fb923c;font-weight:700;padding:3px 10px;border-radius:8px;font-size:12px;">
+                                            EGP {{ number_format($balance,0) }}
+                                        </span>
+                                    @else
+                                        <span style="color:#1e293b;">—</span>
+                                    @endif
                                 </td>
-                                <td class="px-4 py-3 text-right">
+                                <td class="cp-td" style="text-align:right;">
                                     <a href="{{ route('filament.admin.resources.client-transactions.edit', $txn) }}"
-                                       class="text-xs font-medium text-primary-600 dark:text-primary-400 hover:underline">
-                                        Edit
+                                       style="font-size:12px;font-weight:600;color:#818cf8;text-decoration:none;padding:4px 10px;border:1px solid #3730a3;border-radius:6px;white-space:nowrap;">
+                                        ✏️ Edit
                                     </a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
-                        <tr class="bg-gray-50 dark:bg-gray-700/50 font-semibold text-gray-900 dark:text-white text-sm">
-                            <td class="px-4 py-3" colspan="4">Totals</td>
-                            <td class="px-4 py-3 text-right">EGP {{ number_format($txns->sum('sell_price'), 0) }}</td>
-                            <td class="px-4 py-3 text-right text-gray-500">EGP {{ number_format($txns->sum('net_price'), 0) }}</td>
-                            <td class="px-4 py-3 text-right text-green-600 dark:text-green-400">EGP {{ number_format($txns->sum('profit'), 0) }}</td>
-                            <td class="px-4 py-3 text-right text-blue-600 dark:text-blue-400">EGP {{ number_format($txns->sum('current_money'), 0) }}</td>
-                            <td class="px-4 py-3 text-right text-orange-600 dark:text-orange-400">EGP {{ number_format($stats['outstanding'], 0) }}</td>
+                        <tr style="background:#1e293b;border-top:2px solid #334155;">
+                            <td class="cp-td" colspan="4" style="font-weight:800;color:#f1f5f9;">Totals</td>
+                            <td class="cp-td" style="text-align:right;font-weight:700;color:#e2e8f0;">EGP {{ number_format($txns->sum('sell_price'),0) }}</td>
+                            <td class="cp-td" style="text-align:right;color:#64748b;font-weight:700;">EGP {{ number_format($txns->sum('net_price'),0) }}</td>
+                            <td class="cp-td" style="text-align:right;font-weight:800;color:#4ade80;">EGP {{ number_format($txns->sum('profit'),0) }}</td>
+                            <td class="cp-td" style="text-align:right;font-weight:700;color:#60a5fa;">EGP {{ number_format($txns->sum('current_money'),0) }}</td>
+                            <td class="cp-td" style="text-align:right;font-weight:800;color:#fb923c;">EGP {{ number_format($stats['outstanding'],0) }}</td>
                             <td></td>
                         </tr>
                     </tfoot>
@@ -209,8 +250,8 @@
         @endif
     </div>
 
-    {{-- footer --}}
-    <p class="mt-6 text-center text-xs text-gray-400 dark:text-gray-600">
-        Profile last updated {{ $client->updated_at->diffForHumans() }} · Ease Travel
+    <p style="text-align:center;font-size:11px;color:#1e293b;padding-bottom:16px;">
+        Last updated {{ $client->updated_at->diffForHumans() }} &middot; Ease Travel
     </p>
+
 </x-filament-panels::page>

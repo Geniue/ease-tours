@@ -32,7 +32,7 @@
                     @endif
                     @if($client->passport_number)
                         <span class="flex items-center gap-1">
-                            <x-heroicon-o-identification class="h-4 w-4"/> {{ $client->passport_number }}
+                            <x-heroicon-o-credit-card class="h-4 w-4"/> {{ $client->passport_number }}
                         </span>
                     @endif
                     @if($client->nationality)

@@ -78,7 +78,7 @@
             $counters = [
                 ['label'=>'All Transactions', 'value'=>$s['total'],   'icon'=>'heroicon-o-clipboard-document-list', 'bg'=>'bg-gray-50 dark:bg-gray-800',       'text'=>'text-gray-700 dark:text-gray-200',  'ring'=>'ring-gray-200 dark:ring-gray-700'],
                 ['label'=>'Done',             'value'=>$s['done'],    'icon'=>'heroicon-o-check-badge',             'bg'=>'bg-green-50 dark:bg-green-900/20',   'text'=>'text-green-700 dark:text-green-300','ring'=>'ring-green-200 dark:ring-green-800'],
-                ['label'=>'Waiting',          'value'=>$s['waiting'], 'icon'=>'heroicon-o-hourglass',               'bg'=>'bg-yellow-50 dark:bg-yellow-900/20', 'text'=>'text-yellow-700 dark:text-yellow-300','ring'=>'ring-yellow-200 dark:ring-yellow-800'],
+                ['label'=>'Waiting',          'value'=>$s['waiting'], 'icon'=>'heroicon-o-clock',                   'bg'=>'bg-yellow-50 dark:bg-yellow-900/20', 'text'=>'text-yellow-700 dark:text-yellow-300','ring'=>'ring-yellow-200 dark:ring-yellow-800'],
                 ['label'=>'Lost',             'value'=>$s['lost'],    'icon'=>'heroicon-o-x-circle',                'bg'=>'bg-red-50 dark:bg-red-900/20',       'text'=>'text-red-700 dark:text-red-300',    'ring'=>'ring-red-200 dark:ring-red-800'],
             ];
         @endphp

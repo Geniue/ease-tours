@@ -9,7 +9,9 @@
       "Bash(xargs grep *)",
       "Bash(find /f/ease-tours -name \".env.example\" -exec cat {} \\\\;)",
       "Bash(php artisan tinker '--execute= *)",
-      "Bash(php artisan *)"
+      "Bash(php artisan *)",
+      "WebFetch(domain:sis.gov.eg)",
+      "Bash(composer require *)"
     ]
   }
 }

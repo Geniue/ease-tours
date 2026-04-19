@@ -96,6 +96,18 @@ export default async function LocaleLayout({
           src="https://emrldtp.com/NTE2OTIw.js?t=516920"
           strategy="lazyOnload"
         />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18050243563"
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-18050243563');
+          `}
+        </Script>
       </body>
     </html>
   );

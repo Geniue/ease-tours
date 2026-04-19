@@ -17,6 +17,7 @@ const cairo = Cairo({
   subsets: ["arabic", "latin"],
   variable: "--font-cairo",
   display: "swap",
+  preload: false,
 });
 
 export async function generateMetadata({

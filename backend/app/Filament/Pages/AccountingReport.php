@@ -45,15 +45,18 @@ class AccountingReport extends Page
             : 0;
 
         // --- By Service ---
+        // Revenue/Profit/Cost = done deals only (matches KPI cards)
+        // Pending = waiting deals sell_price (potential)
         $byService = ClientTransaction::select(
             'service',
             DB::raw('COUNT(*) as count'),
-            DB::raw('SUM(sell_price) as total_sell'),
-            DB::raw('SUM(net_price) as total_net'),
-            DB::raw('SUM(profit) as total_profit'),
-            DB::raw('SUM(CASE WHEN status = "done" THEN 1 ELSE 0 END) as done_count'),
+            DB::raw('SUM(CASE WHEN status = "done" THEN sell_price ELSE 0 END) as total_sell'),
+            DB::raw('SUM(CASE WHEN status = "done" THEN net_price  ELSE 0 END) as total_net'),
+            DB::raw('SUM(CASE WHEN status = "done" THEN profit     ELSE 0 END) as total_profit'),
+            DB::raw('SUM(CASE WHEN status = "waiting" THEN sell_price ELSE 0 END) as total_pending'),
+            DB::raw('SUM(CASE WHEN status = "done"    THEN 1 ELSE 0 END) as done_count'),
             DB::raw('SUM(CASE WHEN status = "waiting" THEN 1 ELSE 0 END) as waiting_count'),
-            DB::raw('SUM(CASE WHEN status = "lost" THEN 1 ELSE 0 END) as lost_count')
+            DB::raw('SUM(CASE WHEN status = "lost"    THEN 1 ELSE 0 END) as lost_count')
         )
             ->groupBy('service')
             ->orderByDesc('total_profit')

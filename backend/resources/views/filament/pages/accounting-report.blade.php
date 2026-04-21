@@ -195,7 +195,8 @@
                         <th style="text-align:center;">Done</th>
                         <th style="text-align:center;">Waiting</th>
                         <th style="text-align:center;">Lost</th>
-                        <th style="text-align:right;">Revenue</th>
+                        <th style="text-align:right;">Revenue (Done)</th>
+                        <th style="text-align:right;color:#fbbf24;">Pending</th>
                         <th style="text-align:right;">Cost</th>
                         <th style="text-align:right;">Profit</th>
                     </tr>
@@ -213,13 +214,22 @@
                             <td style="text-align:center;"><span class="ar-badge" style="background:#052e16;color:#4ade80;">{{ $row->done_count }}</span></td>
                             <td style="text-align:center;"><span class="ar-badge" style="background:#422006;color:#fbbf24;">{{ $row->waiting_count }}</span></td>
                             <td style="text-align:center;"><span class="ar-badge" style="background:#2d0a0a;color:#f87171;">{{ $row->lost_count }}</span></td>
-                            <td style="text-align:right;color:#cbd5e1;font-weight:500;">EGP {{ number_format($row->total_sell, 0) }}</td>
-                            <td style="text-align:right;color:#64748b;">EGP {{ number_format($row->total_net, 0) }}</td>
+                            <td style="text-align:right;color:#cbd5e1;font-weight:500;">
+                                {{ $row->total_sell > 0 ? 'EGP '.number_format($row->total_sell, 0) : '—' }}
+                            </td>
+                            <td style="text-align:right;color:{{ $row->total_pending > 0 ? '#fbbf24' : '#334155' }};font-weight:{{ $row->total_pending > 0 ? '600' : '400' }};">
+                                {{ $row->total_pending > 0 ? 'EGP '.number_format($row->total_pending, 0) : '—' }}
+                            </td>
+                            <td style="text-align:right;color:#64748b;">
+                                {{ $row->total_net > 0 ? 'EGP '.number_format($row->total_net, 0) : '—' }}
+                            </td>
                             <td style="text-align:right;">
-                                <span style="font-weight:700; color:{{ $row->total_profit > 0 ? '#4ade80' : '#f87171' }};">
-                                    EGP {{ number_format($row->total_profit, 0) }}
+                                <span style="font-weight:700; color:{{ $row->total_profit > 0 ? '#4ade80' : ($row->total_profit < 0 ? '#f87171' : '#334155') }};">
+                                    {{ $row->total_profit != 0 ? 'EGP '.number_format($row->total_profit, 0) : '—' }}
                                 </span>
-                                <span style="color:{{ $pct>=20?'#34d399':'#94a3b8' }};font-size:11px;margin-left:4px;">{{ $pct }}%</span>
+                                @if($pct > 0)
+                                    <span style="color:{{ $pct>=20?'#34d399':'#94a3b8' }};font-size:11px;margin-left:4px;">{{ $pct }}%</span>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -232,6 +242,7 @@
                         <td style="text-align:center;padding:12px 16px;color:#fbbf24;font-weight:700;">{{ $data['byService']->sum('waiting_count') }}</td>
                         <td style="text-align:center;padding:12px 16px;color:#f87171;font-weight:700;">{{ $data['byService']->sum('lost_count') }}</td>
                         <td style="text-align:right;padding:12px 16px;color:#e2e8f0;font-weight:700;">EGP {{ number_format($data['byService']->sum('total_sell'), 0) }}</td>
+                        <td style="text-align:right;padding:12px 16px;color:#fbbf24;font-weight:700;">EGP {{ number_format($data['byService']->sum('total_pending'), 0) }}</td>
                         <td style="text-align:right;padding:12px 16px;color:#64748b;font-weight:700;">EGP {{ number_format($data['byService']->sum('total_net'), 0) }}</td>
                         <td style="text-align:right;padding:12px 16px;color:#4ade80;font-weight:800;font-size:14px;">EGP {{ number_format($data['byService']->sum('total_profit'), 0) }}</td>
                     </tr>

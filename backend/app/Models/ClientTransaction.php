@@ -17,6 +17,7 @@ class ClientTransaction extends Model
         'service',
         'status',
         'follow_up_date',
+        'completed_at',
         'net_price',
         'sell_price',
         'profit',
@@ -27,6 +28,7 @@ class ClientTransaction extends Model
     protected $casts = [
         'transaction_date' => 'date',
         'follow_up_date'   => 'date',
+        'completed_at'     => 'datetime',
         'net_price'        => 'decimal:2',
         'sell_price'       => 'decimal:2',
         'profit'           => 'decimal:2',
@@ -42,6 +44,14 @@ class ClientTransaction extends Model
     {
         static::saving(function (self $model) {
             $model->profit = $model->sell_price - $model->net_price;
+
+            if ($model->status === 'done' && $model->completed_at === null) {
+                $model->completed_at = now();
+            }
+
+            if ($model->status !== 'done') {
+                $model->completed_at = null;
+            }
         });
     }
 }

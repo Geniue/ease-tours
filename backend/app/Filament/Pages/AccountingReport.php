@@ -58,18 +58,22 @@ class AccountingReport extends Page
             ->orderByDesc('total_profit')
             ->get();
 
-        // --- By Month ---
+        // --- By Month (revenue recognised when deal is Done) ---
+        // completed_at = when status flipped to done (auto-set by model)
+        // Falls back to transaction_date for old imported records
         $byMonth = ClientTransaction::select(
-            DB::raw('DATE_FORMAT(transaction_date, "%Y-%m") as month'),
-            DB::raw('DATE_FORMAT(transaction_date, "%b %Y") as month_label'),
+            DB::raw('DATE_FORMAT(COALESCE(completed_at, transaction_date), "%Y-%m") as month'),
+            DB::raw('DATE_FORMAT(COALESCE(completed_at, transaction_date), "%b %Y") as month_label'),
             DB::raw('COUNT(*) as count'),
-            DB::raw('SUM(sell_price) as total_sell'),
-            DB::raw('SUM(profit) as total_profit'),
+            DB::raw('SUM(CASE WHEN status = "done" THEN sell_price ELSE 0 END) as total_sell'),
+            DB::raw('SUM(CASE WHEN status = "done" THEN profit ELSE 0 END) as total_profit'),
             DB::raw('SUM(current_money) as total_collected'),
             DB::raw('SUM(CASE WHEN status = "done" THEN 1 ELSE 0 END) as done_count'),
             DB::raw('SUM(CASE WHEN status = "waiting" THEN 1 ELSE 0 END) as waiting_count')
         )
-            ->whereNotNull('transaction_date')
+            ->where(function ($q) {
+                $q->whereNotNull('completed_at')->orWhereNotNull('transaction_date');
+            })
             ->groupBy('month', 'month_label')
             ->orderBy('month')
             ->get();

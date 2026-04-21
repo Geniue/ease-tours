@@ -143,19 +143,36 @@
 
     {{-- ══════════════════════════ PIPELINE + PENDING ══ --}}
     @if($s['waiting'] > 0 || $s['pending_revenue'] > 0)
-    <div style="background: linear-gradient(135deg,#1e1b4b,#312e81); border-radius:14px; padding:18px 24px; display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; color:#fff;">
+    @php
+        $pendingMargin = $s['pending_revenue'] > 0
+            ? round(($s['pending_profit'] / $s['pending_revenue']) * 100, 1)
+            : 0;
+    @endphp
+    <div style="background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:14px;padding:20px 24px;margin-bottom:20px;color:#fff;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;align-items:center;">
+        {{-- Pipeline Revenue --}}
         <div style="display:flex;align-items:center;gap:14px;">
-            <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:10px;">
-                <svg style="width:22px;height:22px;color:#a5b4fc;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:10px;flex-shrink:0;">
+                <svg style="width:22px;height:22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </div>
             <div>
-                <p style="font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:.07em;font-weight:700;">Pending Pipeline</p>
+                <p style="font-size:11px;opacity:.55;text-transform:uppercase;letter-spacing:.07em;font-weight:700;">Pending Revenue</p>
                 <p style="font-size:22px;font-weight:800;line-height:1.1;">EGP {{ number_format($s['pending_revenue'], 0) }}</p>
+                <p style="font-size:11px;opacity:.45;margin-top:2px;">{{ $s['waiting'] }} deals in progress</p>
             </div>
         </div>
+
+        {{-- Expected Profit --}}
+        <div style="border-left:1px solid rgba(255,255,255,.1);border-right:1px solid rgba(255,255,255,.1);padding:0 24px;text-align:center;">
+            <p style="font-size:11px;opacity:.55;text-transform:uppercase;letter-spacing:.07em;font-weight:700;">Expected Profit</p>
+            <p style="font-size:22px;font-weight:800;line-height:1.1;color:#6ee7b7;">EGP {{ number_format($s['pending_profit'], 0) }}</p>
+            <p style="font-size:11px;opacity:.45;margin-top:2px;">If all {{ $s['waiting'] }} deals close</p>
+        </div>
+
+        {{-- Margin --}}
         <div style="text-align:right;">
-            <p style="font-size:12px;opacity:.6;">{{ $s['waiting'] }} deals in progress</p>
-            <p style="font-size:12px;opacity:.4;margin-top:2px;">Potential if all close</p>
+            <p style="font-size:11px;opacity:.55;text-transform:uppercase;letter-spacing:.07em;font-weight:700;">Expected Margin</p>
+            <p style="font-size:28px;font-weight:800;line-height:1;color:#a5b4fc;">{{ $pendingMargin }}%</p>
+            <p style="font-size:11px;opacity:.45;margin-top:2px;">Profit / Revenue</p>
         </div>
     </div>
     @endif

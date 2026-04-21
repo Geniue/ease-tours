@@ -32,6 +32,7 @@ class AccountingReport extends Page
             'total_profit'    => ClientTransaction::where('status', 'done')->sum('profit'),
             'total_collected' => ClientTransaction::sum('current_money'),
             'pending_revenue' => ClientTransaction::where('status', 'waiting')->sum('sell_price'),
+            'pending_profit'  => ClientTransaction::where('status', 'waiting')->sum('profit'),
             'lost_revenue'    => ClientTransaction::where('status', 'lost')->sum('sell_price'),
         ];
 

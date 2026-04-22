@@ -1,6 +1,6 @@
-# تأشيرة هولندا السياحية من مصر 2025 — الدليل الكامل وقائمة الأوراق المطلوبة
+# تأشيرة هولندا السياحية من مصر 2026 — الدليل الكامل وقائمة الأوراق المطلوبة
 
-**الفئة:** تأشيرات وسفر | **وقت القراءة:** 8 دقائق | **آخر تحديث:** أبريل 2025
+**الفئة:** تأشيرات وسفر | **وقت القراءة:** 8 دقائق | **آخر تحديث:** أبريل 2026
 
 ---
 
@@ -8,7 +8,7 @@
 
 هولندا — أرض طواحين الهواء وحقول التوليب وقنوات أمستردام — واحدة من أكثر الوجهات الأوروبية جذباً للسياح المصريين. لكن الخطوة الأولى نحو هذا الحلم هي استخراج تأشيرة شنغن السياحية بشكل صحيح. أي خطأ في الأوراق = رفض الطلب وضياع رسوم التأشيرة.
 
-في هذا الدليل ستجد **القائمة الكاملة والرسمية** للمستندات المطلوبة للتأشيرة السياحية لهولندا من مصر لعام 2025، استناداً إلى [المتطلبات الرسمية لـ VFS Global هولندا من مصر](https://visa.vfsglobal.com/one-pager/netherlands/egypt/english/).
+في هذا الدليل ستجد **القائمة الكاملة والرسمية** للمستندات المطلوبة للتأشيرة السياحية لهولندا من مصر لعام 2026، استناداً إلى [المتطلبات الرسمية لـ VFS Global هولندا من مصر](https://visa.vfsglobal.com/one-pager/netherlands/egypt/english/).
 
 ---
 
@@ -18,7 +18,7 @@
 
 ---
 
-## قائمة الأوراق المطلوبة لتأشيرة هولندا السياحية من مصر 2025
+## قائمة الأوراق المطلوبة لتأشيرة هولندا السياحية من مصر 2026
 
 > جميع الأوراق الآتية مستخرجة من **[القائمة الرسمية لـ VFS Global — هولندا من مصر](https://visa.vfsglobal.com/one-pager/netherlands/egypt/english/)**.
 
@@ -205,25 +205,25 @@
 
 <!-- ═══════════════════════════ SEO METADATA ═══════════════════════════
 
-SLUG: تأشيرة-هولندا-السياحية-من-مصر-2025
-SLUG (en): netherlands-schengen-tourist-visa-from-egypt-2025
+SLUG: تأشيرة-هولندا-السياحية-من-مصر-2026
+SLUG (en): netherlands-schengen-tourist-visa-from-egypt-2026
 
 META TITLE (ar):
-تأشيرة هولندا السياحية من مصر 2025 — الأوراق المطلوبة كاملة | إيز ترافل
+تأشيرة هولندا السياحية من مصر 2026 — الأوراق المطلوبة كاملة | إيز ترافل
 
 META TITLE (en):
-Netherlands Schengen Tourist Visa from Egypt 2025 — Complete Documents Checklist
+Netherlands Schengen Tourist Visa from Egypt 2026 — Complete Documents Checklist
 
 META DESCRIPTION (ar):
-قائمة كاملة بأوراق تأشيرة هولندا السياحية (شنغن) لعام 2025 للمتقدمين من مصر — جواز السفر، التأمين، الحجوزات، الكشف البنكي وأكثر. استناداً للمصدر الرسمي VFS Global.
+قائمة كاملة بأوراق تأشيرة هولندا السياحية (شنغن) لعام 2026 للمتقدمين من مصر — جواز السفر، التأمين، الحجوزات، الكشف البنكي وأكثر. استناداً للمصدر الرسمي VFS Global.
 
 META DESCRIPTION (en):
-Complete official checklist for Netherlands Schengen tourist visa from Egypt 2025 — passport, insurance, bank statements, hotel reservations and more. Based on VFS Global official requirements.
+Complete official checklist for Netherlands Schengen tourist visa from Egypt 2026 — passport, insurance, bank statements, hotel reservations and more. Based on VFS Global official requirements.
 
 PRIMARY KEYWORDS:
 - تأشيرة هولندا من مصر
-- أوراق تأشيرة هولندا السياحية 2025
-- تأشيرة شنغن من مصر 2025
+- أوراق تأشيرة هولندا السياحية 2026
+- تأشيرة شنغن من مصر 2026
 - متطلبات تأشيرة هولندا
 - VFS هولندا مصر
 
@@ -243,8 +243,8 @@ INTERNAL LINKS TO ADD:
 - /ar/trips     → "رحلات هولندا وأوروبا"
 
 IMAGES NEEDED:
-1. [og-image] netherlands-visa-egypt-2025.jpg — مدخل مركز VFS القاهرة أو علم هولندا مع جواز سفر مصري (1200×630)
-2. [body-1] schengen-visa-documents.jpg — صورة أوراق تأشيرة على مكتب (alt: أوراق تأشيرة شنغن من مصر 2025)
+1. [og-image] netherlands-visa-egypt-2026.jpg — مدخل مركز VFS القاهرة أو علم هولندا مع جواز سفر مصري (1200×630)
+2. [body-1] schengen-visa-documents.jpg — صورة أوراق تأشيرة على مكتب (alt: أوراق تأشيرة شنغن من مصر 2026)
 3. [body-2] travel-insurance-schengen.jpg — وثيقة تأمين سفر (alt: تأمين سفر شنغن 30000 يورو)
 4. [body-3] amsterdam-tourism.jpg — مشهد سياحي أمستردام (alt: السياحة في هولندا أمستردام)
 

@@ -185,7 +185,7 @@
 - ✅ **خطابات دعم التأشيرة** المعدّة باحترافية
 - ✅ **متابعة الطلب** حتى الحصول على التأشيرة
 
-👈 [تواصل مع إيز ترافل الآن للمساعدة في تأشيرتك](https://ease-travel.online/ar/services)
+👈 [حجز موعد السفارة الهولندية عبر إيز ترافل](https://ease-travel.online/ar/services/%D8%AD%D8%AC%D8%B2-%D9%85%D9%88%D8%A7%D8%B9%D9%8A%D8%AF-%D8%A7%D9%84%D8%B3%D9%81%D8%A7%D8%B1%D8%A7%D8%AA) — أو — [استخراج تأشيرة هولندا باحترافية](https://ease-travel.online/ar/services/%D8%A7%D8%B3%D8%AA%D8%AE%D8%B1%D8%A7%D8%AC-%D8%A7%D9%84%D8%AA%D8%A3%D8%B4%D9%8A%D8%B1%D8%A7%D8%AA)
 
 ---
 

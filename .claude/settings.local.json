@@ -11,7 +11,13 @@
       "Bash(php artisan tinker '--execute= *)",
       "Bash(php artisan *)",
       "WebFetch(domain:sis.gov.eg)",
-      "Bash(composer require *)"
+      "Bash(composer require *)",
+      "WebFetch(domain:visa.vfsglobal.com)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'content: add Netherlands Schengen tourist visa from Egypt 2025 SEO blog *)",
+      "Bash(git push *)",
+      "Bash(git commit -m 'content: add English version + fix service links in Netherlands visa blog *)",
+      "Bash(git commit -m 'fix: update Netherlands visa blog year from 2025 to 2026, rename files *)"
     ]
   }
 }

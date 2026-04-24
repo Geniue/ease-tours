@@ -92,7 +92,7 @@ export default async function LocaleLayout({
           id="cookiebot"
           src="https://consent.cookiebot.com/uc.js"
           data-cbid="6e4653c4-e7c9-4350-a3ed-3b8ad3ac0ee5"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
         />
         <Script
           src="https://analytics.ahrefs.com/analytics.js"

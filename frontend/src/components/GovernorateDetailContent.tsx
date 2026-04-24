@@ -155,7 +155,7 @@ export default function GovernorateDetailContent({
                       : "Contact us on WhatsApp and book your trip now"}
                   </p>
                   <a
-                    href="https://wa.me/201551555498"
+                    href="https://wa.me/201105001389"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block bg-white text-green-600 font-bold py-2.5 px-6 rounded-full hover:bg-green-50 transition-colors"
@@ -252,7 +252,7 @@ export default function GovernorateDetailContent({
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/201551555498"
+              href="https://wa.me/201105001389"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition-colors"

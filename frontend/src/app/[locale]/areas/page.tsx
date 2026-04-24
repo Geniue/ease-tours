@@ -200,7 +200,7 @@ export default async function AreasPage({
                 : "Ease Travel serves everywhere in Egypt. Contact us on WhatsApp and book your trip."}
             </p>
             <a
-              href="https://wa.me/201551555498"
+              href="https://wa.me/201105001389"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition-colors"

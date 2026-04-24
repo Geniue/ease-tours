@@ -403,7 +403,7 @@ export default function FlightsContent({ faqs }: { faqs: Faq[] }) {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/201551555498?text=%D8%B9%D8%A7%D9%8A%D8%B2+%D8%A3%D8%AD%D8%AC%D8%B2+%D8%AA%D8%B0%D9%83%D8%B1%D8%A9+%D8%B7%D9%8A%D8%B1%D8%A7%D9%86"
+              href="https://wa.me/201105001389?text=%D8%B9%D8%A7%D9%8A%D8%B2+%D8%A3%D8%AD%D8%AC%D8%B2+%D8%AA%D8%B0%D9%83%D8%B1%D8%A9+%D8%B7%D9%8A%D8%B1%D8%A7%D9%86"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition-colors"

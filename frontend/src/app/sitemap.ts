@@ -1,10 +1,17 @@
 import type { MetadataRoute } from "next";
-import { getTrips, getBlogs, getServices } from "@/lib/api";
+import { getTrips, getBlogs, getServices, getCategories, getTags, getAuthors } from "@/lib/api";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [trips, blogs, services] = await Promise.all([getTrips(), getBlogs({ limit: "500" }), getServices()]);
+  const [trips, blogs, services, categories, tags, authors] = await Promise.all([
+    getTrips(),
+    getBlogs({ limit: "500" }),
+    getServices(),
+    getCategories(),
+    getTags(),
+    getAuthors(),
+  ]);
 
   const staticPages = ["", "/tours", "/blog", "/about", "/contact", "/hajj-umrah", "/services", "/embassy"];
   const locales = ["ar", "en"];
@@ -45,5 +52,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
-  return [...staticEntries, ...tripEntries, ...blogEntries, ...serviceEntries];
+  const categoryEntries: MetadataRoute.Sitemap = categories.flatMap((cat) =>
+    locales.map((locale) => ({
+      url: `${SITE_URL}/${locale}/blog/category/${encodeURIComponent(locale === "ar" ? cat.slug_ar : cat.slug_en)}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    }))
+  );
+
+  const tagEntries: MetadataRoute.Sitemap = tags.flatMap((tag) =>
+    locales.map((locale) => ({
+      url: `${SITE_URL}/${locale}/blog/tag/${encodeURIComponent(locale === "ar" ? tag.slug_ar : tag.slug_en)}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.5,
+    }))
+  );
+
+  const authorEntries: MetadataRoute.Sitemap = authors.flatMap((author) =>
+    locales.map((locale) => ({
+      url: `${SITE_URL}/${locale}/blog/author/${encodeURIComponent(locale === "ar" ? author.slug_ar : author.slug_en)}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.5,
+    }))
+  );
+
+  return [
+    ...staticEntries,
+    ...tripEntries,
+    ...blogEntries,
+    ...serviceEntries,
+    ...categoryEntries,
+    ...tagEntries,
+    ...authorEntries,
+  ];
 }

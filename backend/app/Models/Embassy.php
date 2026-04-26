@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Embassy extends Model
 {
@@ -33,4 +34,9 @@ class Embassy extends Model
         'next_close_date' => 'date',
         'appointment_price' => 'decimal:2',
     ];
+
+    public function blogs(): BelongsToMany
+    {
+        return $this->belongsToMany(Blog::class, 'blog_embassy');
+    }
 }

@@ -1,9 +1,11 @@
 import { useTranslations } from "next-intl";
 import type { Metadata } from "next";
-import { getBlogsPaginated, getCategories } from "@/lib/api";
+import { getBlogsPaginated, getCategories, getBlogs, getTags } from "@/lib/api";
 import BlogFilter from "@/components/BlogFilter";
+import BlogFeaturedStrip from "@/components/BlogFeaturedStrip";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { JsonLd, breadcrumbSchema } from "@/lib/schemas";
+import { Link } from "@/i18n/navigation";
+import { JsonLd, breadcrumbSchema, blogItemListSchema, collectionPageSchema } from "@/lib/schemas";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
@@ -29,20 +31,42 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
-export default async function BlogPage() {
-  const [{ data: blogs, meta }, categories] = await Promise.all([
+export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const isAr = locale === "ar";
+  const [{ data: blogs, meta }, categories, featured, tags] = await Promise.all([
     getBlogsPaginated({ page: "1" }),
     getCategories(),
+    getBlogs({ featured: "1", limit: "3" }),
+    getTags(),
   ]);
+
+  const pageUrl = `${SITE_URL}/${locale}/blog`;
+  const pageTitle = isAr ? "المدونة - مقالات سياحية" : "Blog - Travel Articles";
+  const pageDescription = isAr
+    ? "اقرأ أحدث المقالات والنصائح عن السياحة في مصر والعالم"
+    : "Read the latest travel articles and tips for Egypt and worldwide";
 
   return (
     <>
       <JsonLd data={breadcrumbSchema([
-        { name: "\u0627\u0644\u0631\u0626\u064a\u0633\u064a\u0629", url: `${SITE_URL}/ar` },
-        { name: "\u0627\u0644\u0645\u062f\u0648\u0646\u0629", url: `${SITE_URL}/ar/blog` },
+        { name: isAr ? "الرئيسية" : "Home", url: `${SITE_URL}/${locale}` },
+        { name: isAr ? "المدونة" : "Blog", url: pageUrl },
       ])} />
+      <JsonLd data={collectionPageSchema({
+        name: pageTitle,
+        description: pageDescription,
+        url: pageUrl,
+        locale,
+        itemCount: meta.total,
+      })} />
+      {blogs.length > 0 && (
+        <JsonLd data={blogItemListSchema(blogs, locale, pageTitle, pageUrl)} />
+      )}
       <main>
         <BlogHero />
+        {featured.length > 0 && <BlogFeaturedStrip blogs={featured} />}
+        {tags.length > 0 && <PopularTags tags={tags.slice(0, 12)} locale={locale} />}
         <section className="py-16">
           <div className="container mx-auto px-4">
             <BlogFilter
@@ -75,8 +99,29 @@ function BlogHero() {
           <Breadcrumbs items={[{ label: t("title") }]} variant="dark" />
         </div>
       </div>
-      <div className="relative z-10 text-center">
+      <div className="relative z-10 text-center px-4">
         <h1 className="text-4xl md:text-5xl font-bold">{t("title")}</h1>
+        <p className="text-base md:text-lg text-white/85 mt-3 max-w-2xl mx-auto">{t("subtitle")}</p>
+      </div>
+    </section>
+  );
+}
+
+function PopularTags({ tags, locale }: { tags: { id: number; name_ar: string; name_en: string; slug_ar: string; slug_en: string }[]; locale: string }) {
+  const isAr = locale === "ar";
+  return (
+    <section className="container mx-auto px-4 mt-10" dir={isAr ? "rtl" : "ltr"}>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-sm font-semibold text-gray-700 me-2">#</span>
+        {tags.map((tag) => (
+          <Link
+            key={tag.id}
+            href={`/blog/tag/${isAr ? tag.slug_ar : tag.slug_en}`}
+            className="text-xs px-3 py-1.5 bg-white border border-gray-200 rounded-full text-gray-700 hover:bg-[#1a73a7] hover:text-white hover:border-[#1a73a7] transition"
+          >
+            {isAr ? tag.name_ar : tag.name_en}
+          </Link>
+        ))}
       </div>
     </section>
   );

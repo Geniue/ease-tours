@@ -138,9 +138,41 @@ export async function getCategories(): Promise<ApiCategory[]> {
   return json.data;
 }
 
+export interface ApiAuthor {
+  id: number;
+  name_ar: string;
+  name_en: string;
+  slug_ar: string;
+  slug_en: string;
+  expertise_ar: string | null;
+  expertise_en: string | null;
+  bio_ar: string | null;
+  bio_en: string | null;
+  photo: string | null;
+  photo_url: string | null;
+  email: string | null;
+  social_twitter: string | null;
+  social_linkedin: string | null;
+  social_facebook: string | null;
+  is_active: boolean;
+  blogs_count?: number;
+}
+
+export interface ApiTag {
+  id: number;
+  name_ar: string;
+  name_en: string;
+  slug_ar: string;
+  slug_en: string;
+  description_ar: string | null;
+  description_en: string | null;
+  blogs_count?: number;
+}
+
 export interface ApiBlog {
   id: number;
   category_id: number;
+  author_id: number | null;
   title_ar: string;
   title_en: string;
   slug_ar: string;
@@ -166,8 +198,15 @@ export interface ApiBlog {
     id: number;
     name_ar: string;
     name_en: string;
+    slug_ar: string;
+    slug_en: string;
     type: "inbound" | "outbound" | "religious";
   };
+  author?: ApiAuthor | null;
+  tags?: ApiTag[];
+  related_trips?: ApiTrip[];
+  related_services?: ApiService[];
+  related_embassies?: ApiEmbassy[];
 }
 
 export async function getBlogs(params?: Record<string, string>): Promise<ApiBlog[]> {
@@ -187,7 +226,85 @@ export async function getBlog(slug: string): Promise<ApiBlog | null> {
   });
   if (!res.ok) return null;
   const json: { status: string; data: ApiBlog } = await res.json();
+  // Laravel snake_cases relations as related_trips/related_services/related_embassies via $blog->load()
+  // and exposes them under the relation method name (relatedTrips). Normalize:
+  const data = json.data as ApiBlog & {
+    relatedTrips?: ApiTrip[];
+    relatedServices?: ApiService[];
+    relatedEmbassies?: ApiEmbassy[];
+  };
+  return {
+    ...data,
+    related_trips: data.related_trips ?? data.relatedTrips ?? [],
+    related_services: data.related_services ?? data.relatedServices ?? [],
+    related_embassies: data.related_embassies ?? data.relatedEmbassies ?? [],
+  };
+}
+
+export async function searchBlogs(q: string): Promise<ApiBlog[]> {
+  if (!q.trim()) return [];
+  const url = new URL(`${API_URL}/blogs`);
+  url.searchParams.set("q", q);
+  url.searchParams.set("per_page", "20");
+  const res = await fetch(url.toString(), { cache: "no-store" });
+  if (!res.ok) return [];
+  const json = await res.json();
+  return json.data ?? [];
+}
+
+// ── Tags ──
+
+export async function getTags(): Promise<ApiTag[]> {
+  const res = await fetch(`${API_URL}/tags`, { next: { revalidate: 60 } });
+  if (!res.ok) return [];
+  const json: ListResponse<ApiTag> = await res.json();
   return json.data;
+}
+
+export async function getTag(slug: string): Promise<ApiTag | null> {
+  const res = await fetch(`${API_URL}/tags/${encodeURIComponent(slug)}`, {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) return null;
+  const json: { status: string; data: ApiTag } = await res.json();
+  return json.data;
+}
+
+// ── Authors ──
+
+export async function getAuthors(): Promise<ApiAuthor[]> {
+  const res = await fetch(`${API_URL}/authors`, { next: { revalidate: 60 } });
+  if (!res.ok) return [];
+  const json: ListResponse<ApiAuthor> = await res.json();
+  return json.data;
+}
+
+export async function getAuthor(slug: string): Promise<ApiAuthor | null> {
+  const res = await fetch(`${API_URL}/authors/${encodeURIComponent(slug)}`, {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) return null;
+  const json: { status: string; data: ApiAuthor } = await res.json();
+  return json.data;
+}
+
+// ── Subscribe ──
+
+export async function subscribeNewsletter(data: {
+  email: string;
+  locale?: string;
+  source?: string;
+}): Promise<{ success: boolean; error?: string }> {
+  const res = await fetch(`${API_URL}/subscribe`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => null);
+    return { success: false, error: err?.message || "Subscription failed" };
+  }
+  return { success: true };
 }
 
 // ── Services ──
@@ -290,6 +407,16 @@ export async function getBlogsPaginated(
   if (!res.ok) return empty;
   const json = await res.json();
   return { data: json.data ?? [], meta: json.meta ?? empty.meta };
+}
+
+export async function getCategoryBySlug(slug: string): Promise<ApiCategory | null> {
+  // categories endpoint exposes a `show` action on slug
+  const res = await fetch(`${API_URL}/categories/${encodeURIComponent(slug)}`, {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) return null;
+  const json: { status: string; data: ApiCategory } = await res.json();
+  return json.data;
 }
 
 export async function getServicesPaginated(

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AuthorController;
 use App\Http\Controllers\Api\V1\BlogController;
 use App\Http\Controllers\Api\V1\BookingController;
 use App\Http\Controllers\Api\V1\CategoryController;
@@ -7,6 +8,8 @@ use App\Http\Controllers\Api\V1\ContactMessageController;
 use App\Http\Controllers\Api\V1\EmbassyController;
 use App\Http\Controllers\Api\V1\GovernorateController;
 use App\Http\Controllers\Api\V1\ServiceController;
+use App\Http\Controllers\Api\V1\SubscriberController;
+use App\Http\Controllers\Api\V1\TagController;
 use App\Http\Controllers\Api\V1\TripController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +32,14 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/blogs', [BlogController::class, 'index']);
     Route::get('/blogs/{slug}', [BlogController::class, 'show']);
+
+    Route::get('/tags', [TagController::class, 'index']);
+    Route::get('/tags/{slug}', [TagController::class, 'show']);
+
+    Route::get('/authors', [AuthorController::class, 'index']);
+    Route::get('/authors/{slug}', [AuthorController::class, 'show']);
+
+    Route::post('/subscribe', [SubscriberController::class, 'store'])->middleware('throttle:6,1');
 
     Route::get('/services', [ServiceController::class, 'index']);
     Route::get('/services/{slug}', [ServiceController::class, 'show']);

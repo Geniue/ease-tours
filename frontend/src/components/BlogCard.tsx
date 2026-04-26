@@ -2,10 +2,11 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import { Calendar } from "lucide-react";
+import { Calendar, Clock } from "lucide-react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import type { ApiBlog } from "@/lib/api";
+import { readingTimeLabel } from "@/lib/readingTime";
 
 export default function BlogCard({ blog }: { blog: ApiBlog }) {
   const t = useTranslations("blog");
@@ -16,6 +17,9 @@ export default function BlogCard({ blog }: { blog: ApiBlog }) {
   const excerpt = isAr ? blog.excerpt_ar : blog.excerpt_en;
   const slug = isAr ? blog.slug_ar : blog.slug_en;
   const categoryName = isAr ? blog.category.name_ar : blog.category.name_en;
+  const body = isAr ? blog.body_ar : blog.body_en;
+  const readTime = body ? readingTimeLabel(body, isAr ? "ar" : "en") : null;
+  const authorName = blog.author ? (isAr ? blog.author.name_ar : blog.author.name_en) : null;
 
   const publishedDate = blog.published_at
     ? new Date(blog.published_at).toLocaleDateString(isAr ? "ar-EG" : "en-US", {
@@ -34,7 +38,6 @@ export default function BlogCard({ blog }: { blog: ApiBlog }) {
       className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow"
     >
       <Link href={`/blog/${slug}`}>
-        {/* Image */}
         <div className="relative h-48 overflow-hidden">
           {blog.featured_image_url ? (
             <Image
@@ -57,7 +60,6 @@ export default function BlogCard({ blog }: { blog: ApiBlog }) {
           </div>
         </div>
 
-        {/* Content */}
         <div className="p-5">
           <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-[#1a73a7] transition-colors">
             {title}
@@ -65,6 +67,22 @@ export default function BlogCard({ blog }: { blog: ApiBlog }) {
 
           {excerpt && (
             <p className="text-sm text-gray-600 mb-3 line-clamp-2">{excerpt}</p>
+          )}
+
+          {(authorName || readTime) && (
+            <div className="flex items-center gap-3 text-xs text-gray-500 mb-2">
+              {authorName && (
+                <span className="truncate max-w-[120px]">
+                  {t("byAuthor")} {authorName}
+                </span>
+              )}
+              {authorName && readTime && <span>•</span>}
+              {readTime && (
+                <span className="inline-flex items-center gap-1">
+                  <Clock size={12} /> {readTime}
+                </span>
+              )}
+            </div>
           )}
 
           <div className="flex items-center justify-between">

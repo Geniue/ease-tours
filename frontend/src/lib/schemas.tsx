@@ -1,4 +1,4 @@
-import type { ApiTrip, ApiBlog, ApiService, ApiGovernorate } from "@/lib/api";
+import type { ApiTrip, ApiBlog, ApiService, ApiGovernorate, ApiAuthor, ApiTag, ApiCategory } from "@/lib/api";
 import { countWords } from "@/lib/blogUtils";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
@@ -151,6 +151,34 @@ export function blogPostingSchema(blog: ApiBlog, locale: string) {
   const body = isAr ? blog.body_ar : blog.body_en;
   const categoryName = isAr ? blog.category.name_ar : blog.category.name_en;
 
+  const authorEntity = blog.author
+    ? {
+        "@type": "Person",
+        name: isAr ? blog.author.name_ar : blog.author.name_en,
+        url: `${SITE_URL}/${locale}/blog/author/${encodeURIComponent(
+          isAr ? blog.author.slug_ar : blog.author.slug_en
+        )}`,
+        ...(blog.author.photo_url && { image: blog.author.photo_url }),
+        ...(blog.author.bio_ar && {
+          description: isAr ? blog.author.bio_ar : blog.author.bio_en,
+        }),
+        ...(blog.author.expertise_ar && {
+          jobTitle: isAr ? blog.author.expertise_ar : blog.author.expertise_en,
+        }),
+        ...((blog.author.social_twitter || blog.author.social_linkedin || blog.author.social_facebook) && {
+          sameAs: [
+            blog.author.social_twitter,
+            blog.author.social_linkedin,
+            blog.author.social_facebook,
+          ].filter(Boolean),
+        }),
+      }
+    : {
+        "@type": "Organization",
+        name: isAr ? "إيز ترافل" : "Ease Travel",
+        url: SITE_URL,
+      };
+
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -169,12 +197,14 @@ export function blogPostingSchema(blog: ApiBlog, locale: string) {
     inLanguage: isAr ? "ar-EG" : "en",
     articleSection: categoryName,
     ...(keywords && { keywords }),
+    ...(blog.tags && blog.tags.length > 0 && {
+      about: blog.tags.map((tag) => ({
+        "@type": "Thing",
+        name: isAr ? tag.name_ar : tag.name_en,
+      })),
+    }),
     wordCount: countWords(body),
-    author: {
-      "@type": "Organization",
-      name: isAr ? "إيز ترافل" : "Ease Travel",
-      url: SITE_URL,
-    },
+    author: authorEntity,
     publisher: {
       "@type": "Organization",
       name: isAr ? "إيز ترافل" : "Ease Travel",
@@ -190,6 +220,104 @@ export function blogPostingSchema(blog: ApiBlog, locale: string) {
     },
   };
 }
+
+// ── ItemList for blog listing pages ──
+export function blogItemListSchema(
+  blogs: ApiBlog[],
+  locale: string,
+  pageName: string,
+  pageUrl: string
+) {
+  const isAr = locale === "ar";
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: pageName,
+    url: pageUrl,
+    numberOfItems: blogs.length,
+    itemListElement: blogs.map((blog, i) => {
+      const title = isAr ? blog.title_ar : blog.title_en;
+      const slug = isAr ? blog.slug_ar : blog.slug_en;
+      return {
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "BlogPosting",
+          headline: title,
+          url: `${SITE_URL}/${locale}/blog/${encodeURIComponent(slug)}`,
+          ...(blog.featured_image_url && { image: blog.featured_image_url }),
+          ...(blog.published_at && { datePublished: blog.published_at }),
+        },
+      };
+    }),
+  };
+}
+
+// ── CollectionPage (category / tag listing pages) ──
+export function collectionPageSchema(args: {
+  name: string;
+  description: string;
+  url: string;
+  locale: string;
+  itemCount: number;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: args.name,
+    description: args.description,
+    url: args.url,
+    inLanguage: args.locale === "ar" ? "ar-EG" : "en",
+    isPartOf: {
+      "@type": "WebSite",
+      name: args.locale === "ar" ? "إيز ترافل" : "Ease Travel",
+      url: SITE_URL,
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: args.itemCount,
+    },
+  };
+}
+
+// ── ProfilePage (author pages) ──
+export function authorProfileSchema(author: ApiAuthor, locale: string, blogs: ApiBlog[]) {
+  const isAr = locale === "ar";
+  const name = isAr ? author.name_ar : author.name_en;
+  const slug = isAr ? author.slug_ar : author.slug_en;
+  const url = `${SITE_URL}/${locale}/blog/author/${encodeURIComponent(slug)}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    name,
+    url,
+    inLanguage: isAr ? "ar-EG" : "en",
+    mainEntity: {
+      "@type": "Person",
+      name,
+      url,
+      ...(author.photo_url && { image: author.photo_url }),
+      ...(author.bio_ar && { description: isAr ? author.bio_ar : author.bio_en }),
+      ...(author.expertise_ar && { jobTitle: isAr ? author.expertise_ar : author.expertise_en }),
+      ...((author.social_twitter || author.social_linkedin || author.social_facebook) && {
+        sameAs: [author.social_twitter, author.social_linkedin, author.social_facebook].filter(Boolean),
+      }),
+      worksFor: {
+        "@type": "TravelAgency",
+        name: isAr ? "إيز ترافل" : "Ease Travel",
+        url: SITE_URL,
+      },
+    },
+    hasPart: blogs.slice(0, 10).map((b) => ({
+      "@type": "BlogPosting",
+      headline: isAr ? b.title_ar : b.title_en,
+      url: `${SITE_URL}/${locale}/blog/${encodeURIComponent(isAr ? b.slug_ar : b.slug_en)}`,
+    })),
+  };
+}
+
+// Re-exportable helpers used in pages — avoid unused-import warnings
+export type { ApiTag, ApiCategory };
 
 // ── Service (service detail pages) ──
 export function serviceSchema(service: ApiService, locale: string) {

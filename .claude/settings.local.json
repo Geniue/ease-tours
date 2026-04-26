@@ -17,7 +17,25 @@
       "Bash(git commit -m 'content: add Netherlands Schengen tourist visa from Egypt 2025 SEO blog *)",
       "Bash(git push *)",
       "Bash(git commit -m 'content: add English version + fix service links in Netherlands visa blog *)",
-      "Bash(git commit -m 'fix: update Netherlands visa blog year from 2025 to 2026, rename files *)"
+      "Bash(git commit -m 'fix: update Netherlands visa blog year from 2025 to 2026, rename files *)",
+      "WebFetch(domain:ease-travel.online)",
+      "Read(//f:/**)",
+      "Bash(npx tsc *)",
+      "Bash(node -e \"const l = require\\('lucide-react'\\); console.log\\(Object.keys\\(l\\).filter\\(k => /twitter|linkedin|facebook|share|mail|user/i.test\\(k\\)\\).join\\('\\\\n'\\)\\)\")",
+      "Bash(echo \"exit=$?\")",
+      "Read(//tmp/**)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://127.0.0.1:8000/api/v1/categories)",
+      "Bash(npm run *)",
+      "Bash(curl -s http://127.0.0.1:8000/api/v1/tags)",
+      "Bash(curl -s http://127.0.0.1:8000/api/v1/authors)",
+      "Bash(curl -s \"http://127.0.0.1:8000/api/v1/blogs?q=mar&per_page=2\")",
+      "Bash(curl -s -X POST http://127.0.0.1:8000/api/v1/subscribe -H \"Content-Type: application/json\" -d '{\"email\":\"smoke-test@example.com\",\"locale\":\"ar\",\"source\":\"smoke-test\"}')",
+      "Bash(curl -s \"http://127.0.0.1:8000/api/v1/blogs?per_page=1\")",
+      "Bash(curl -s \"http://127.0.0.1:8000/api/v1/blogs?q=visa&per_page=2\")",
+      "Bash(curl -s \"http://127.0.0.1:8000/api/v1/blogs?q=%D8%AA%D8%A3%D8%B4%D9%8A%D8%B1%D8%A9&per_page=2\")",
+      "Bash(curl -s \"http://127.0.0.1:8000/api/v1/blogs?q=%D8%AA%D8%A3%D8%B4%D9%8A%D8%B1&per_page=2\")",
+      "Bash(taskkill //F //FI \"WINDOWTITLE eq php*\")",
+      "Bash(powershell -Command \"Get-Process php -ErrorAction SilentlyContinue | Stop-Process -Force\")"
     ]
   }
 }

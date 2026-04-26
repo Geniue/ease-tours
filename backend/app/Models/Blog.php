@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 
 class Blog extends Model
@@ -13,6 +14,7 @@ class Blog extends Model
 
     protected $fillable = [
         'category_id',
+        'author_id',
         'title_ar',
         'title_en',
         'slug_ar',
@@ -55,5 +57,30 @@ class Blog extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function author(): BelongsTo
+    {
+        return $this->belongsTo(Author::class);
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function relatedTrips(): BelongsToMany
+    {
+        return $this->belongsToMany(Trip::class, 'blog_trip');
+    }
+
+    public function relatedServices(): BelongsToMany
+    {
+        return $this->belongsToMany(Service::class, 'blog_service');
+    }
+
+    public function relatedEmbassies(): BelongsToMany
+    {
+        return $this->belongsToMany(Embassy::class, 'blog_embassy');
     }
 }

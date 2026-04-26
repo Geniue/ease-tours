@@ -33,6 +33,17 @@ class BlogResource extends Resource
                             ->required()
                             ->searchable()
                             ->preload(),
+                        Forms\Components\Select::make('author_id')
+                            ->relationship('author', 'name_en')
+                            ->searchable()
+                            ->preload()
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('name_ar')->required(),
+                                Forms\Components\TextInput::make('name_en')->required(),
+                                Forms\Components\TextInput::make('slug_ar')->required(),
+                                Forms\Components\TextInput::make('slug_en')->required(),
+                            ])
+                            ->helperText('Strengthens E-E-A-T signal for Google'),
                         Forms\Components\Select::make('direction')
                             ->options([
                                 'rtl' => 'RTL (Arabic)',
@@ -118,6 +129,45 @@ class BlogResource extends Resource
                             ->helperText('Comma-separated, e.g. tours, travel, Egypt'),
                     ]),
 
+                Forms\Components\Section::make('Tags')
+                    ->description('Long-tail keyword coverage. Tag pages /blog/tag/{slug} are indexable.')
+                    ->collapsed()
+                    ->schema([
+                        Forms\Components\Select::make('tags')
+                            ->relationship('tags', 'name_en')
+                            ->multiple()
+                            ->searchable()
+                            ->preload()
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('name_ar')->required(),
+                                Forms\Components\TextInput::make('name_en')->required(),
+                                Forms\Components\TextInput::make('slug_ar')->required(),
+                                Forms\Components\TextInput::make('slug_en')->required(),
+                            ]),
+                    ]),
+
+                Forms\Components\Section::make('Related Content')
+                    ->description('Internal links emitted on the blog detail page. Boosts topical authority and conversions.')
+                    ->collapsed()
+                    ->schema([
+                        Forms\Components\Select::make('relatedTrips')
+                            ->label('Related Tours')
+                            ->relationship('relatedTrips', 'title_en')
+                            ->multiple()
+                            ->searchable()
+                            ->preload(),
+                        Forms\Components\Select::make('relatedServices')
+                            ->relationship('relatedServices', 'title_en')
+                            ->multiple()
+                            ->searchable()
+                            ->preload(),
+                        Forms\Components\Select::make('relatedEmbassies')
+                            ->relationship('relatedEmbassies', 'country_name_en')
+                            ->multiple()
+                            ->searchable()
+                            ->preload(),
+                    ]),
+
                 Forms\Components\Section::make('Media & Publishing')
                     ->columns(2)
                     ->schema([
@@ -154,6 +204,10 @@ class BlogResource extends Resource
                 Tables\Columns\TextColumn::make('category.name_en')
                     ->label('Category')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('author.name_en')
+                    ->label('Author')
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('direction')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {

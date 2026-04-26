@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 
 class Service extends Model
@@ -41,5 +42,10 @@ class Service extends Model
             return $image;
         }
         return preg_replace('#(?<!:)//+#', '/', Storage::disk('public')->url($image));
+    }
+
+    public function blogs(): BelongsToMany
+    {
+        return $this->belongsToMany(Blog::class, 'blog_service');
     }
 }

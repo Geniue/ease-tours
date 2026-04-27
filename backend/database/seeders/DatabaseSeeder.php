@@ -14,10 +14,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            CategorySeeder::class,
-            TripSeeder::class,
-            BlogSeeder::class,
-            GovernorateSeeder::class,
+            // CategorySeeder::class,
+            // TripSeeder::class,
+            UaeVisaTourSeeder::class,
+            // BlogSeeder::class,
+            // GovernorateSeeder::class,
         ]);
     }
 }

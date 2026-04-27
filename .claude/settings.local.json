@@ -35,7 +35,8 @@
       "Bash(curl -s \"http://127.0.0.1:8000/api/v1/blogs?q=%D8%AA%D8%A3%D8%B4%D9%8A%D8%B1%D8%A9&per_page=2\")",
       "Bash(curl -s \"http://127.0.0.1:8000/api/v1/blogs?q=%D8%AA%D8%A3%D8%B4%D9%8A%D8%B1&per_page=2\")",
       "Bash(taskkill //F //FI \"WINDOWTITLE eq php*\")",
-      "Bash(powershell -Command \"Get-Process php -ErrorAction SilentlyContinue | Stop-Process -Force\")"
+      "Bash(powershell -Command \"Get-Process php -ErrorAction SilentlyContinue | Stop-Process -Force\")",
+      "WebSearch"
     ]
   }
 }

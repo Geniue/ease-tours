@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { MessageCircle, Mail, Phone } from "lucide-react";
 import Image from "next/image";
+import WhatsAppTrackedLink from "@/components/WhatsAppTrackedLink";
 
 export default function Footer() {
   const t = useTranslations("footer");
@@ -98,10 +99,15 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/201105001389" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white transition-colors">
+                <WhatsAppTrackedLink
+                  href="https://wa.me/201105001389"
+                  className="flex items-center gap-2 hover:text-white transition-colors"
+                  ctaLocation="footer-contact"
+                  sourceType="footer"
+                >
                   <MessageCircle size={16} />
                   WhatsApp
-                </a>
+                </WhatsAppTrackedLink>
               </li>
             </ul>
 

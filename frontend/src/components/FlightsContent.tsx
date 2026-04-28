@@ -14,7 +14,7 @@ import {
   Globe,
   CreditCard,
 } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import WhatsAppTrackedLink from "@/components/WhatsAppTrackedLink";
 
 interface Faq {
   q: string;
@@ -402,11 +402,11 @@ export default function FlightsContent({ faqs }: { faqs: Faq[] }) {
               : "Our team is ready to help on WhatsApp. Send us your destination and travel date and we'll find you the best deal."}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
+            <WhatsAppTrackedLink
               href="https://wa.me/201105001389?text=%D8%B9%D8%A7%D9%8A%D8%B2+%D8%A3%D8%AD%D8%AC%D8%B2+%D8%AA%D8%B0%D9%83%D8%B1%D8%A9+%D8%B7%D9%8A%D8%B1%D8%A7%D9%86"
-              target="_blank"
-              rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition-colors"
+              ctaLocation="flights-bottom-cta"
+              sourceType="flights"
             >
               <svg
                 className="w-5 h-5"
@@ -417,7 +417,7 @@ export default function FlightsContent({ faqs }: { faqs: Faq[] }) {
                 <path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.387 0-4.591-.838-6.311-2.236l-.44-.362-3.22 1.08 1.08-3.22-.362-.44A9.958 9.958 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
               </svg>
               {isAr ? "احجز عبر الواتساب" : "Book via WhatsApp"}
-            </a>
+            </WhatsAppTrackedLink>
             <Link
               href="/tours"
               className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-8 rounded-full transition-colors border border-white/30"

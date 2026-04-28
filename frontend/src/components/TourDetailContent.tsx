@@ -33,7 +33,6 @@ export default function TourDetailContent({ trip }: { trip: ApiTrip }) {
   const discounted = trip.discounted_price
     ? parseFloat(trip.discounted_price)
     : null;
-  const displayPrice = discounted ?? price;
 
   const [openSection, setOpenSection] = useState<string | null>("overview");
   const [showBooking, setShowBooking] = useState(false);
@@ -47,7 +46,6 @@ export default function TourDetailContent({ trip }: { trip: ApiTrip }) {
     ? new Date(trip.end_date) < new Date(new Date().toDateString())
     : false;
   const isComingSoon = trip.coming_soon;
-  const canBook = !isTripEnded && !isComingSoon;
 
   const toggleSection = (section: string) => {
     setOpenSection(openSection === section ? null : section);

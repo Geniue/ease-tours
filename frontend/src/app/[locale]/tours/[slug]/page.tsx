@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getTrip, getBlogs } from "@/lib/api";
+import { buildMetaDescription, buildSeoTitle } from "@/lib/seo";
 import TourDetailContent from "@/components/TourDetailContent";
 import RelatedBlogs from "@/components/RelatedBlogs";
 import { JsonLd, touristTripSchema, breadcrumbSchema } from "@/lib/schemas";
@@ -21,13 +22,15 @@ export async function generateMetadata({
   const isAr = locale === "ar";
   const title = isAr ? trip.title_ar : trip.title_en;
   const description = isAr ? trip.description_ar : trip.description_en;
+  const metaTitle = buildSeoTitle(title);
+  const metaDescription = buildMetaDescription([description, title]);
   const correctSlug = isAr ? trip.slug_ar : trip.slug_en;
   const altLocale = isAr ? "en" : "ar";
   const altSlug = isAr ? trip.slug_en : trip.slug_ar;
 
   return {
-    title,
-    description: description || title,
+    title: { absolute: metaTitle },
+    description: metaDescription,
     alternates: {
       canonical: `${SITE_URL}/${locale}/tours/${encodeURIComponent(correctSlug)}`,
       languages: {
@@ -39,17 +42,17 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       locale: isAr ? "ar_EG" : "en_US",
-      title,
-      description: description || title,
+      title: metaTitle,
+      description: metaDescription,
       url: `${SITE_URL}/${locale}/tours/${encodeURIComponent(correctSlug)}`,
       ...(trip.featured_image_url && {
-        images: [{ url: trip.featured_image_url, alt: title }],
+        images: [{ url: trip.featured_image_url, alt: metaTitle }],
       }),
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description: description || title,
+      title: metaTitle,
+      description: metaDescription,
       ...(trip.featured_image_url && { images: [trip.featured_image_url] }),
     },
   };

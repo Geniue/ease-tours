@@ -6,6 +6,21 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Local env and secrets
+.env
+.env.*
+!.env.example
+!**/.env.example
+*.local
+
+# Runtime/build artifacts
+.vercel/
+frontend/.next/
+backend/storage/logs/*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 # Docs (not needed in production)
 REVIEW.md
 PRODUCTION_ROADMAP.md

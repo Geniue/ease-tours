@@ -22,8 +22,8 @@ class BlogController extends Controller
 
     public function index(Request $request)
     {
-        $query = Blog::with(['category', 'author', 'tags'])
-            ->where('is_published', true);
+        $fields = $request->input('fields');
+        $query = Blog::query()->where('is_published', true);
 
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
@@ -79,9 +79,8 @@ class BlogController extends Controller
 
         // Flat list when limit is specified (homepage featured, sitemap, related)
         if ($request->has('limit')) {
-            if ($request->input('fields') === 'sitemap') {
+            if ($fields === 'sitemap') {
                 $blogs = $query
-                    ->without(['category', 'author', 'tags'])
                     ->select(['id', 'slug_ar', 'slug_en', 'updated_at'])
                     ->limit(min((int) $request->limit, 500))
                     ->get();
@@ -92,6 +91,7 @@ class BlogController extends Controller
                 ]);
             }
 
+            $this->applyListFields($query, $fields);
             $blogs = $query->limit(min((int) $request->limit, 500))->get();
             return response()->json([
                 'status' => 'success',
@@ -100,6 +100,7 @@ class BlogController extends Controller
         }
 
         // Paginated response
+        $this->applyListFields($query, $fields);
         $perPage = min((int) ($request->per_page ?? 9), 50);
         $paginated = $query->paginate($perPage);
 
@@ -144,5 +145,44 @@ class BlogController extends Controller
                 'total' => 0,
             ],
         ]);
+    }
+
+    private function applyListFields($query, ?string $fields): void
+    {
+        if ($fields === 'card') {
+            $query
+                ->select([
+                    'id',
+                    'category_id',
+                    'author_id',
+                    'title_ar',
+                    'title_en',
+                    'slug_ar',
+                    'slug_en',
+                    'excerpt_ar',
+                    'excerpt_en',
+                    'featured_image',
+                    'direction',
+                    'is_published',
+                    'is_featured',
+                    'published_at',
+                    'updated_at',
+                    'seo_title_ar',
+                    'seo_title_en',
+                    'seo_description_ar',
+                    'seo_description_en',
+                    'keywords_ar',
+                    'keywords_en',
+                ])
+                ->with([
+                    'category:id,name_ar,name_en,slug_ar,slug_en,type',
+                    'author:id,name_ar,name_en,slug_ar,slug_en,expertise_ar,expertise_en,bio_ar,bio_en,photo,social_twitter,social_linkedin,social_facebook,is_active',
+                    'tags:id,name_ar,name_en,slug_ar,slug_en,description_ar,description_en',
+                ]);
+
+            return;
+        }
+
+        $query->with(['category', 'author', 'tags']);
     }
 }

@@ -5,6 +5,8 @@ import { useTranslations, useLocale } from "next-intl";
 import { Phone, Mail, MessageCircle, MapPin, CheckCircle } from "lucide-react";
 import { sendContactMessage } from "@/lib/api";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import WhatsAppTrackedLink from "@/components/WhatsAppTrackedLink";
+import { trackLeadEvent } from "@/lib/tracking";
 
 export default function ContactContent() {
   const t = useTranslations("contact");
@@ -26,6 +28,13 @@ export default function ContactContent() {
     const result = await sendContactMessage(formData);
     setLoading(false);
     if (result.success) {
+      trackLeadEvent({
+        event_type: "contact_success",
+        locale,
+        cta_location: "contact-form",
+        source_type: "contact",
+        contact_message_id: result.contactMessageId,
+      });
       setSubmitted(true);
     } else {
       setError(locale === "ar" ? "حدث خطأ، حاول مرة أخرى" : "Something went wrong, please try again");
@@ -110,6 +119,17 @@ export default function ContactContent() {
                               : undefined
                           }
                           className="text-[#1a73a7] hover:underline"
+                          onClick={
+                            item.href.includes("wa.me")
+                              ? () =>
+                                  trackLeadEvent({
+                                    event_type: "whatsapp_click",
+                                    locale,
+                                    cta_location: "contact-info",
+                                    source_type: "contact",
+                                  })
+                              : undefined
+                          }
                         >
                           {item.value}
                         </a>
@@ -125,15 +145,15 @@ export default function ContactContent() {
                 <p className="text-gray-700 font-medium mb-3">
                   {t("orWhatsapp")}
                 </p>
-                <a
+                <WhatsAppTrackedLink
                   href="https://wa.me/201105001389"
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-[#25d366] text-white px-6 py-3 rounded-full font-medium hover:bg-[#1da851] transition-colors"
+                  ctaLocation="contact-whatsapp-card"
+                  sourceType="contact"
                 >
                   <MessageCircle className="w-5 h-5" />
                   WhatsApp
-                </a>
+                </WhatsAppTrackedLink>
               </div>
             </div>
 

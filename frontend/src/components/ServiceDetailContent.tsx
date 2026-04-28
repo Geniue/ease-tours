@@ -1,10 +1,9 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import type { ApiService } from "@/lib/api";
+import WhatsAppTrackedLink from "@/components/WhatsAppTrackedLink";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 
@@ -18,8 +17,7 @@ export default function ServiceDetailContent({
   const isAr = locale === "ar";
 
   const title = isAr ? service.title_ar : service.title_en;
-  const body = isAr ? service.body_ar : service.body_en;
-  const Chevron = isAr ? ChevronLeft : ChevronRight;
+  const body = (isAr ? service.body_ar : service.body_en) || "";
 
   return (
     <article className="pt-28 pb-12">
@@ -61,14 +59,15 @@ export default function ServiceDetailContent({
 
         {/* CTA */}
         <div className="mt-12 text-center">
-          <a
+          <WhatsAppTrackedLink
             href="https://wa.me/201105001389"
-            target="_blank"
-            rel="noopener noreferrer"
             className="inline-block bg-[#f59e0b] hover:bg-[#d97706] text-white font-bold py-3 px-8 rounded-full text-lg transition-colors"
+            ctaLocation="service-detail"
+            sourceType="service"
+            sourceId={service.id}
           >
             {t("contactForService")}
-          </a>
+          </WhatsAppTrackedLink>
         </div>
       </div>
     </article>

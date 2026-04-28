@@ -3,7 +3,6 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import { useLocale } from "next-intl";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
 
 interface VideoItem {
   id: string;

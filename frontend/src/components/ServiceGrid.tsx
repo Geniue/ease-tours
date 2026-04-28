@@ -28,7 +28,7 @@ export default function ServiceGrid({
     setLoading(true);
     try {
       const nextPage = page + 1;
-      const res = await fetch(`${API_URL}/services?page=${nextPage}`);
+      const res = await fetch(`${API_URL}/services?page=${nextPage}&fields=card`);
       if (!res.ok) return;
       const json = await res.json();
       const items: ApiService[] = json.data ?? [];

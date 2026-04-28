@@ -4,6 +4,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import type { ApiEmbassy } from "@/lib/api";
+import WhatsAppTrackedLink from "@/components/WhatsAppTrackedLink";
 
 /* ─── status colour helpers ─── */
 
@@ -251,11 +252,12 @@ function EmbassyDetail({ embassy }: { embassy: ApiEmbassy }) {
 
       {/* CTA */}
       <div className="mt-6 pt-4 border-t border-gray-200">
-        <a
+        <WhatsAppTrackedLink
           href="https://wa.me/201105001389"
-          target="_blank"
-          rel="noopener noreferrer"
           className="inline-flex items-center gap-2 bg-[#25D366] text-white font-bold px-6 py-3 rounded-xl hover:bg-[#1ebe57] transition-colors"
+          ctaLocation="embassy-detail"
+          sourceType="embassy"
+          sourceId={embassy.id}
         >
           <svg
             className="w-5 h-5"
@@ -266,7 +268,7 @@ function EmbassyDetail({ embassy }: { embassy: ApiEmbassy }) {
             <path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.122 1.52 5.86L0 24l6.336-1.652A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-1.875 0-3.632-.506-5.148-1.39l-.37-.216-3.822.999 1.02-3.71-.24-.38A9.698 9.698 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z" />
           </svg>
           {t("contactForAppointment")}
-        </a>
+        </WhatsAppTrackedLink>
       </div>
     </motion.div>
   );

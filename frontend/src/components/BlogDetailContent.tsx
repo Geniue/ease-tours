@@ -29,7 +29,7 @@ export default function BlogDetailContent({
   const isAr = locale === "ar";
 
   const title = isAr ? blog.title_ar : blog.title_en;
-  const body = processBodyImages(isAr ? blog.body_ar : blog.body_en);
+  const body = processBodyImages((isAr ? blog.body_ar : blog.body_en) || "");
   const categoryName = isAr ? blog.category.name_ar : blog.category.name_en;
   const slug = isAr ? blog.slug_ar : blog.slug_en;
   const shareUrl = `${SITE_URL}/${locale}/blog/${encodeURIComponent(slug)}`;

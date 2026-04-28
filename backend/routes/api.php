@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\ContactMessageController;
 use App\Http\Controllers\Api\V1\EmbassyController;
 use App\Http\Controllers\Api\V1\GovernorateController;
+use App\Http\Controllers\Api\V1\LeadEventController;
 use App\Http\Controllers\Api\V1\ServiceController;
 use App\Http\Controllers\Api\V1\SubscriberController;
 use App\Http\Controllers\Api\V1\TagController;
@@ -27,6 +28,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/categories/{slug}', [CategoryController::class, 'show']);
 
     Route::post('/bookings', [BookingController::class, 'store'])->middleware('throttle:6,1');
+    Route::post('/lead-events', [LeadEventController::class, 'store'])->middleware('throttle:30,1');
 
     Route::post('/contact', [ContactMessageController::class, 'store'])->middleware('throttle:6,1');
 

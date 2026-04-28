@@ -14,8 +14,8 @@ export interface ApiTrip {
   title_en: string;
   slug_ar: string;
   slug_en: string;
-  description_ar: string | null;
-  description_en: string | null;
+  description_ar?: string | null;
+  description_en?: string | null;
   destination_ar: string;
   destination_en: string;
   duration_days: number;
@@ -31,10 +31,10 @@ export interface ApiTrip {
   is_featured: boolean;
   is_active: boolean;
   coming_soon: boolean;
-  itinerary_ar: string | null;
-  itinerary_en: string | null;
-  inclusions_ar: string | null;
-  inclusions_en: string | null;
+  itinerary_ar?: string | null;
+  itinerary_en?: string | null;
+  inclusions_ar?: string | null;
+  inclusions_en?: string | null;
   start_date: string | null;
   end_date: string | null;
   max_participants: number | null;
@@ -78,10 +78,31 @@ export async function getTrips(params?: Record<string, string>): Promise<ApiTrip
   if (params) {
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
   }
+  if (!url.searchParams.has("fields")) {
+    url.searchParams.set("fields", "card");
+  }
   const res = await fetch(url.toString(), { next: { revalidate: 60 } });
   if (!res.ok) return [];
   const json: PaginatedResponse<ApiTrip> = await res.json();
   return json.data.data;
+}
+
+export interface ApiTripSitemapEntry {
+  id: number;
+  slug_ar: string;
+  slug_en: string;
+  updated_at: string;
+}
+
+export async function getTripsForSitemap(limit = "500"): Promise<ApiTripSitemapEntry[]> {
+  const url = new URL(`${API_URL}/trips`);
+  url.searchParams.set("limit", limit);
+  url.searchParams.set("fields", "sitemap");
+
+  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
+  if (!res.ok) return [];
+  const json = await res.json();
+  return Array.isArray(json.data) ? json.data : json.data?.data ?? [];
 }
 
 export async function getTrip(slug: string): Promise<ApiTrip | null> {
@@ -100,7 +121,7 @@ export async function createBooking(data: {
   customer_phone: string;
   num_passengers: number;
   notes?: string;
-}): Promise<{ success: boolean; error?: string }> {
+}): Promise<{ success: boolean; error?: string; bookingId?: number }> {
   const res = await fetch(`${API_URL}/bookings`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -110,7 +131,8 @@ export async function createBooking(data: {
     const err = await res.json().catch(() => null);
     return { success: false, error: err?.message || "Booking failed" };
   }
-  return { success: true };
+  const json = await res.json().catch(() => null);
+  return { success: true, ...((json?.data?.id && { bookingId: json.data.id }) || {}) };
 }
 
 export async function sendContactMessage(data: {
@@ -118,7 +140,7 @@ export async function sendContactMessage(data: {
   email: string;
   phone?: string;
   message: string;
-}): Promise<{ success: boolean; error?: string }> {
+}): Promise<{ success: boolean; error?: string; contactMessageId?: number }> {
   const res = await fetch(`${API_URL}/contact`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -128,7 +150,8 @@ export async function sendContactMessage(data: {
     const err = await res.json().catch(() => null);
     return { success: false, error: err?.message || "Failed to send message" };
   }
-  return { success: true };
+  const json = await res.json().catch(() => null);
+  return { success: true, ...((json?.data?.id && { contactMessageId: json.data.id }) || {}) };
 }
 
 export async function getCategories(): Promise<ApiCategory[]> {
@@ -179,8 +202,8 @@ export interface ApiBlog {
   slug_en: string;
   excerpt_ar: string | null;
   excerpt_en: string | null;
-  body_ar: string;
-  body_en: string;
+  body_ar?: string | null;
+  body_en?: string | null;
   featured_image: string | null;
   featured_image_url: string | null;
   direction: "rtl" | "ltr";
@@ -220,6 +243,9 @@ export async function getBlogs(params?: Record<string, string>): Promise<ApiBlog
   const url = new URL(`${API_URL}/blogs`);
   if (params) {
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+  }
+  if (!url.searchParams.has("fields")) {
+    url.searchParams.set("fields", "card");
   }
   const res = await fetch(url.toString(), { next: { revalidate: 60 } });
   if (!res.ok) return [];
@@ -264,6 +290,7 @@ export async function searchBlogs(q: string): Promise<ApiBlog[]> {
   const url = new URL(`${API_URL}/blogs`);
   url.searchParams.set("q", q);
   url.searchParams.set("per_page", "20");
+  url.searchParams.set("fields", "card");
   const res = await fetch(url.toString(), { cache: "no-store" });
   if (!res.ok) return [];
   const json = await res.json();
@@ -312,7 +339,7 @@ export async function subscribeNewsletter(data: {
   email: string;
   locale?: string;
   source?: string;
-}): Promise<{ success: boolean; error?: string }> {
+}): Promise<{ success: boolean; error?: string; subscriberId?: number }> {
   const res = await fetch(`${API_URL}/subscribe`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -322,7 +349,8 @@ export async function subscribeNewsletter(data: {
     const err = await res.json().catch(() => null);
     return { success: false, error: err?.message || "Subscription failed" };
   }
-  return { success: true };
+  const json = await res.json().catch(() => null);
+  return { success: true, ...((json?.data?.id && { subscriberId: json.data.id }) || {}) };
 }
 
 // ── Services ──
@@ -335,8 +363,8 @@ export interface ApiService {
   slug_en: string;
   excerpt_ar: string | null;
   excerpt_en: string | null;
-  body_ar: string;
-  body_en: string;
+  body_ar?: string | null;
+  body_en?: string | null;
   icon: string | null;
   featured_image: string | null;
   featured_image_url: string | null;
@@ -352,6 +380,9 @@ export async function getServices(params?: Record<string, string>): Promise<ApiS
   } else {
     url.searchParams.set("all", "1");
   }
+  if (!url.searchParams.has("fields")) {
+    url.searchParams.set("fields", "card");
+  }
   const res = await fetch(url.toString(), { next: { revalidate: 60 } });
   if (!res.ok) return [];
   const json: ListResponse<ApiService> = await res.json();
@@ -364,6 +395,24 @@ export async function getService(slug: string): Promise<ApiService | null> {
   });
   if (!res.ok) return null;
   const json: { status: string; data: ApiService } = await res.json();
+  return json.data;
+}
+
+export interface ApiServiceSitemapEntry {
+  id: number;
+  slug_ar: string;
+  slug_en: string;
+  updated_at: string;
+}
+
+export async function getServicesForSitemap(limit = "500"): Promise<ApiServiceSitemapEntry[]> {
+  const url = new URL(`${API_URL}/services`);
+  url.searchParams.set("limit", limit);
+  url.searchParams.set("fields", "sitemap");
+
+  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
+  if (!res.ok) return [];
+  const json: ListResponse<ApiServiceSitemapEntry> = await res.json();
   return json.data;
 }
 
@@ -420,6 +469,7 @@ export async function getBlogsPaginated(
   if (params) {
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
   }
+  url.searchParams.set("fields", "card");
   const res = await fetch(url.toString(), { cache: "no-store" });
   const empty = { data: [] as ApiBlog[], meta: { current_page: 1, last_page: 1, per_page: 9, total: 0 } };
   if (!res.ok) return empty;
@@ -444,6 +494,7 @@ export async function getServicesPaginated(
   if (params) {
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
   }
+  url.searchParams.set("fields", "card");
   const res = await fetch(url.toString(), { cache: "no-store" });
   const empty = { data: [] as ApiService[], meta: { current_page: 1, last_page: 1, per_page: 9, total: 0 } };
   if (!res.ok) return empty;

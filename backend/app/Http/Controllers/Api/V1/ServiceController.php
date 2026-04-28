@@ -10,6 +10,7 @@ class ServiceController extends Controller
 {
     public function index(Request $request)
     {
+        $fields = $request->input('fields');
         $query = Service::where('is_active', true)
             ->orderBy('sort_order');
 
@@ -19,6 +20,7 @@ class ServiceController extends Controller
 
         // Flat list when limit is specified (homepage featured, sitemap)
         if ($request->has('limit')) {
+            $this->applyListFields($query, $fields);
             $services = $query->limit(min((int) $request->limit, 500))->get();
             return response()->json([
                 'status' => 'success',
@@ -28,6 +30,7 @@ class ServiceController extends Controller
 
         // Flat list for sitemap
         if ($request->boolean('all')) {
+            $this->applyListFields($query, $fields);
             return response()->json([
                 'status' => 'success',
                 'data' => $query->get(),
@@ -35,6 +38,7 @@ class ServiceController extends Controller
         }
 
         // Paginated response
+        $this->applyListFields($query, $fields);
         $perPage = min((int) ($request->per_page ?? 9), 50);
         $paginated = $query->paginate($perPage);
 
@@ -63,5 +67,33 @@ class ServiceController extends Controller
             'status' => 'success',
             'data' => $service,
         ]);
+    }
+
+    private function applyListFields($query, ?string $fields): void
+    {
+        if ($fields === 'sitemap') {
+            $query->select(['id', 'slug_ar', 'slug_en', 'updated_at']);
+
+            return;
+        }
+
+        if ($fields === 'card') {
+            $query->select([
+                'id',
+                'title_ar',
+                'title_en',
+                'slug_ar',
+                'slug_en',
+                'excerpt_ar',
+                'excerpt_en',
+                'icon',
+                'featured_image',
+                'is_active',
+                'is_featured',
+                'sort_order',
+                'created_at',
+                'updated_at',
+            ]);
+        }
     }
 }

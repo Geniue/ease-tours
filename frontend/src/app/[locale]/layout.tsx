@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { NextIntlClientProvider, useMessages } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Cairo } from "next/font/google";
 import { notFound } from "next/navigation";
@@ -27,7 +27,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "metadata" });
-  const altLocale = locale === "ar" ? "en" : "ar";
 
   return {
     title: {

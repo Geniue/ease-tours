@@ -38,9 +38,11 @@ export default function TableOfContents({ html }: { html: string }) {
         text: h.textContent?.trim() || "",
       };
     });
-    setItems(collected);
+    const frame = requestAnimationFrame(() => setItems(collected));
 
-    if (collected.length === 0) return;
+    if (collected.length === 0) {
+      return () => cancelAnimationFrame(frame);
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -51,7 +53,10 @@ export default function TableOfContents({ html }: { html: string }) {
       { rootMargin: "-100px 0px -70% 0px", threshold: [0, 1] }
     );
     headings.forEach((h) => observer.observe(h));
-    return () => observer.disconnect();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
   }, [html]);
 
   if (items.length < 3) return null;

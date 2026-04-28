@@ -20,8 +20,6 @@ export async function generateMetadata({
     ? "قارن أسعار تذاكر الطيران واحجز أرخص رحلات من القاهرة، الإسكندرية، شرم الشيخ والغردقة. حجز طيران داخلي ودولي لأكثر من 200 وجهة عالمية مع إيز ترافل."
     : "Compare airfare prices and book the cheapest flights from Cairo, Alexandria, Sharm El Sheikh & Hurghada. Domestic and international flight booking to 200+ destinations worldwide with Ease Travel.";
 
-  const altLocale = isAr ? "en" : "ar";
-
   return {
     title,
     description,

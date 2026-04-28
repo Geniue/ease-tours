@@ -4,8 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const intlMiddleware = createMiddleware(routing);
 
-export default function middleware(request: NextRequest) {
-  // Redirect www to non-www (301 permanent)
+export function proxy(request: NextRequest) {
   const host = request.headers.get("host") || "";
   if (host.startsWith("www.")) {
     const proto = request.headers.get("x-forwarded-proto") || "https";
@@ -16,7 +15,6 @@ export default function middleware(request: NextRequest) {
 
   const response = intlMiddleware(request);
 
-  // Fix redirect Location headers for Cloudflare Flexible SSL
   if (request.headers.get("x-forwarded-proto") === "https") {
     const location = response.headers.get("location");
     if (location?.startsWith("http://")) {

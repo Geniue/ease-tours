@@ -148,7 +148,7 @@ export function blogPostingSchema(blog: ApiBlog, locale: string) {
   const excerpt = isAr ? blog.excerpt_ar : blog.excerpt_en;
   const slug = isAr ? blog.slug_ar : blog.slug_en;
   const keywords = isAr ? blog.keywords_ar : blog.keywords_en;
-  const body = isAr ? blog.body_ar : blog.body_en;
+  const body = (isAr ? blog.body_ar : blog.body_en) || "";
   const categoryName = isAr ? blog.category.name_ar : blog.category.name_en;
 
   const authorEntity = blog.author

@@ -1,7 +1,6 @@
 import { useTranslations, useLocale } from "next-intl";
 import type { Metadata } from "next";
-import { getTranslations, getLocale } from "next-intl/server";
-import TourCard from "@/components/TourCard";
+import { getLocale } from "next-intl/server";
 import { getTrips, getCategories } from "@/lib/api";
 import ToursFilter from "@/components/ToursFilter";
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -287,8 +286,6 @@ function ToursDestinations() {
 
 function ToursFaq() {
   const t = useTranslations("tours");
-  const locale = useLocale();
-  const isAr = locale === "ar";
 
   const faqs = [
     { question: t("faq1q"), answer: t("faq1a") },

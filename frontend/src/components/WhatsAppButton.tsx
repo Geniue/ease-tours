@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useLocale } from "next-intl";
+import { trackLeadEvent } from "@/lib/tracking";
 
 export default function WhatsAppButton() {
   const [hovered, setHovered] = useState(false);
@@ -38,6 +39,14 @@ export default function WhatsAppButton() {
         onMouseLeave={() => setHovered(false)}
         onFocus={() => setHovered(true)}
         onBlur={() => setHovered(false)}
+        onClick={() =>
+          trackLeadEvent({
+            event_type: "whatsapp_click",
+            locale,
+            cta_location: "floating-whatsapp",
+            source_type: "global",
+          })
+        }
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

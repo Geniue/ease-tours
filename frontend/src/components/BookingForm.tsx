@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { X, CheckCircle, AlertCircle } from "lucide-react";
 import { createBooking, type ApiTrip } from "@/lib/api";
+import { trackLeadEvent } from "@/lib/tracking";
 
 export default function BookingForm({
   trip,
@@ -56,6 +57,20 @@ export default function BookingForm({
     });
 
     if (result.success) {
+      trackLeadEvent({
+        event_type: "booking_success",
+        locale,
+        cta_location: "booking-form",
+        source_type: "trip",
+        source_id: trip.id,
+        trip_id: trip.id,
+        booking_id: result.bookingId,
+        metadata: {
+          num_passengers: form.num_passengers,
+          total_price: totalPrice,
+          currency: trip.currency,
+        },
+      });
       setStatus("success");
     } else {
       setErrorMsg(result.error || t("errorMsg"));

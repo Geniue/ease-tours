@@ -1,10 +1,12 @@
 import { useTranslations, useLocale } from "next-intl";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import TourCard from "@/components/TourCard";
 import { getTrips, getCategories, getBlogs } from "@/lib/api";
 import { JsonLd, breadcrumbSchema } from "@/lib/schemas";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import WhatsAppTrackedLink from "@/components/WhatsAppTrackedLink";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
@@ -170,7 +172,7 @@ export default async function HajjUmrahPage({ params }: { params: Promise<{ loca
                       <Link key={blog.id} href={`/${locale}/blog/${slug}`} className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow">
                         {blog.featured_image_url && (
                           <div className="relative h-48 overflow-hidden">
-                            <img src={blog.featured_image_url} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                            <Image src={blog.featured_image_url} alt={title} fill unoptimized className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 768px) 100vw, 33vw" />
                           </div>
                         )}
                         <div className="p-5">
@@ -203,9 +205,9 @@ export default async function HajjUmrahPage({ params }: { params: Promise<{ loca
                   : "Contact the Ease Travel team now for the best Umrah prices from Egypt and customized packages for your budget"}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="https://wa.me/201105001389" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] hover:bg-[#1ebe57] text-white font-semibold px-8 py-3 rounded-full transition-colors">
+                <WhatsAppTrackedLink href="https://wa.me/201105001389" className="bg-[#25D366] hover:bg-[#1ebe57] text-white font-semibold px-8 py-3 rounded-full transition-colors" ctaLocation="hajj-umrah-bottom-cta" sourceType="hajj-umrah">
                   {isAr ? "واتساب" : "WhatsApp"}
-                </a>
+                </WhatsAppTrackedLink>
                 <a href="tel:+201105001389" className="bg-white/20 hover:bg-white/30 text-white font-semibold px-8 py-3 rounded-full transition-colors border border-white/30">
                   {isAr ? "اتصل بنا: 01105001389" : "Call: 01105001389"}
                 </a>

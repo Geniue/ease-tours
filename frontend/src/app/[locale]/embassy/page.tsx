@@ -230,7 +230,6 @@ function EmbassyHero() {
 }
 
 function EmbassyFAQ() {
-  const t = useTranslations("embassy");
   const locale = useLocale();
   const isAr = locale === "ar";
 

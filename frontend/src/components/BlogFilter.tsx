@@ -37,6 +37,7 @@ export default function BlogFilter({
       try {
         const url = new URL(`${API_URL}/blogs`);
         url.searchParams.set("page", String(pageNum));
+        url.searchParams.set("fields", "card");
         if (categoryId) url.searchParams.set("category_id", String(categoryId));
         if (q.trim()) url.searchParams.set("q", q.trim());
         const res = await fetch(url.toString());

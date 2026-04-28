@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import WhatsAppTrackedLink from "@/components/WhatsAppTrackedLink";
 
 const slides = [
   { image: "/felix-rostig-UmV2wr-Vbq8-unsplash.jpg", titleKey: "slide1Title", subtitleKey: "slide1Subtitle" },
@@ -75,14 +76,14 @@ export default function Hero() {
             </p>
 
             {/* Book Now CTA */}
-            <a
+            <WhatsAppTrackedLink
               href="https://wa.me/201105001389"
-              target="_blank"
-              rel="noopener noreferrer"
               className="bg-accent hover:bg-accent-dark text-white font-semibold px-10 py-3 rounded-full text-lg transition-colors"
+              ctaLocation="home-hero"
+              sourceType="home"
             >
               {t("cta")}
-            </a>
+            </WhatsAppTrackedLink>
           </motion.div>
         </AnimatePresence>
 

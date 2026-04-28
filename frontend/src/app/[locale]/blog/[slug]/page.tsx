@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getBlog, getBlogs } from "@/lib/api";
+import { buildMetaDescription, buildSeoTitle } from "@/lib/seo";
 import BlogDetailContent from "@/components/BlogDetailContent";
 import { extractFaqs } from "@/components/blog/extractFaqs";
 import {
@@ -28,18 +29,23 @@ export async function generateMetadata({
   const isAr = locale === "ar";
   const title = isAr ? blog.title_ar : blog.title_en;
   const excerpt = isAr ? blog.excerpt_ar : blog.excerpt_en;
+  const body = isAr ? blog.body_ar : blog.body_en;
   const correctSlug = isAr ? blog.slug_ar : blog.slug_en;
   const altLocale = isAr ? "en" : "ar";
   const altSlug = isAr ? blog.slug_en : blog.slug_ar;
 
-  const metaTitle = (isAr ? blog.seo_title_ar : blog.seo_title_en) || title;
-  const metaDescription =
-    (isAr ? blog.seo_description_ar : blog.seo_description_en) || excerpt || title;
+  const metaTitle = buildSeoTitle((isAr ? blog.seo_title_ar : blog.seo_title_en) || title);
+  const metaDescription = buildMetaDescription([
+    isAr ? blog.seo_description_ar : blog.seo_description_en,
+    excerpt,
+    body,
+    title,
+  ]);
   const keywords = isAr ? blog.keywords_ar : blog.keywords_en;
   const authorName = blog.author ? (isAr ? blog.author.name_ar : blog.author.name_en) : undefined;
 
   return {
-    title: metaTitle,
+    title: { absolute: metaTitle },
     description: metaDescription,
     ...(keywords && { keywords }),
     ...(authorName && { authors: [{ name: authorName }] }),
@@ -95,7 +101,7 @@ export default async function BlogPostPage({
   const homeLabel = isAr ? "الرئيسية" : "Home";
   const blogLabel = isAr ? "المدونة" : "Blog";
 
-  const body = isAr ? blog.body_ar : blog.body_en;
+  const body = (isAr ? blog.body_ar : blog.body_en) || "";
   const faqs = extractFaqs(body);
 
   return (

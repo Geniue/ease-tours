@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Mail, Loader2, Check } from "lucide-react";
 import { subscribeNewsletter } from "@/lib/api";
+import { trackLeadEvent } from "@/lib/tracking";
 
 export default function NewsletterCTA({ source = "blog-detail" }: { source?: string }) {
   const t = useTranslations("blog");
@@ -20,6 +21,13 @@ export default function NewsletterCTA({ source = "blog-detail" }: { source?: str
     setError(null);
     const res = await subscribeNewsletter({ email, locale, source });
     if (res.success) {
+      trackLeadEvent({
+        event_type: "newsletter_success",
+        locale,
+        cta_location: source,
+        source_type: "newsletter",
+        subscriber_id: res.subscriberId,
+      });
       setStatus("ok");
       setEmail("");
     } else {

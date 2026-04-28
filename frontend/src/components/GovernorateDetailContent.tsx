@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import type { ApiGovernorate } from "@/lib/api";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import WhatsAppTrackedLink from "@/components/WhatsAppTrackedLink";
 
 export default function GovernorateDetailContent({
   governorate: gov,
@@ -21,7 +22,6 @@ export default function GovernorateDetailContent({
   const body = isAr ? gov.body_ar : gov.body_en;
   const excerpt = isAr ? gov.excerpt_ar : gov.excerpt_en;
   const region = isAr ? gov.region_ar : gov.region_en;
-  const Chevron = isAr ? ChevronLeft : ChevronRight;
 
   const faqs = (gov.faqs || []).map((faq) => ({
     question: isAr ? faq.question_ar : faq.question_en,
@@ -154,14 +154,15 @@ export default function GovernorateDetailContent({
                       ? "تواصل معنا على الواتساب واحجز رحلتك الآن"
                       : "Contact us on WhatsApp and book your trip now"}
                   </p>
-                  <a
+                  <WhatsAppTrackedLink
                     href="https://wa.me/201105001389"
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="inline-block bg-white text-green-600 font-bold py-2.5 px-6 rounded-full hover:bg-green-50 transition-colors"
+                    ctaLocation="governorate-sidebar"
+                    sourceType="governorate"
+                    sourceId={gov.id}
                   >
                     {isAr ? "واتساب الآن" : "WhatsApp Now"}
-                  </a>
+                  </WhatsAppTrackedLink>
                   <div className="mt-3 text-green-100 text-xs">
                     {isAr ? "أو اتصل: " : "Or call: "}
                     <a href="tel:+201105001389" className="underline">
@@ -251,14 +252,15 @@ export default function GovernorateDetailContent({
               : "Ease Travel is ready to serve you. Tours, Umrah, and visa services at the best prices."}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
+            <WhatsAppTrackedLink
               href="https://wa.me/201105001389"
-              target="_blank"
-              rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition-colors"
+              ctaLocation="governorate-bottom-cta"
+              sourceType="governorate"
+              sourceId={gov.id}
             >
               {isAr ? "احجز عبر الواتساب" : "Book via WhatsApp"}
-            </a>
+            </WhatsAppTrackedLink>
             <Link
               href="/tours"
               className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-8 rounded-full transition-colors border border-white/30"

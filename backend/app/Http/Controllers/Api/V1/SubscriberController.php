@@ -28,7 +28,7 @@ class SubscriberController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'data' => ['email' => $subscriber->email],
+            'data' => ['id' => $subscriber->id, 'email' => $subscriber->email],
         ], $subscriber->wasRecentlyCreated ? 201 : 200);
     }
 }

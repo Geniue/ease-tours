@@ -1,13 +1,13 @@
 import type { MetadataRoute } from "next";
-import { getTrips, getBlogsForSitemap, getServices, getCategories, getTags, getAuthors } from "@/lib/api";
+import { getTripsForSitemap, getBlogsForSitemap, getServicesForSitemap, getCategories, getTags, getAuthors } from "@/lib/api";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [trips, blogs, services, categories, tags, authors] = await Promise.all([
-    getTrips(),
+    getTripsForSitemap("500"),
     getBlogsForSitemap("500"),
-    getServices(),
+    getServicesForSitemap("500"),
     getCategories(),
     getTags(),
     getAuthors(),

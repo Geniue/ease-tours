@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getService } from "@/lib/api";
+import { buildMetaDescription, buildSeoTitle } from "@/lib/seo";
 import ServiceDetailContent from "@/components/ServiceDetailContent";
 import { JsonLd, serviceSchema, breadcrumbSchema } from "@/lib/schemas";
 
@@ -21,13 +22,16 @@ export async function generateMetadata({
   const isAr = locale === "ar";
   const title = isAr ? service.title_ar : service.title_en;
   const excerpt = isAr ? service.excerpt_ar : service.excerpt_en;
+  const body = isAr ? service.body_ar : service.body_en;
+  const metaTitle = buildSeoTitle(title);
+  const metaDescription = buildMetaDescription([excerpt, body, title]);
   const correctSlug = isAr ? service.slug_ar : service.slug_en;
   const altLocale = isAr ? "en" : "ar";
   const altSlug = isAr ? service.slug_en : service.slug_ar;
 
   return {
-    title,
-    description: excerpt || title,
+    title: { absolute: metaTitle },
+    description: metaDescription,
     alternates: {
       canonical: `${SITE_URL}/${locale}/services/${encodeURIComponent(correctSlug)}`,
       languages: {
@@ -39,17 +43,17 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       locale: isAr ? "ar_EG" : "en_US",
-      title,
-      description: excerpt || title,
+      title: metaTitle,
+      description: metaDescription,
       url: `${SITE_URL}/${locale}/services/${encodeURIComponent(correctSlug)}`,
       ...(service.featured_image_url && {
-        images: [{ url: service.featured_image_url, alt: title }],
+        images: [{ url: service.featured_image_url, alt: metaTitle }],
       }),
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description: excerpt || title,
+      title: metaTitle,
+      description: metaDescription,
       ...(service.featured_image_url && {
         images: [service.featured_image_url],
       }),

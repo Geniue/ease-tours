@@ -79,7 +79,7 @@ export default async function BlogTagPage({
         <JsonLd data={blogItemListSchema(blogs, locale, pageTitle, url)} />
       )}
       <main>
-        <section className="bg-gradient-to-br from-[#1a73a7] to-[#0d4a6e] text-white py-12 md:py-16">
+        <section className="bg-gradient-to-br from-[#1a73a7] to-[#0d4a6e] text-white pt-36 pb-12 md:pt-40 md:pb-16">
           <div className="container mx-auto px-4">
             <Breadcrumbs
               items={[

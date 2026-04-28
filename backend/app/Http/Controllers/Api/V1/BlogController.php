@@ -79,6 +79,19 @@ class BlogController extends Controller
 
         // Flat list when limit is specified (homepage featured, sitemap, related)
         if ($request->has('limit')) {
+            if ($request->input('fields') === 'sitemap') {
+                $blogs = $query
+                    ->without(['category', 'author', 'tags'])
+                    ->select(['id', 'slug_ar', 'slug_en', 'updated_at'])
+                    ->limit(min((int) $request->limit, 500))
+                    ->get();
+
+                return response()->json([
+                    'status' => 'success',
+                    'data' => $blogs,
+                ]);
+            }
+
             $blogs = $query->limit(min((int) $request->limit, 500))->get();
             return response()->json([
                 'status' => 'success',

@@ -209,6 +209,13 @@ export interface ApiBlog {
   related_embassies?: ApiEmbassy[];
 }
 
+export interface ApiBlogSitemapEntry {
+  id: number;
+  slug_ar: string;
+  slug_en: string;
+  updated_at: string;
+}
+
 export async function getBlogs(params?: Record<string, string>): Promise<ApiBlog[]> {
   const url = new URL(`${API_URL}/blogs`);
   if (params) {
@@ -217,6 +224,17 @@ export async function getBlogs(params?: Record<string, string>): Promise<ApiBlog
   const res = await fetch(url.toString(), { next: { revalidate: 60 } });
   if (!res.ok) return [];
   const json: ListResponse<ApiBlog> = await res.json();
+  return json.data;
+}
+
+export async function getBlogsForSitemap(limit = "500"): Promise<ApiBlogSitemapEntry[]> {
+  const url = new URL(`${API_URL}/blogs`);
+  url.searchParams.set("limit", limit);
+  url.searchParams.set("fields", "sitemap");
+
+  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
+  if (!res.ok) return [];
+  const json: ListResponse<ApiBlogSitemapEntry> = await res.json();
   return json.data;
 }
 

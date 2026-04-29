@@ -99,10 +99,6 @@ export default async function LocaleLayout({
           strategy="afterInteractive"
         />
         <Script
-          src="https://emrldtp.com/NTE2OTIw.js?t=516920"
-          strategy="lazyOnload"
-        />
-        <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-18050243563"
           strategy="afterInteractive"
         />

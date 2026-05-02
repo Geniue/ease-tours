@@ -6,6 +6,7 @@ import TourCard from "@/components/TourCard";
 import BlogCard from "@/components/BlogCard";
 import ServiceCard from "@/components/ServiceCard";
 import WhyChooseUs from "@/components/WhyChooseUs";
+import GoogleReviewsSection from "@/components/GoogleReviewsSection";
 import { getTrips, getBlogs, getServices } from "@/lib/api";
 import { Link } from "@/i18n/navigation";
 
@@ -125,6 +126,8 @@ export default async function HomePage() {
         )}
 
         <WhyChooseUs />
+
+        <GoogleReviewsSection />
       </main>
     </>
   );

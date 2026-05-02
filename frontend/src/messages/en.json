@@ -86,6 +86,14 @@
     "guides": "Professional licensed tour guides",
     "satisfaction": "Your satisfaction and travel experience is our priority"
   },
+  "reviews": {
+    "title": "What Our Customers Say",
+    "intro": "Read Google reviews from Ease Travel customers and see how travelers describe our service.",
+    "loading": "Loading Google reviews...",
+    "error": "Google reviews could not be loaded right now.",
+    "noscript": "You can read our Google reviews directly.",
+    "viewOnGoogle": "View Ease Travel reviews on Google"
+  },
   "footer": {
     "rights": "All rights reserved",
     "contactUs": "Contact Us",

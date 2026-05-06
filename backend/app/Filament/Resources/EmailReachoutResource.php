@@ -62,8 +62,26 @@ class EmailReachoutResource extends Resource
                 Forms\Components\Section::make('Email')
                     ->columns(2)
                     ->schema([
+                        Forms\Components\Select::make('locale')
+                            ->label('Email language')
+                            ->options([
+                                EmailReachout::LOCALE_EN => 'English',
+                                EmailReachout::LOCALE_AR => 'Arabic',
+                            ])
+                            ->default(EmailReachout::LOCALE_EN)
+                            ->required()
+                            ->live()
+                            ->afterStateUpdated(function (Forms\Set $set, ?string $state): void {
+                                $locale = EmailReachout::normalizeLocale($state);
+
+                                $set('subject', self::defaultCompanyReachoutSubject($locale));
+                                $set('body', self::defaultCompanyReachoutBody($locale));
+                            })
+                            ->helperText('Switching language refreshes the starter subject and message.')
+                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('subject')
                             ->required()
+                            ->default(self::defaultCompanyReachoutSubject(EmailReachout::LOCALE_EN))
                             ->maxLength(255)
                             ->columnSpanFull(),
                         Forms\Components\TextInput::make('reply_to')
@@ -77,7 +95,7 @@ class EmailReachoutResource extends Resource
                             ->columnSpanFull(),
                         Forms\Components\RichEditor::make('body')
                             ->required()
-                            ->default(self::defaultCompanyReachoutBody())
+                            ->default(self::defaultCompanyReachoutBody(EmailReachout::LOCALE_EN))
                             ->helperText('Use this company-focused template as a starting point, then tailor the offer before sending.')
                             ->toolbarButtons([
                                 'bold',
@@ -135,6 +153,11 @@ class EmailReachoutResource extends Resource
                     ->sortable()
                     ->weight('bold')
                     ->limit(45),
+                Tables\Columns\TextColumn::make('locale')
+                    ->label('Lang')
+                    ->formatStateUsing(fn (?string $state): string => strtoupper(EmailReachout::normalizeLocale($state)))
+                    ->badge()
+                    ->color(fn (?string $state): string => EmailReachout::normalizeLocale($state) === EmailReachout::LOCALE_AR ? 'info' : 'gray'),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([
                         'warning' => 'pending',
@@ -173,6 +196,12 @@ class EmailReachoutResource extends Resource
                         'sent' => 'Sent',
                         'partial' => 'Partial',
                         'failed' => 'Failed',
+                    ]),
+                Tables\Filters\SelectFilter::make('locale')
+                    ->label('Language')
+                    ->options([
+                        EmailReachout::LOCALE_EN => 'English',
+                        EmailReachout::LOCALE_AR => 'Arabic',
                     ]),
             ])
             ->actions([
@@ -245,8 +274,27 @@ class EmailReachoutResource extends Resource
         return preg_split('/[\s,;]+/', $value ?? '', -1, PREG_SPLIT_NO_EMPTY) ?: [];
     }
 
-    private static function defaultCompanyReachoutBody(): string
+    private static function defaultCompanyReachoutSubject(string $locale): string
     {
+        if (EmailReachout::normalizeLocale($locale) === EmailReachout::LOCALE_AR) {
+            return 'دعم سفر الشركات من Ease Travel';
+        }
+
+        return 'Corporate travel support from Ease Travel';
+    }
+
+    private static function defaultCompanyReachoutBody(string $locale): string
+    {
+        if (EmailReachout::normalizeLocale($locale) === EmailReachout::LOCALE_AR) {
+            return <<<'HTML'
+<p>مرحباً،</p>
+<p>تدعم Ease Travel الشركات في تنسيق رحلات العمل والتأشيرات وحجوزات الطيران والفنادق والانتقالات وترتيبات المجموعات باحترافية وسرعة.</p>
+<p>إذا كان لدى فريقكم احتياج سفر قريب، يمكننا تجهيز خطة مناسبة بخيارات واضحة ومواعيد وخطوات تنفيذ محددة.</p>
+<p><strong>يمكنكم الرد على هذا البريد بوجهة السفر، والتواريخ المتوقعة، وعدد المسافرين، وسيتواصل معكم فريق العمليات بعرض مناسب.</strong></p>
+<p>مع خالص التحية،<br>فريق عمليات Ease Travel</p>
+HTML;
+        }
+
         return <<<'HTML'
 <p>Hello,</p>
 <p>Ease Travel supports companies with reliable travel coordination for business trips, visas, flights, hotels, airport transfers, and group arrangements.</p>

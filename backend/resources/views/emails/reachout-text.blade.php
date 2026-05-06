@@ -1,11 +1,11 @@
 {{ $plainBody }}
 
-Reply to Ease Travel Operations:
+{{ $copy['cta'] }}:
 {{ $operationsEmail }}
 
-Contact page:
+{{ $copy['contactPage'] }}:
 {{ $contactUrl }}
 
 --
-Ease Travel Operations
+{{ $copy['footerName'] }}
 {{ $websiteUrl }}

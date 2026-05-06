@@ -33,6 +33,7 @@ class CreateEmailReachout extends CreateRecord
             ]);
         }
 
+        $data['locale'] = EmailReachout::normalizeLocale($data['locale'] ?? null);
         $data['recipient_emails'] = $recipients;
         $data['recipient_count'] = count($recipients);
         $data['sent_count'] = 0;

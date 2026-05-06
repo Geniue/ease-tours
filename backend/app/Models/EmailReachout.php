@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class EmailReachout extends Model
 {
+    public const LOCALE_EN = 'en';
+
+    public const LOCALE_AR = 'ar';
+
+    public const SUPPORTED_LOCALES = [
+        self::LOCALE_EN,
+        self::LOCALE_AR,
+    ];
+
     public const OPERATIONS_EMAIL = 'operations@ease-travel.online';
 
     public const OPERATIONS_NAME = 'Ease Travel Operations';
@@ -19,6 +28,7 @@ class EmailReachout extends Model
 
     protected $fillable = [
         'user_id',
+        'locale',
         'recipient_sources',
         'manual_recipients',
         'recipient_emails',
@@ -44,5 +54,22 @@ class EmailReachout extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public static function normalizeLocale(?string $locale): string
+    {
+        return in_array($locale, self::SUPPORTED_LOCALES, true)
+            ? $locale
+            : self::LOCALE_EN;
+    }
+
+    public static function contactUrlForLocale(?string $locale): string
+    {
+        return self::WEBSITE_URL . '/' . self::normalizeLocale($locale) . '/contact';
+    }
+
+    public function emailLocale(): string
+    {
+        return self::normalizeLocale($this->locale ?? null);
     }
 }

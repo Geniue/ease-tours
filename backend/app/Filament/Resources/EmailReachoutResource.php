@@ -77,6 +77,8 @@ class EmailReachoutResource extends Resource
                             ->columnSpanFull(),
                         Forms\Components\RichEditor::make('body')
                             ->required()
+                            ->default(self::defaultCompanyReachoutBody())
+                            ->helperText('Use this company-focused template as a starting point, then tailor the offer before sending.')
                             ->toolbarButtons([
                                 'bold',
                                 'italic',
@@ -241,6 +243,17 @@ class EmailReachoutResource extends Resource
     public static function parseManualRecipients(?string $value): array
     {
         return preg_split('/[\s,;]+/', $value ?? '', -1, PREG_SPLIT_NO_EMPTY) ?: [];
+    }
+
+    private static function defaultCompanyReachoutBody(): string
+    {
+        return <<<'HTML'
+<p>Hello,</p>
+<p>Ease Travel supports companies with reliable travel coordination for business trips, visas, flights, hotels, airport transfers, and group arrangements.</p>
+<p>If your team has upcoming travel needs, we can prepare a tailored plan with clear options, timing, and next steps.</p>
+<p><strong>Reply to this email with your destination, travel dates, and approximate number of travelers, and our operations team will follow up with a suitable proposal.</strong></p>
+<p>Best regards,<br>Ease Travel Operations</p>
+HTML;
     }
 
     private static function normalizeEmails(Collection $emails): Collection

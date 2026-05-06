@@ -1,5 +1,11 @@
 {{ $plainBody }}
 
+Reply to Ease Travel Operations:
+{{ $operationsEmail }}
+
+Contact page:
+{{ $contactUrl }}
+
 --
-Ease Travel
-https://ease-travel.online
+Ease Travel Operations
+{{ $websiteUrl }}

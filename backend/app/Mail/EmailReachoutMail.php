@@ -42,6 +42,11 @@ class EmailReachoutMail extends Mailable
             with: [
                 'reachout' => $this->reachout,
                 'plainBody' => $this->plainBody(),
+                'websiteUrl' => EmailReachout::WEBSITE_URL,
+                'contactUrl' => EmailReachout::CONTACT_URL,
+                'logoUrl' => EmailReachout::LOGO_URL,
+                'operationsEmail' => EmailReachout::OPERATIONS_EMAIL,
+                'hasAttachments' => count($this->reachout->attachments ?? []) > 0,
             ],
         );
     }
@@ -57,7 +62,7 @@ class EmailReachoutMail extends Mailable
 
     private function plainBody(): string
     {
-        $body = str_replace(['<br>', '<br/>', '<br />', '</p>'], "\n", $this->reachout->body);
+        $body = str_replace(['<br>', '<br/>', '<br />', '</p>', '</li>'], "\n", $this->reachout->body);
 
         return trim(html_entity_decode(strip_tags($body)));
     }

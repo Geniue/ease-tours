@@ -11,6 +11,12 @@ class EmailReachout extends Model
 
     public const OPERATIONS_NAME = 'Ease Travel Operations';
 
+    public const WEBSITE_URL = 'https://ease-travel.online';
+
+    public const CONTACT_URL = 'https://ease-travel.online/en/contact';
+
+    public const LOGO_URL = 'https://ease-travel.online/logo.jpg';
+
     protected $fillable = [
         'user_id',
         'recipient_sources',

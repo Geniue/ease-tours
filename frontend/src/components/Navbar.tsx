@@ -1,12 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
-import { Menu, X, Globe } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Globe, Menu, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import WhatsAppTrackedLink from "@/components/WhatsAppTrackedLink";
+
+type NavLinkItem = {
+  href: string;
+  label: string;
+};
 
 export default function Navbar() {
   const t = useTranslations("nav");
@@ -38,114 +43,59 @@ export default function Navbar() {
   const visaServicesLabel = locale === "ar" ? "خدمات التأشيرات" : "Visa Services";
   const visaGalleryLabel = locale === "ar" ? "معرض التأشيرات" : "Visa Gallery";
 
-  const rightLinks = [
+  const navLinks: NavLinkItem[] = [
     { href: "/", label: t("home") },
     { href: "/about", label: t("about") },
     { href: "/tours", label: t("tours") },
     { href: "/services", label: t("services") },
     { href: "/visa-requirements", label: visaServicesLabel },
-    { href: "/visa-gallery", label: visaGalleryLabel },
-    { href: "/areas", label: t("areas") },
-  ];
-
-  const leftLinks = [
     { href: "/hajj-umrah", label: t("hajjUmrah") },
     { href: "/booking/flights", label: t("flights") },
+    { href: "/visa-gallery", label: visaGalleryLabel },
+    { href: "/areas", label: t("areas") },
     { href: "/embassy", label: t("embassy") },
     { href: "/blog", label: t("blog") },
     { href: "/contact", label: t("contact") },
   ];
 
-  const allLinks = [...rightLinks, ...leftLinks];
+  const galleryIndex = navLinks.findIndex(
+    (link) => link.href === "/visa-gallery"
+  );
+  const desktopSplitIndex =
+    galleryIndex > -1 ? galleryIndex : Math.ceil(navLinks.length / 2);
+  const leftLinks = navLinks.slice(0, desktopSplitIndex);
+  const rightLinks = navLinks.slice(desktopSplitIndex);
   const switchLocale = locale === "ar" ? "en" : "ar";
   const linkColor = solid ? "text-foreground" : "text-white";
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
+  const desktopLinkClass = (href: string) =>
+    `whitespace-nowrap text-[12px] font-semibold transition-colors hover:text-accent xl:text-[13px] 2xl:text-sm ${
+      isActive(href) ? "text-accent" : linkColor
+    }`;
+
   return (
     <header
       className={`fixed top-0 start-0 end-0 z-50 transition-all duration-300 ${
-        solid
-          ? "bg-white/95 shadow-md backdrop-blur-sm"
-          : "bg-transparent"
+        solid ? "bg-white/95 shadow-md backdrop-blur-sm" : "bg-transparent"
       }`}
       role="banner"
     >
       <nav
-        className="container mx-auto px-4 h-20 flex items-center justify-between"
+        className="container mx-auto hidden h-20 grid-cols-[1fr_auto_1fr] items-center px-4 lg:grid"
         aria-label={locale === "ar" ? "التنقل الرئيسي" : "Main navigation"}
       >
-        {/* Mobile: Hamburger | Desktop: Language Switcher */}
-        <div className="flex items-center flex-1 lg:flex-none">
-          {/* Mobile hamburger */}
-          <button
-            className={`lg:hidden ${linkColor}`}
-            onClick={toggleMobileMenu}
-            aria-label={mobileOpen
-              ? (locale === "ar" ? "إغلاق القائمة" : "Close menu")
-              : (locale === "ar" ? "فتح القائمة" : "Open menu")}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-menu"
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-
-          {/* Desktop language switcher */}
-          <Link
-            href={pathname}
-            locale={switchLocale}
-            className={`hidden lg:flex items-center gap-1 text-sm px-3 py-1.5 rounded-full border transition-colors ${
-              solid
-                ? "border-foreground/20 hover:bg-primary/10"
-                : "border-white/30 hover:bg-white/10"
-            } ${linkColor}`}
-            aria-label={switchLocale === "ar" ? "التبديل للعربية" : "Switch to English"}
-          >
-            <Globe size={14} />
-            {switchLocale === "ar" ? "العربية" : "EN"}
-          </Link>
-        </div>
-
-        {/* Right Links (desktop) */}
-        <ul className="hidden lg:flex items-center gap-6 flex-1 justify-end list-none m-0 p-0">
-          {rightLinks.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className={`text-sm font-semibold transition-colors hover:text-accent ${
-                  isActive(link.href) ? "text-accent" : linkColor
-                }`}
-                {...(isActive(link.href) ? { "aria-current": "page" as const } : {})}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        {/* Centered Logo */}
-        <Link href="/" className="mx-4 lg:mx-8 shrink-0 mt-4" aria-label={locale === "ar" ? "إيز ترافل - الصفحة الرئيسية" : "Ease Travel - Home"}>
-          <Image
-            src="/logo.png"
-            alt={locale === "ar" ? "إيز ترافل - شركة سياحة مصرية" : "Ease Travel - Egyptian Tourism Company"}
-            width={160}
-            height={160}
-            className="h-36 lg:h-40 w-auto object-contain drop-shadow-md"
-            priority
-          />
-        </Link>
-
-        {/* Left Links (desktop) */}
-        <ul className="hidden lg:flex items-center gap-6 flex-1 list-none m-0 p-0">
+        <ul className="m-0 flex min-w-0 list-none items-center justify-end gap-2 p-0 xl:gap-3 2xl:gap-5">
           {leftLinks.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`text-sm font-semibold transition-colors hover:text-accent ${
-                  isActive(link.href) ? "text-accent" : linkColor
-                }`}
-                {...(isActive(link.href) ? { "aria-current": "page" as const } : {})}
+                className={desktopLinkClass(link.href)}
+                {...(isActive(link.href)
+                  ? { "aria-current": "page" as const }
+                  : {})}
               >
                 {link.label}
               </Link>
@@ -153,17 +103,55 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Mobile: Language Switcher (far end to balance hamburger) */}
-        <div className="lg:hidden flex-1 flex justify-end">
+        <Link
+          href="/"
+          className="mx-5 mt-4 shrink-0 xl:mx-7"
+          aria-label={
+            locale === "ar" ? "إيز ترافل - الصفحة الرئيسية" : "Ease Travel - Home"
+          }
+        >
+          <Image
+            src="/logo.png"
+            alt={
+              locale === "ar"
+                ? "إيز ترافل - شركة سياحة مصرية"
+                : "Ease Travel - Egyptian Tourism Company"
+            }
+            width={160}
+            height={160}
+            className="h-32 w-auto object-contain drop-shadow-md xl:h-36"
+            priority
+          />
+        </Link>
+
+        <div className="flex min-w-0 items-center justify-start gap-2 xl:gap-3 2xl:gap-5">
+          <ul className="m-0 flex min-w-0 list-none items-center justify-start gap-2 p-0 xl:gap-3 2xl:gap-5">
+            {rightLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className={desktopLinkClass(link.href)}
+                  {...(isActive(link.href)
+                    ? { "aria-current": "page" as const }
+                    : {})}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
           <Link
             href={pathname}
             locale={switchLocale}
-            className={`flex items-center gap-1 text-sm px-2.5 py-1.5 rounded-full border transition-colors ${
+            className={`flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1.5 text-xs font-semibold transition-colors xl:px-3 ${
               solid
                 ? "border-foreground/20 hover:bg-primary/10"
                 : "border-white/30 hover:bg-white/10"
             } ${linkColor}`}
-            aria-label={switchLocale === "ar" ? "التبديل للعربية" : "Switch to English"}
+            aria-label={
+              switchLocale === "ar" ? "التبديل للعربية" : "Switch to English"
+            }
           >
             <Globe size={14} />
             {switchLocale === "ar" ? "العربية" : "EN"}
@@ -171,7 +159,70 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      <nav
+        className="container mx-auto flex h-20 items-center justify-between px-4 lg:hidden"
+        aria-label={locale === "ar" ? "التنقل الرئيسي" : "Main navigation"}
+      >
+        <div className="flex flex-1 items-center">
+          <button
+            className={linkColor}
+            onClick={toggleMobileMenu}
+            aria-label={
+              mobileOpen
+                ? locale === "ar"
+                  ? "إغلاق القائمة"
+                  : "Close menu"
+                : locale === "ar"
+                  ? "فتح القائمة"
+                  : "Open menu"
+            }
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+          >
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        <Link
+          href="/"
+          className="mx-4 mt-4 shrink-0"
+          aria-label={
+            locale === "ar" ? "إيز ترافل - الصفحة الرئيسية" : "Ease Travel - Home"
+          }
+        >
+          <Image
+            src="/logo.png"
+            alt={
+              locale === "ar"
+                ? "إيز ترافل - شركة سياحة مصرية"
+                : "Ease Travel - Egyptian Tourism Company"
+            }
+            width={150}
+            height={150}
+            className="h-32 w-auto object-contain drop-shadow-md"
+            priority
+          />
+        </Link>
+
+        <div className="flex flex-1 justify-end">
+          <Link
+            href={pathname}
+            locale={switchLocale}
+            className={`flex items-center gap-1 rounded-full border px-2.5 py-1.5 text-sm transition-colors ${
+              solid
+                ? "border-foreground/20 hover:bg-primary/10"
+                : "border-white/30 hover:bg-white/10"
+            } ${linkColor}`}
+            aria-label={
+              switchLocale === "ar" ? "التبديل للعربية" : "Switch to English"
+            }
+          >
+            <Globe size={14} />
+            {switchLocale === "ar" ? "العربية" : "EN"}
+          </Link>
+        </div>
+      </nav>
+
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -184,7 +235,7 @@ export default function Navbar() {
             className="lg:hidden bg-white shadow-lg overflow-hidden"
           >
             <ul className="flex flex-col gap-1 p-4 list-none m-0">
-              {allLinks.map((link) => (
+              {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -193,7 +244,9 @@ export default function Navbar() {
                         ? "text-primary bg-primary/5"
                         : "text-foreground hover:text-primary hover:bg-gray-50"
                     }`}
-                    {...(isActive(link.href) ? { "aria-current": "page" as const } : {})}
+                    {...(isActive(link.href)
+                      ? { "aria-current": "page" as const }
+                      : {})}
                     onClick={closeMobileMenu}
                   >
                     {link.label}
@@ -205,7 +258,11 @@ export default function Navbar() {
                   href={pathname}
                   locale={switchLocale}
                   className="flex items-center gap-1 text-sm mt-2 px-2 py-2"
-                  aria-label={switchLocale === "ar" ? "التبديل للعربية" : "Switch to English"}
+                  aria-label={
+                    switchLocale === "ar"
+                      ? "التبديل للعربية"
+                      : "Switch to English"
+                  }
                 >
                   <Globe size={16} />
                   {switchLocale === "ar" ? "العربية" : "English"}

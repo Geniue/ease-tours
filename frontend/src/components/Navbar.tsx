@@ -78,7 +78,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 start-0 end-0 z-50 transition-all duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         solid ? "bg-white/95 shadow-md backdrop-blur-sm" : "bg-transparent"
       }`}
       role="banner"
@@ -105,7 +105,7 @@ export default function Navbar() {
 
         <Link
           href="/"
-          className="mx-5 mt-4 shrink-0 xl:mx-7"
+          className="mx-5 shrink-0 xl:mx-7"
           aria-label={
             locale === "ar" ? "إيز ترافل - الصفحة الرئيسية" : "Ease Travel - Home"
           }
@@ -119,7 +119,7 @@ export default function Navbar() {
             }
             width={160}
             height={160}
-            className="h-32 w-auto object-contain drop-shadow-md xl:h-36"
+            className="h-24 w-auto object-contain drop-shadow-md xl:h-28"
             priority
           />
         </Link>
@@ -185,7 +185,7 @@ export default function Navbar() {
 
         <Link
           href="/"
-          className="mx-4 mt-4 shrink-0"
+          className="mx-4 shrink-0"
           aria-label={
             locale === "ar" ? "إيز ترافل - الصفحة الرئيسية" : "Ease Travel - Home"
           }
@@ -199,7 +199,7 @@ export default function Navbar() {
             }
             width={150}
             height={150}
-            className="h-32 w-auto object-contain drop-shadow-md"
+            className="h-24 w-auto object-contain drop-shadow-md"
             priority
           />
         </Link>

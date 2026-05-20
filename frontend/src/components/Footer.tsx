@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { MessageCircle, Mail, Phone } from "lucide-react";
 import Image from "next/image";
@@ -7,6 +7,9 @@ import WhatsAppTrackedLink from "@/components/WhatsAppTrackedLink";
 export default function Footer() {
   const t = useTranslations("footer");
   const nav = useTranslations("nav");
+  const locale = useLocale();
+  const visaServicesLabel = locale === "ar" ? "خدمات التأشيرات" : "Visa Services";
+  const visaGalleryLabel = locale === "ar" ? "معرض التأشيرات" : "Visa Gallery";
 
   return (
     <footer className="bg-gray-900 text-gray-300 py-12">
@@ -59,6 +62,30 @@ export default function Footer() {
                   className="hover:text-white transition-colors"
                 >
                   {nav("services")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/visa-requirements"
+                  className="hover:text-white transition-colors"
+                >
+                  {visaServicesLabel}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/visa-gallery"
+                  className="hover:text-white transition-colors"
+                >
+                  {visaGalleryLabel}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/areas"
+                  className="hover:text-white transition-colors"
+                >
+                  {nav("areas")}
                 </Link>
               </li>
               <li>

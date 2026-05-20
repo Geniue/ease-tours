@@ -35,12 +35,16 @@ export default function Navbar() {
   };
 
   const solid = scrolled || !isHome;
+  const visaServicesLabel = locale === "ar" ? "خدمات التأشيرات" : "Visa Services";
+  const visaGalleryLabel = locale === "ar" ? "معرض التأشيرات" : "Visa Gallery";
 
   const rightLinks = [
     { href: "/", label: t("home") },
     { href: "/about", label: t("about") },
     { href: "/tours", label: t("tours") },
     { href: "/services", label: t("services") },
+    { href: "/visa-requirements", label: visaServicesLabel },
+    { href: "/visa-gallery", label: visaGalleryLabel },
     { href: "/areas", label: t("areas") },
   ];
 

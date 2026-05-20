@@ -563,3 +563,115 @@ export async function getGovernorate(slug: string): Promise<ApiGovernorate | nul
   const json: { status: string; data: ApiGovernorate } = await res.json();
   return json.data;
 }
+
+// ─── Visa Gallery ───
+
+export type ApiVisaGalleryRegion =
+  | "schengen"
+  | "gulf"
+  | "asia"
+  | "africa"
+  | "america"
+  | "europe"
+  | "other";
+
+export interface ApiVisaGalleryGovernorate {
+  id: number;
+  name_ar: string;
+  name_en: string;
+  slug_ar: string;
+  slug_en: string;
+  region_ar: string | null;
+  region_en: string | null;
+}
+
+export interface ApiVisaGalleryItem {
+  id: number;
+  title_ar: string | null;
+  title_en: string | null;
+  slug_ar: string | null;
+  slug_en: string | null;
+  country_ar: string;
+  country_en: string | null;
+  visa_type_ar: string;
+  visa_type_en: string | null;
+  region: ApiVisaGalleryRegion | null;
+  city_ar: string;
+  city_en: string | null;
+  governorate_id: number | null;
+  governorate?: ApiVisaGalleryGovernorate | null;
+  processed_month: number | null;
+  processed_year: number | null;
+  processing_days: number | null;
+  image_path: string;
+  image_url: string | null;
+  alt_ar: string | null;
+  alt_en: string | null;
+  summary_ar: string | null;
+  summary_en: string | null;
+  is_redacted: boolean;
+  has_client_consent: boolean;
+  is_featured: boolean;
+  published_at: string | null;
+  updated_at: string;
+  related_items?: ApiVisaGalleryItem[];
+}
+
+export interface ApiVisaGallerySitemapEntry {
+  id: number;
+  slug_ar: string | null;
+  slug_en: string | null;
+  updated_at: string;
+  published_at: string | null;
+}
+
+export async function getVisaGallery(
+  params?: Record<string, string>
+): Promise<{ data: ApiVisaGalleryItem[]; meta: PaginatedMeta }> {
+  const url = new URL(`${API_URL}/visa-gallery`);
+  if (params) {
+    Object.entries(params).forEach(([k, v]) => {
+      if (v) url.searchParams.set(k, v);
+    });
+  }
+  if (!url.searchParams.has("fields")) {
+    url.searchParams.set("fields", "card");
+  }
+
+  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
+  const empty = {
+    data: [] as ApiVisaGalleryItem[],
+    meta: { current_page: 1, last_page: 1, per_page: 24, total: 0 },
+  };
+  if (!res.ok) return empty;
+  const json = await res.json();
+
+  return {
+    data: json.data ?? [],
+    meta: json.meta ?? empty.meta,
+  };
+}
+
+export async function getVisaGalleryItem(
+  slug: string
+): Promise<ApiVisaGalleryItem | null> {
+  const res = await fetch(`${API_URL}/visa-gallery/${encodeURIComponent(slug)}`, {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) return null;
+  const json: { status: string; data: ApiVisaGalleryItem } = await res.json();
+  return json.data;
+}
+
+export async function getVisaGalleryForSitemap(
+  limit = "500"
+): Promise<ApiVisaGallerySitemapEntry[]> {
+  const url = new URL(`${API_URL}/visa-gallery`);
+  url.searchParams.set("fields", "sitemap");
+  url.searchParams.set("limit", limit);
+
+  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
+  if (!res.ok) return [];
+  const json: ListResponse<ApiVisaGallerySitemapEntry> = await res.json();
+  return json.data;
+}

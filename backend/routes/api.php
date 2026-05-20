@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\V1\ServiceController;
 use App\Http\Controllers\Api\V1\SubscriberController;
 use App\Http\Controllers\Api\V1\TagController;
 use App\Http\Controllers\Api\V1\TripController;
+use App\Http\Controllers\Api\V1\VisaGalleryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -51,4 +52,7 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/governorates', [GovernorateController::class, 'index']);
     Route::get('/governorates/{slug}', [GovernorateController::class, 'show']);
+
+    Route::get('/visa-gallery', [VisaGalleryController::class, 'index']);
+    Route::get('/visa-gallery/{slug}', [VisaGalleryController::class, 'show']);
 });

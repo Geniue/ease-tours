@@ -1,19 +1,28 @@
 import type { MetadataRoute } from "next";
-import { getTripsForSitemap, getBlogsForSitemap, getServicesForSitemap, getCategories, getTags, getAuthors } from "@/lib/api";
+import {
+  getAuthors,
+  getBlogsForSitemap,
+  getCategories,
+  getServicesForSitemap,
+  getTags,
+  getTripsForSitemap,
+  getVisaGalleryForSitemap,
+} from "@/lib/api";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ease-travel.online";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [trips, blogs, services, categories, tags, authors] = await Promise.all([
+  const [trips, blogs, services, categories, tags, authors, visaGallery] = await Promise.all([
     getTripsForSitemap("500"),
     getBlogsForSitemap("500"),
     getServicesForSitemap("500"),
     getCategories(),
     getTags(),
     getAuthors(),
+    getVisaGalleryForSitemap("500"),
   ]);
 
-  const staticPages = ["", "/tours", "/blog", "/about", "/contact", "/hajj-umrah", "/services", "/embassy"];
+  const staticPages = ["", "/tours", "/blog", "/about", "/contact", "/hajj-umrah", "/services", "/embassy", "/visa-gallery"];
   const locales = ["ar", "en"];
 
   const staticEntries: MetadataRoute.Sitemap = staticPages.flatMap((page) =>
@@ -79,6 +88,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
+  const visaGalleryEntries: MetadataRoute.Sitemap = visaGallery.flatMap((item) =>
+    locales.flatMap((locale) => {
+      const slug = locale === "ar" ? item.slug_ar : item.slug_en;
+      if (!slug) return [];
+
+      return [{
+        url: `${SITE_URL}/${locale}/visa-gallery/${encodeURIComponent(slug)}`,
+        lastModified: new Date(item.updated_at || item.published_at || Date.now()),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      }];
+    })
+  );
+
   return [
     ...staticEntries,
     ...tripEntries,
@@ -87,5 +110,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...categoryEntries,
     ...tagEntries,
     ...authorEntries,
+    ...visaGalleryEntries,
   ];
 }

@@ -81,7 +81,7 @@ class BlogController extends Controller
         if ($request->has('limit')) {
             if ($fields === 'sitemap') {
                 $blogs = $query
-                    ->select(['id', 'slug_ar', 'slug_en', 'updated_at'])
+                    ->select(['id', 'slug_ar', 'slug_en', 'published_at', 'created_at', 'updated_at'])
                     ->limit(min((int) $request->limit, 500))
                     ->get();
 

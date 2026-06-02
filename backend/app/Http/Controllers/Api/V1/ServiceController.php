@@ -72,7 +72,7 @@ class ServiceController extends Controller
     private function applyListFields($query, ?string $fields): void
     {
         if ($fields === 'sitemap') {
-            $query->select(['id', 'slug_ar', 'slug_en', 'updated_at']);
+            $query->select(['id', 'slug_ar', 'slug_en', 'created_at', 'updated_at']);
 
             return;
         }

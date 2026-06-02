@@ -23,7 +23,7 @@ class VisaGalleryController extends Controller
 
         if ($fields === 'sitemap') {
             $items = $query
-                ->select(['id', 'slug_ar', 'slug_en', 'updated_at', 'published_at'])
+                ->select(['id', 'slug_ar', 'slug_en', 'published_at', 'created_at', 'updated_at'])
                 ->limit(min((int) ($request->limit ?? 500), 500))
                 ->get();
 

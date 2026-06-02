@@ -10,6 +10,7 @@ class GovernorateController extends Controller
 {
     public function index(Request $request)
     {
+        $fields = $request->input('fields');
         $query = Governorate::where('is_published', true)
             ->orderBy('sort_order');
 
@@ -22,6 +23,10 @@ class GovernorateController extends Controller
         }
 
         if ($request->has('limit')) {
+            if ($fields === 'sitemap') {
+                $query->select(['id', 'slug_ar', 'slug_en', 'created_at', 'updated_at']);
+            }
+
             $governorates = $query->limit(min((int) $request->limit, 100))->get();
             return response()->json([
                 'status' => 'success',

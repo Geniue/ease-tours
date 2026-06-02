@@ -38,7 +38,7 @@ class TripController extends Controller
 
         if ($fields === 'sitemap') {
             $trips = $query
-                ->select(['id', 'slug_ar', 'slug_en', 'updated_at'])
+                ->select(['id', 'slug_ar', 'slug_en', 'created_at', 'updated_at'])
                 ->orderBy('created_at', 'desc')
                 ->limit(min($request->integer('limit', 500), 500))
                 ->get();

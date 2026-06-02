@@ -56,6 +56,8 @@ export interface ApiCategory {
   description_ar: string | null;
   description_en: string | null;
   trips_count: number;
+  created_at?: string | null;
+  updated_at?: string | null;
 }
 
 interface PaginatedResponse<T> {
@@ -91,6 +93,7 @@ export interface ApiTripSitemapEntry {
   id: number;
   slug_ar: string;
   slug_en: string;
+  created_at?: string | null;
   updated_at: string;
 }
 
@@ -179,6 +182,8 @@ export interface ApiAuthor {
   social_facebook: string | null;
   is_active: boolean;
   blogs_count?: number;
+  created_at?: string | null;
+  updated_at?: string | null;
 }
 
 export interface ApiTag {
@@ -190,6 +195,8 @@ export interface ApiTag {
   description_ar: string | null;
   description_en: string | null;
   blogs_count?: number;
+  created_at?: string | null;
+  updated_at?: string | null;
 }
 
 export interface ApiBlog {
@@ -236,6 +243,8 @@ export interface ApiBlogSitemapEntry {
   id: number;
   slug_ar: string;
   slug_en: string;
+  published_at?: string | null;
+  created_at?: string | null;
   updated_at: string;
 }
 
@@ -402,6 +411,7 @@ export interface ApiServiceSitemapEntry {
   id: number;
   slug_ar: string;
   slug_en: string;
+  created_at?: string | null;
   updated_at: string;
 }
 
@@ -540,6 +550,8 @@ export interface ApiGovernorate {
   is_published: boolean;
   is_featured: boolean;
   sort_order: number;
+  created_at?: string | null;
+  updated_at?: string | null;
 }
 
 export async function getGovernorates(params?: Record<string, string>): Promise<ApiGovernorate[]> {
@@ -561,6 +573,25 @@ export async function getGovernorate(slug: string): Promise<ApiGovernorate | nul
   });
   if (!res.ok) return null;
   const json: { status: string; data: ApiGovernorate } = await res.json();
+  return json.data;
+}
+
+export interface ApiGovernorateSitemapEntry {
+  id: number;
+  slug_ar: string;
+  slug_en: string;
+  created_at?: string | null;
+  updated_at: string;
+}
+
+export async function getGovernoratesForSitemap(limit = "100"): Promise<ApiGovernorateSitemapEntry[]> {
+  const url = new URL(`${API_URL}/governorates`);
+  url.searchParams.set("limit", limit);
+  url.searchParams.set("fields", "sitemap");
+
+  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
+  if (!res.ok) return [];
+  const json: ListResponse<ApiGovernorateSitemapEntry> = await res.json();
   return json.data;
 }
 
@@ -621,6 +652,7 @@ export interface ApiVisaGallerySitemapEntry {
   id: number;
   slug_ar: string | null;
   slug_en: string | null;
+  created_at?: string | null;
   updated_at: string;
   published_at: string | null;
 }

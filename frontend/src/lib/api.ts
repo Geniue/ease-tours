@@ -75,7 +75,7 @@ interface ListResponse<T> {
   data: T[];
 }
 
-export async function getTrips(params?: Record<string, string>): Promise<ApiTrip[]> {
+export async function getTrips(params?: Record<string, string>, revalidate = 60): Promise<ApiTrip[]> {
   const url = new URL(`${API_URL}/trips`);
   if (params) {
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
@@ -83,7 +83,7 @@ export async function getTrips(params?: Record<string, string>): Promise<ApiTrip
   if (!url.searchParams.has("fields")) {
     url.searchParams.set("fields", "card");
   }
-  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
+  const res = await fetch(url.toString(), { next: { revalidate } });
   if (!res.ok) return [];
   const json: PaginatedResponse<ApiTrip> = await res.json();
   return json.data.data;
@@ -248,7 +248,7 @@ export interface ApiBlogSitemapEntry {
   updated_at: string;
 }
 
-export async function getBlogs(params?: Record<string, string>): Promise<ApiBlog[]> {
+export async function getBlogs(params?: Record<string, string>, revalidate = 60): Promise<ApiBlog[]> {
   const url = new URL(`${API_URL}/blogs`);
   if (params) {
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
@@ -256,7 +256,7 @@ export async function getBlogs(params?: Record<string, string>): Promise<ApiBlog
   if (!url.searchParams.has("fields")) {
     url.searchParams.set("fields", "card");
   }
-  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
+  const res = await fetch(url.toString(), { next: { revalidate } });
   if (!res.ok) return [];
   const json: ListResponse<ApiBlog> = await res.json();
   return json.data;
@@ -382,7 +382,7 @@ export interface ApiService {
   sort_order: number;
 }
 
-export async function getServices(params?: Record<string, string>): Promise<ApiService[]> {
+export async function getServices(params?: Record<string, string>, revalidate = 60): Promise<ApiService[]> {
   const url = new URL(`${API_URL}/services`);
   if (params) {
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
@@ -392,7 +392,7 @@ export async function getServices(params?: Record<string, string>): Promise<ApiS
   if (!url.searchParams.has("fields")) {
     url.searchParams.set("fields", "card");
   }
-  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
+  const res = await fetch(url.toString(), { next: { revalidate } });
   if (!res.ok) return [];
   const json: ListResponse<ApiService> = await res.json();
   return json.data;
@@ -447,8 +447,8 @@ export interface ApiEmbassy {
   sort_order: number;
 }
 
-export async function getEmbassies(): Promise<ApiEmbassy[]> {
-  const res = await fetch(`${API_URL}/embassies`, { next: { revalidate: 60 } });
+export async function getEmbassies(revalidate = 60): Promise<ApiEmbassy[]> {
+  const res = await fetch(`${API_URL}/embassies`, { next: { revalidate } });
   if (!res.ok) return [];
   const json: ListResponse<ApiEmbassy> = await res.json();
   return json.data;
@@ -554,14 +554,14 @@ export interface ApiGovernorate {
   updated_at?: string | null;
 }
 
-export async function getGovernorates(params?: Record<string, string>): Promise<ApiGovernorate[]> {
+export async function getGovernorates(params?: Record<string, string>, revalidate = 60): Promise<ApiGovernorate[]> {
   const url = new URL(`${API_URL}/governorates`);
   if (params) {
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
   } else {
     url.searchParams.set("limit", "27");
   }
-  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
+  const res = await fetch(url.toString(), { next: { revalidate } });
   if (!res.ok) return [];
   const json: ListResponse<ApiGovernorate> = await res.json();
   return json.data;
@@ -658,7 +658,8 @@ export interface ApiVisaGallerySitemapEntry {
 }
 
 export async function getVisaGallery(
-  params?: Record<string, string>
+  params?: Record<string, string>,
+  revalidate = 60
 ): Promise<{ data: ApiVisaGalleryItem[]; meta: PaginatedMeta }> {
   const url = new URL(`${API_URL}/visa-gallery`);
   if (params) {
@@ -670,7 +671,7 @@ export async function getVisaGallery(
     url.searchParams.set("fields", "card");
   }
 
-  const res = await fetch(url.toString(), { next: { revalidate: 60 } });
+  const res = await fetch(url.toString(), { next: { revalidate } });
   const empty = {
     data: [] as ApiVisaGalleryItem[],
     meta: { current_page: 1, last_page: 1, per_page: 24, total: 0 },
